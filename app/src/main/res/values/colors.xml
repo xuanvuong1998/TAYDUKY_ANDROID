@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#EFF0EC</color>
+    <color name="colorAccent">#6ec5ff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGrayLine">#BEBEBE</color>
+    <color name="colorTextLogin">#FF9800</color>
+    <color name="colorButtonCancel">#EA6060</color>
+
+    <color name="colorMenuIcon">#FF9800</color>
+    <color name="colorTextOpacity">#70000000</color>
+    <color name="colorOpacity">#6B000000</color>
+    <color name="semitransparent">#9A000000</color>
+
+    <color name="text_color_valid">#4CAF50</color>
+    <color name="text_color_invalid">#EA6060</color>
+    <color name="opacity">#00000000</color>
+    <color name="lightBlack">#353235</color>
+
+    <array name="colors">
+        <item name="All" type="color">#827f93</item>
+        <item name="Processing" type="color">#FFEB3B</item>
+        <item name="Deleted" type="color">#EA6060</item>
+        <item name="Approved" type="color">#42C53D</item>
+        <item name="Denied" type="color">#000000</item>
+    </array>
+</resources>
