@@ -10,7 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.enums.UserRole;
+import vuong.hx.tayduky.constants.UserRole;
+import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.presenters.LoginPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
 
@@ -33,6 +34,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (isUserAuthenticated()){
+            int role = SharePreferenceHelper.getInt(this, "user_role");
+
+            goToHomeActivity(null, null, role);
+
+            this.finish();
+        }
+
+    }
+
+    private boolean isUserAuthenticated(){
+        return SharePreferenceHelper.getString(this, "user_id") != null;
+    }
     private void initViews(){
         edtUsername =  findViewById(R.id.edtUsername);
         edtPassword =  findViewById(R.id.edtPassword);
@@ -63,9 +81,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void goToHomeActivity(String token, int role) {
+    public void goToHomeActivity(String username, String token, int role) {
         // Save token to preference
 
+        if (username != null){
+            SharePreferenceHelper.putString(this, "user_token", token);
+            SharePreferenceHelper.putString(this, "user_id", username);
+            SharePreferenceHelper.putInt(this, "user_role", role);
+        }
         Intent intent = null;
         if (role == UserRole.ADMIN.getVal()){
             intent = new Intent(this, AdminHomeActivity.class);
