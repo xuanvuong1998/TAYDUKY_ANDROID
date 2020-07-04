@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/mnHome" android:title="@string/menu_home" android:icon="@drawable/ic_baseline_home_24"/>
+    <item android:id="@+id/mnActors" android:title="@string/menu_actors" android:icon="@drawable/ic_baseline_actors_24"/>
+    <item android:id="@+id/mnTools" android:title="@string/menu_tools" android:icon="@drawable/ic_baseline_tools_24"/>
+    <item android:id="@+id/mnNotif" android:title="@string/menu_notif" android:icon="@drawable/ic_baseline_notifications_24"/>
+    <item android:id="@+id/mnAcc" android:title="@string/menu_acc" android:icon="@drawable/ic_baseline_account_circle_24"/>
+</menu>

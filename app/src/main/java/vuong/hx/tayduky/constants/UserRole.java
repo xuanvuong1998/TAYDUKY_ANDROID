@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.enums;
+package vuong.hx.tayduky.constants;
 
 public enum UserRole {
     ADMIN(0),
