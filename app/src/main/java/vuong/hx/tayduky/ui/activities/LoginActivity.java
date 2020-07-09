@@ -10,9 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.constants.UserRole;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.presenters.LoginPresenter;
+import vuong.hx.tayduky.remote.api.ApiConfig;
 import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginScreenView{
@@ -33,23 +35,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initViews();
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
-
         if (isUserAuthenticated()){
-            int role = SharePreferenceHelper.getInt(this, "user_role");
 
-            goToHomeActivity(null, null, role);
+            String userId = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_ID);
+
+            refreshUserToken(userId);
 
             this.finish();
         }
-
     }
 
+    private void refreshUserToken(String userId){
+        String userPassword = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_PASSWORD);
+
+        if (userId != null){
+            mLoginPresenter.authenticate(userId, userPassword);
+        }
+    }
     private boolean isUserAuthenticated(){
-        return SharePreferenceHelper.getString(this, "user_id") != null;
+
+        return SharePreferenceHelper.getString(this,
+                        SharePreferenceKeys.USER_ID) != null;
     }
     private void initViews(){
         edtUsername =  findViewById(R.id.edtUsername);
@@ -81,13 +90,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void goToHomeActivity(String username, String token, int role) {
+    public void goToHomeActivity(String username, String password, String token, int role) {
         // Save token to preference
 
-        if (username != null){
-            SharePreferenceHelper.putString(this, "user_token", token);
-            SharePreferenceHelper.putString(this, "user_id", username);
-            SharePreferenceHelper.putInt(this, "user_role", role);
+        if (username != null){ // First time
+            token = ApiConfig.Apis.Auth.BEARER_PREFIX + token;
+            SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_PASSWORD, password);
+            SharePreferenceHelper.putString(this,SharePreferenceKeys.USER_TOKEN, token);
+            SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_ID, username);
+            SharePreferenceHelper.putInt(this, SharePreferenceKeys.USER_ROLE, role);
         }
         Intent intent = null;
         if (role == UserRole.ADMIN.getVal()){

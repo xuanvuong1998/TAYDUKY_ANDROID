@@ -9,8 +9,4 @@ public abstract class AdminMenuItem {
     public static final int NOTIFICATION = 3;
     public static final int ACCOUNT = 4;
 
-
-
-
-
 }

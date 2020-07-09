@@ -108,7 +108,6 @@ public class AdminHomeActivity extends AppCompatActivity {
                     default:
                         throw new IllegalStateException("Unexpected value: " + position);
                 }
-
                 return fragment;
             }
 

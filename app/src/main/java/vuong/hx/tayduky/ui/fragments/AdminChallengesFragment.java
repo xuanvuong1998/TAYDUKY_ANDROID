@@ -4,62 +4,140 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.adapters.ChallengesAdapter;
+import vuong.hx.tayduky.constants.SharePreferenceKeys;
+import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Challenge;
+import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
+import vuong.hx.tayduky.ui.view_interfaces.ManageChallengeView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminChallengesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AdminChallengesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class AdminChallengesFragment extends Fragment
+                implements ChallengesAdapter.OnClickItem, ManageChallengeView {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView mRecyclerView;
+    private Spinner mChallengeFilter;
+
+    private List<Challenge> mChallengesList, mChallengesListFilter;
+    private ManageChallengesPresenter mChallengesPresenter;
+    private ChallengesAdapter mChallengeAdapter;
 
     public AdminChallengesFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminChallengesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminChallengesFragment newInstance(String param1, String param2) {
+
+    public static AdminChallengesFragment newInstance() {
         AdminChallengesFragment fragment = new AdminChallengesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_challenges, container, false);
+
+        View view =  inflater.inflate(R.layout.fragment_admin_challenges
+                            , container, false);
+
+        initViews(view);
+
+        return view;
+    }
+
+    private void initViews(View view){
+        mChallengeFilter = view.findViewById(R.id.spChallengeStt);
+        mRecyclerView = view.findViewById(R.id.rcAdminChallenges);
+
+        //setupDropdownList();
+        initData();
+    }
+
+    private void initData(){
+        mChallengesPresenter = new ManageChallengesPresenter(this);
+
+        String token = SharePreferenceHelper.getString(this.getContext(),
+                            SharePreferenceKeys.USER_TOKEN);
+        mChallengesPresenter.loadChallengesList(token);
+    }
+
+    private void setupDropdownList(){
+        String[] stts = getResources().getStringArray(R.array.challenge_filter);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_list_item_1, stts);
+
+        mChallengeFilter.setAdapter(adapter);
+
+        mChallengeFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mChallengesListFilter = mChallengesPresenter.filterListByStatus(
+                        mChallengesList, position);
+
+                mChallengeAdapter.setListData(mChallengesListFilter);
+                mChallengeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+    @Override
+    public void onClickDetails(Challenge challenge) {
+        ToastHelper.showLongMess(getContext(), "DETAILS");
+    }
+
+    @Override
+    public void onClickEdit(Challenge challenge) {
+        ToastHelper.showLongMess(getContext(), "EDITS");
+    }
+
+    @Override
+    public void loadChallengesList(List<Challenge> challenges) {
+        mChallengesList = challenges;
+
+        if (mChallengeAdapter != null){
+            mChallengeAdapter.setListData(challenges);
+            mChallengeAdapter.notifyDataSetChanged();
+        }else{
+            mChallengeAdapter = new ChallengesAdapter(mChallengesList, getContext());
+
+            mChallengeAdapter.setListener(this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+
+            setupDropdownList();
+
+            mRecyclerView.setHasFixedSize(true);
+
+            mRecyclerView.setLayoutManager(layoutManager);
+            mRecyclerView.setAdapter(mChallengeAdapter);
+        }
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        ToastHelper.showLongMess(getContext(), message);
     }
 }

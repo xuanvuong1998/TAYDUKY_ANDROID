@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -18,7 +19,7 @@ public interface ChallengeService {
     Call<Challenge> getById(@Path("challenge_id") int challengeId);
 
     @GET(ApiConfig.Apis.Challenge.GET_ALL)
-    Call<List<Challenge>> getAll();
+    Call<List<Challenge>> getAll(@Header("Authorization") String token);
 
     @POST(ApiConfig.Apis.Challenge.CREATE)
     Call<ResponseBody> createNew(@Body Challenge challenge);

@@ -16,12 +16,12 @@ public class LoginPresenter {
         mLoginView = loginView;
     }
 
-    public void authenticate(final String username, String password){
+    public void authenticate(final String username, final String password){
         mAuthRepo.authenticate(username, password, new ApiCallBack<AuthenticatedUser>() {
             @Override
             public void onSuccess(AuthenticatedUser authenticatedUser) {
                 if (authenticatedUser != null){
-                    mLoginView.goToHomeActivity(username, authenticatedUser.getToken()
+                    mLoginView.goToHomeActivity(username, password,authenticatedUser.getToken()
                             , authenticatedUser.getRole());
                 }else{
                     mLoginView.showToastMessage("Login failed!");

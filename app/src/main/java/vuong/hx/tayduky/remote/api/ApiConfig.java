@@ -1,11 +1,12 @@
 package vuong.hx.tayduky.remote.api;
 
 public class ApiConfig {
-    static final String BASE_URL = "http://10.0.2.2/api/";
+    static final String BASE_URL = "http://10.0.2.2:2310/api/";
 
     public interface Apis{
          interface Auth{
              String LOGIN = "auth";
+             String BEARER_PREFIX = "Bearer ";
          }
          interface Actor {
              String BASE_NAME = "actors";
