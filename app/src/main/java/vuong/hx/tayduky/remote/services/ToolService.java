@@ -19,7 +19,7 @@ public interface ToolService {
     Call<Tool> getById(@Path("tool_id") int toolId);
 
     @GET(ApiConfig.Apis.Tool.GET_ALL)
-    Call<List<SceneTool>> getAll();
+    Call<List<Tool>> getAll();
 
     @POST(ApiConfig.Apis.Tool.CREATE)
     Call<ResponseBody> createNew(@Body Tool Tool);

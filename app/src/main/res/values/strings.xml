@@ -21,4 +21,10 @@
         <item>Incoming Challenges</item>
         <item>Played Challenges</item>
     </string-array>
+
+    <string-array name="tools_mock_data">
+        <item>TONGOKHONG-https://i.imgur.com/DvpvklR.png</item>
+        <item>TONGOKHONG2-https://i.imgur.com/DvpvklR.png</item>
+        <item>TONGOKHONG3-https://i.imgur.com/DvpvklR.png</item>
+    </string-array>
 </resources>

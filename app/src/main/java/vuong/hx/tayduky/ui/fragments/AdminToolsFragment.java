@@ -6,60 +6,92 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.adapters.ToolsAdapter;
+import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Tool;
+import vuong.hx.tayduky.presenters.ManageToolsPresenter;
+import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminToolsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AdminToolsFragment extends Fragment {
+public class AdminToolsFragment extends Fragment implements ManageToolView {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ToolsAdapter mToolsAdapter;
+    RecyclerView mRecyclerView;
+    ManageToolsPresenter mPresenter;
+    List<Tool> mToolsList, mToolsFilteredList;
 
     public AdminToolsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminToolsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminToolsFragment newInstance(String param1, String param2) {
+
+    public static AdminToolsFragment newInstance() {
         AdminToolsFragment fragment = new AdminToolsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_tools, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_tools, container, false);
+
+        initViews(view);
+        return view;
+    }
+
+    private void initViews(View view){
+        mRecyclerView = view.findViewById(R.id.rcAdminTools);
+
+        initData();
+    }
+
+    private void initData(){
+        mPresenter = new ManageToolsPresenter(this);
+
+       /* String[] arr = getResources().getStringArray(R.array.tools_mock_data);
+
+        List<Tool> list = new ArrayList<>();
+
+        for(String s: arr){
+            String name = s.split("-")[0];
+            String imageURI = s.split("-")[1];
+
+            Tool newTool = new Tool();
+            newTool.setName(name);
+            newTool.setImage(imageURI);
+
+            list.add(newTool);
+        }*/
+
+       mPresenter.loadToolsList();
+
+    }
+
+    @Override
+    public void loadToolsList(List<Tool> list) {
+
+        mToolsAdapter = new ToolsAdapter(list, getContext());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mToolsAdapter);
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        ToastHelper.showLongMess(getContext(), message);
     }
 }

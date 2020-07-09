@@ -15,7 +15,7 @@ import java.util.List;
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.models.Challenge;
 
-public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.ChallengHolder> {
+public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.ChallengeHolder> {
 
     private List<Challenge> listData;
     private Context context;
@@ -44,15 +44,15 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
     @NonNull
     @Override
-    public ChallengHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ChallengeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_rv_admin_challenges, parent, false);
 
-        return new ChallengHolder(view);
+        return new ChallengeHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChallengHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChallengeHolder holder, int position) {
         final Challenge challenge = listData.get(position);
 
         holder.bindData(challenge);
@@ -87,14 +87,14 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
         void onClickEdit(Challenge challenge);
     }
 
-    class ChallengHolder extends RecyclerView.ViewHolder {
+    class ChallengeHolder extends RecyclerView.ViewHolder {
 
         private TextView tvChallengeName, tvShootTimes, tvStartDate, tvEndDate, tvLocation;
         public View view;
 
         public Button btnUpdate;
 
-        public ChallengHolder(@NonNull View itemView) {
+        public ChallengeHolder(@NonNull View itemView) {
             super(itemView);
             this.view = itemView;
 

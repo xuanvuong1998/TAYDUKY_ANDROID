@@ -41,6 +41,7 @@ public class AdminChallengesFragment extends Fragment
     public static AdminChallengesFragment newInstance() {
         AdminChallengesFragment fragment = new AdminChallengesFragment();
 
+
         return fragment;
     }
 

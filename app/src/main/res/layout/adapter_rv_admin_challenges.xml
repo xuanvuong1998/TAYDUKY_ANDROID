@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="5dp"
+    android:elevation="10dp"
     app:cardCornerRadius="10dp"
     android:orientation="vertical"
     android:layout_marginHorizontal="10dp"
@@ -37,6 +37,7 @@
             android:id="@+id/shootDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_below="@id/tvChallengeLocation"
             android:orientation="horizontal">
 
@@ -45,13 +46,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ngay quay"
+                android:layout_marginBottom="10dp"
                 android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/tvEndDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvStartDate"
                 android:text="Ngay ket thuc"
                 android:textSize="18dp" />
         </RelativeLayout>
