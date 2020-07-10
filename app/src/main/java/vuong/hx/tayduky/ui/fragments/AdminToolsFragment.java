@@ -1,11 +1,14 @@
 package vuong.hx.tayduky.ui.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +27,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
     private ToolsAdapter mToolsAdapter;
     private RecyclerView mRecyclerView;
     private ManageToolsPresenter mPresenter;
+    private final int SELECT_PHOTO = 23;
 
     private List<Tool> mToolsList, mToolsFilteredList;
     private Button btnAddNew;
@@ -57,11 +61,39 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
         btnAddNew = view.findViewById(R.id.btnAddNewTool);
         mRecyclerView = view.findViewById(R.id.rcAdminTools);
 
-
+        registerEvents();
         initData();
     }
 
+    private void openFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PHOTO);
+    }
 
+    private void registerEvents(){
+        btnAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateToolDialogFragment fragment = new CreateToolDialogFragment();
+
+                fragment.show(getActivity().getSupportFragmentManager(), "dialog_create_tool");
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == SELECT_PHOTO){
+
+            }
+        }
+    }
 
     private void initData(){
         if (mPresenter == null){

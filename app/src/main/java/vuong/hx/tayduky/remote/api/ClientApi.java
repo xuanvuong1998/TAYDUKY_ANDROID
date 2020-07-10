@@ -42,5 +42,4 @@ public class ClientApi extends BaseApi{
         return this.getService(ToolService.class, ApiConfig.BASE_URL);
     }
 
-    
 }

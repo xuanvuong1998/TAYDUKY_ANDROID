@@ -10,12 +10,12 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="menu_home">Home</string>
-    <string name="menu_actors">Actors</string>
+    <string name="menu_actors">Characters</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_notif">Notification</string>
     <string name="menu_acc">Account</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    
+
     <string-array name="challenge_filter">
         <item>All</item>
         <item>Incoming Challenges</item>

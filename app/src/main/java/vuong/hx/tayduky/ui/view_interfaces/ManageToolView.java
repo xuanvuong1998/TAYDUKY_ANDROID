@@ -6,4 +6,6 @@ import vuong.hx.tayduky.models.Tool;
 
 public interface ManageToolView extends ToastView {
     void loadToolsList(List<Tool> tools);
+
+    
 }

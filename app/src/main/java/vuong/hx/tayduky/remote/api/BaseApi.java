@@ -23,7 +23,7 @@ public class BaseApi {
                         .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create())
 
-                        //.client(client)
+                        .client(client)
                         .build();
             }catch (Exception exp)
             {
