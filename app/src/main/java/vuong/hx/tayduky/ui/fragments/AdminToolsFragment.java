@@ -24,10 +24,15 @@ import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class AdminToolsFragment extends Fragment implements ManageToolView {
 
+    private final int SELECT_PHOTO = 23;
+    private final int CREATE_TOOL = 78;
+    private final String DIALOG_CREATE_TOOL_TAG = "create_tool_dialog";
+
+
     private ToolsAdapter mToolsAdapter;
     private RecyclerView mRecyclerView;
     private ManageToolsPresenter mPresenter;
-    private final int SELECT_PHOTO = 23;
+
 
     private List<Tool> mToolsList, mToolsFilteredList;
     private Button btnAddNew;
@@ -65,21 +70,17 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
         initData();
     }
 
-    private void openFileChooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PHOTO);
-    }
 
     private void registerEvents(){
+        final CreateToolDialogFragment fragment = new CreateToolDialogFragment();
+
+        fragment.setTargetFragment(this, CREATE_TOOL);
+
         btnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateToolDialogFragment fragment = new CreateToolDialogFragment();
 
-                fragment.show(getActivity().getSupportFragmentManager(), "dialog_create_tool");
+                fragment.show(getActivity().getSupportFragmentManager(), DIALOG_CREATE_TOOL_TAG);
             }
         });
     }
@@ -88,11 +89,14 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == SELECT_PHOTO){
-
+        if (requestCode == CREATE_TOOL){
+            if (resultCode == Activity.RESULT_OK){
+                mPresenter.loadToolsList();
+            }else if (resultCode == Activity.RESULT_CANCELED){
+                showToastMessage("Nothing changed!");
             }
         }
+
     }
 
     private void initData(){

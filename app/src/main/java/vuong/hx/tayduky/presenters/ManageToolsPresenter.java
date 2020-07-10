@@ -2,7 +2,6 @@ package vuong.hx.tayduky.presenters;
 
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,7 @@ public class ManageToolsPresenter {
         ToolRepo = new ToolRepoImpl();
     }
 
-    public void createNewTool(String toolName, int quantity, File image){
 
-    }
 
     public void loadToolsList(){
 

@@ -95,6 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void goToHomeActivity(String username, String password, String token, int role) {
         // Save token to preference
 
+
+
         if (username != null){ // First time
             token = ApiConfig.Apis.Auth.BEARER_PREFIX + token;
             SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_PASSWORD, password);

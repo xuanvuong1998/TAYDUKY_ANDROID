@@ -24,18 +24,22 @@ import java.io.File;
 import java.io.IOException;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.presenters.ManageToolsPresenter;
+import vuong.hx.tayduky.constants.SharePreferenceKeys;
+import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.presenters.CreateToolPresenter;
+import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 
 
 public class CreateToolDialogFragment extends DialogFragment
-                implements View.OnFocusChangeListener {
+                implements View.OnFocusChangeListener, CreateToolView {
 
 
-    private EditText mEdtToolName, mEdtToolQty;
+    private EditText mEdtToolName, mEdtToolQty, mEdtToolDesc;
     private Button mBtnUploadImage, mBtnCancel, mBtnSave;
     private ImageView mImgvToolImage;
     private File mImageFile;
-    private ManageToolsPresenter mPresenter;
+    private CreateToolPresenter mPresenter;
 
     private final int SELECT_PHOTO = 99;
 
@@ -47,9 +51,9 @@ public class CreateToolDialogFragment extends DialogFragment
         View view = inflater.inflate(R.layout.dialog_fragment_create_tool, container, false);
 
 
-
         mEdtToolName = view.findViewById(R.id.edtToolName);
         mEdtToolQty = view.findViewById(R.id.edtToolQty);
+        mEdtToolDesc = view.findViewById(R.id.edtToolDesc);
         mEdtToolName.setOnFocusChangeListener(this);
         mBtnUploadImage = view.findViewById(R.id.btnUploadToolImage);
 
@@ -66,15 +70,24 @@ public class CreateToolDialogFragment extends DialogFragment
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getTargetFragment().onActivityResult(getTargetRequestCode(),
+                            Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });
+
+        mPresenter = new CreateToolPresenter(this);
 
         mBtnSave = view.findViewById(R.id.btnSaveNewTool);
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userToken = SharePreferenceHelper
+                            .getString(getContext(), SharePreferenceKeys.USER_TOKEN);
 
+                mPresenter.createNewTool(userToken, mEdtToolName.getText().toString(),
+                                    Integer.parseInt(mEdtToolQty.getText().toString()),
+                                    mEdtToolDesc.getText().toString(), mImageFile);
             }
         });
 
@@ -126,4 +139,16 @@ public class CreateToolDialogFragment extends DialogFragment
         }
     }
 
+
+    @Override
+    public void refreshToolList() {
+        getTargetFragment().onActivityResult(getTargetRequestCode(),
+                Activity.RESULT_OK, getActivity().getIntent() );
+        dismiss();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        ToastHelper.showLongMess(getContext(), message);
+    }
 }
