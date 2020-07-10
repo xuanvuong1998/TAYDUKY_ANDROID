@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -21,13 +22,14 @@ public interface SceneToolService {
     Call<List<SceneTool>> getAll();
 
     @POST(ApiConfig.Apis.SceneTool.CREATE)
-    Call<ResponseBody> createNew(@Body SceneTool SceneTool);
+    Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body SceneTool SceneTool);
 
     @PUT(ApiConfig.Apis.SceneTool.UPDATE)
-    Call<ResponseBody> update(@Body SceneTool SceneTool);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body SceneTool SceneTool);
 
     @DELETE(ApiConfig.Apis.SceneTool.DELETE)
-    Call<ResponseBody> delete(@Path("challenge_id") int challengeId, @Path("tool_id") int toolId);
+    Call<ResponseBody> delete(@Header("Authorization") String token
+                , @Path("challenge_id") int challengeId, @Path("tool_id") int toolId);
 
 
 

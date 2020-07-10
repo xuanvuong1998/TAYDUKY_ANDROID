@@ -8,6 +8,6 @@ import vuong.hx.tayduky.models.SceneTool;
 
 public interface SceneToolRepo {
 
-    void getAll(String token, ApiCallBack<List<SceneTool>> callBack);
-    void getById(String token, int toolId, ApiCallBack<Character> callBack);
+    void getAll(ApiCallBack<List<SceneTool>> callBack);
+    void getById(int toolId, ApiCallBack<Character> callBack);
 }

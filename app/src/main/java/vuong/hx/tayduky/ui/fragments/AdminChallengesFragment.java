@@ -72,7 +72,9 @@ public class AdminChallengesFragment extends Fragment
     }
 
     private void initData(){
-        mChallengesPresenter = new ManageChallengesPresenter(this);
+        if (mChallengesPresenter == null){
+            mChallengesPresenter = new ManageChallengesPresenter(this);
+        }
 
         String token = SharePreferenceHelper.getString(this.getContext(),
                             SharePreferenceKeys.USER_TOKEN);

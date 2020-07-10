@@ -23,7 +23,6 @@ public class ManageToolsPresenter {
 
     public void loadToolsList(){
 
-
         ToolRepo.getAll(new ApiCallBack<List<Tool>>() {
             @Override
             public void onSuccess(List<Tool> Tools) {

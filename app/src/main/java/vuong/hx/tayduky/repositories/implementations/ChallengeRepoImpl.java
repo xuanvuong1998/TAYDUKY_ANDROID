@@ -1,6 +1,5 @@
 package vuong.hx.tayduky.repositories.implementations;
 
-import java.net.HttpURLConnection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -15,14 +14,14 @@ public class ChallengeRepoImpl implements ChallengeRepo {
 
 
     @Override
-    public void getAll(String token, final ApiCallBack<List<Challenge>> callBack) {
-        Call<List<Challenge>> call = new ClientApi().getChallengeService().getAll(token);
+    public void getAll(final ApiCallBack<List<Challenge>> callBack) {
+        Call<List<Challenge>> call = new ClientApi().getChallengeService().getAll();
 
         call.enqueue(new Callback<List<Challenge>>() {
             @Override
             public void onResponse(Call<List<Challenge>> call, Response<List<Challenge>> response) {
-                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
-                    callBack.onFail("UnAuthorized!");
+                if (response.isSuccessful() == false){
+                    callBack.onFail("Retrieve Data failed!");
                 }else{
                     callBack.onSuccess(response.body());
                 }

@@ -19,16 +19,16 @@ public interface ChallengeService {
     Call<Challenge> getById(@Path("challenge_id") int challengeId);
 
     @GET(ApiConfig.Apis.Challenge.GET_ALL)
-    Call<List<Challenge>> getAll(@Header("Authorization") String token);
+    Call<List<Challenge>> getAll();
 
     @POST(ApiConfig.Apis.Challenge.CREATE)
-    Call<ResponseBody> createNew(@Body Challenge challenge);
+    Call<ResponseBody> createNew(@Header("Authorization") String token, @Body Challenge challenge);
 
     @PUT(ApiConfig.Apis.Challenge.UPDATE)
-    Call<ResponseBody> update(@Body Challenge challenge);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body Challenge challenge);
 
     @DELETE(ApiConfig.Apis.Challenge.DELETE)
-    Call<ResponseBody> delete(@Path("challenge_id") int challengeId);
+    Call<ResponseBody> delete(@Header("Authorization") String token, @Path("challenge_id") int challengeId);
 
 
 

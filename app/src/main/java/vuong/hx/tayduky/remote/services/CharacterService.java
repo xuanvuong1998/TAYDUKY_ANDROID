@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -21,13 +22,13 @@ public interface CharacterService {
     Call<List<Character>> getAll();
 
     @POST(ApiConfig.Apis.Character.CREATE)
-    Call<ResponseBody> createNew(@Body Character Character);
+    Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body Character Character);
 
     @PUT(ApiConfig.Apis.Character.UPDATE)
-    Call<ResponseBody> update(@Body Character Character);
+    Call<ResponseBody> update(@Header("Authorization") String token,@Body Character Character);
 
     @DELETE(ApiConfig.Apis.Character.DELETE)
-    Call<ResponseBody> delete(@Path("character_id") int characterId);
+    Call<ResponseBody> delete(@Header("Authorization") String token, @Path("character_id") int characterId);
 
 
 

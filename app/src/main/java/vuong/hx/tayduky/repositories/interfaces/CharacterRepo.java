@@ -7,7 +7,7 @@ import vuong.hx.tayduky.models.Character;
 
 public interface CharacterRepo {
 
-    void getAll(String token, ApiCallBack<List<Character>> callBack);
+    void getAll(ApiCallBack<List<Character>> callBack);
 
     void getById(String token, int toolId, ApiCallBack<Character> callBack);
 }

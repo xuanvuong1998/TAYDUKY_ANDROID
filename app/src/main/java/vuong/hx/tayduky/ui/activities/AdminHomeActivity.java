@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.AdminMenuItem;
 import vuong.hx.tayduky.ui.fragments.AdminAccountFragment;
-import vuong.hx.tayduky.ui.fragments.AdminActorsFragment;
+import vuong.hx.tayduky.ui.fragments.AdminCharactersFragment;
 import vuong.hx.tayduky.ui.fragments.AdminChallengesFragment;
 import vuong.hx.tayduky.ui.fragments.AdminNotificationFragment;
 import vuong.hx.tayduky.ui.fragments.AdminToolsFragment;
@@ -94,7 +94,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         fragment = new AdminChallengesFragment();
                         break;
                     case AdminMenuItem.ACTORS:
-                        fragment = new AdminActorsFragment();
+                        fragment = new AdminCharactersFragment();
                         break;
                     case AdminMenuItem.TOOLS:
                         fragment = new AdminToolsFragment();

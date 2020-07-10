@@ -20,7 +20,7 @@ public interface ActorService {
     Call<Actor> getById(@Path("actor_id") String actor_id);
 
     @GET(ApiConfig.Apis.Actor.GET_ALL)
-    Call<List<Actor>> getAll(@Header("Authorization") String token);
+    Call<List<Actor>> getAll();
 
     @GET(ApiConfig.Apis.Actor.GET_INCOMING_ROLES)
     Call<List<SceneRole>> getIncomingRoles(@Path("actor_id") String actorId);
@@ -32,10 +32,10 @@ public interface ActorService {
     Call<ResponseBody> createNew(@Body Actor actor);
 
     @PUT(ApiConfig.Apis.Actor.UPDATE)
-    Call<ResponseBody> update(@Body Actor actor);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body Actor actor);
 
     @DELETE(ApiConfig.Apis.Actor.DELETE)
-    Call<ResponseBody> delete(@Path("actor_id") String actorId);
+    Call<ResponseBody> delete(@Header("Authorization") String token, @Path("actor_id") String actorId);
 
 
 

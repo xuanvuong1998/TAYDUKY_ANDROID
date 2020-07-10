@@ -57,25 +57,10 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
     }
 
     private void initData(){
-        mPresenter = new ManageToolsPresenter(this);
-
-       /* String[] arr = getResources().getStringArray(R.array.tools_mock_data);
-
-        List<Tool> list = new ArrayList<>();
-
-        for(String s: arr){
-            String name = s.split("-")[0];
-            String imageURI = s.split("-")[1];
-
-            Tool newTool = new Tool();
-            newTool.setName(name);
-            newTool.setImage(imageURI);
-
-            list.add(newTool);
-        }*/
-
-       mPresenter.loadToolsList();
-
+        if (mPresenter == null){
+            mPresenter = new ManageToolsPresenter(this);
+        }
+        mPresenter.loadToolsList();
     }
 
     @Override

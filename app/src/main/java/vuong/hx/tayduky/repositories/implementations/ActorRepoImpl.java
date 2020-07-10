@@ -15,10 +15,10 @@ import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 public class ActorRepoImpl implements ActorRepo {
 
     @Override
-    public void getAll(String token, final ApiCallBack<List<Actor>> callBack) {
+    public void getAll(final ApiCallBack<List<Actor>> callBack) {
         ActorService actorService = new ClientApi().getActorService();
 
-        actorService.getAll(token).enqueue(new Callback<List<Actor>>() {
+        actorService.getAll().enqueue(new Callback<List<Actor>>() {
             @Override
             public void onResponse(Call<List<Actor>> call, Response<List<Actor>> response) {
                 if (response != null && response.body() != null){
@@ -43,12 +43,12 @@ public class ActorRepoImpl implements ActorRepo {
     }
 
     @Override
-    public void getIncomingRoles(String token, String actorId, ApiCallBack<List<SceneRole>> callBack) {
+    public void getIncomingRoles(String actorId, ApiCallBack<List<SceneRole>> callBack) {
 
     }
 
     @Override
-    public void getPlayedRoles(String token, String actorId, ApiCallBack<List<SceneRole>> callBack) {
+    public void getPlayedRoles(String actorId, ApiCallBack<List<SceneRole>> callBack) {
 
     }
 

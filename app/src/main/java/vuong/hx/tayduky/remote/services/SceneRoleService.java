@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -21,13 +22,14 @@ public interface SceneRoleService {
     Call<List<SceneRole>> getAll();
 
     @POST(ApiConfig.Apis.SceneRole.CREATE)
-    Call<ResponseBody> createNew(@Body SceneRole SceneRole);
+    Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body SceneRole SceneRole);
 
     @PUT(ApiConfig.Apis.SceneRole.UPDATE)
-    Call<ResponseBody> update(@Body SceneRole SceneRole);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body SceneRole SceneRole);
 
     @DELETE(ApiConfig.Apis.SceneRole.DELETE)
-    Call<ResponseBody> delete(@Path("sceneRole_id") int sceneRoleId);
+    Call<ResponseBody> delete(@Header("Authorization") String token
+                            , @Path("sceneRole_id") int sceneRoleId);
 
 
 

@@ -7,10 +7,10 @@ import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.models.SceneRole;
 
 public interface ActorRepo {
-    void getAll(String token, ApiCallBack<List<Actor>> callBack);
+    void getAll(ApiCallBack<List<Actor>> callBack);
     void getActorById(String token, String actorId, ApiCallBack<Actor> callBack);
-    void getIncomingRoles(String token, String actorId, ApiCallBack<List<SceneRole>> callBack);
-    void getPlayedRoles(String token,String actorId, ApiCallBack<List<SceneRole>> callBack);
+    void getIncomingRoles(String actorId, ApiCallBack<List<SceneRole>> callBack);
+    void getPlayedRoles(String actorId, ApiCallBack<List<SceneRole>> callBack);
 
 
 }

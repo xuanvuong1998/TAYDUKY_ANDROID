@@ -23,7 +23,7 @@ public class ManageChallengesPresenter {
     }
 
     public void loadChallengesList(String token){
-        challengeRepo.getAll(token, new ApiCallBack<List<Challenge>>() {
+        challengeRepo.getAll(new ApiCallBack<List<Challenge>>() {
             @Override
             public void onSuccess(List<Challenge> challenges) {
                 Log.println(Log.ASSERT,"CHALLENGES",  challenges.size() + "");

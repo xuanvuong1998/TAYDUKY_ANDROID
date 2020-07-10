@@ -7,10 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.remote.api.ApiConfig;
 
@@ -22,13 +22,13 @@ public interface ToolService {
     Call<List<Tool>> getAll();
 
     @POST(ApiConfig.Apis.Tool.CREATE)
-    Call<ResponseBody> createNew(@Body Tool Tool);
+    Call<ResponseBody> createNew(@Header("Authorization") String token, @Body Tool Tool);
 
     @PUT(ApiConfig.Apis.Tool.UPDATE)
-    Call<ResponseBody> update(@Body Tool Tool);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body Tool Tool);
 
     @DELETE(ApiConfig.Apis.Tool.DELETE)
-    Call<ResponseBody> delete(@Path("tool_id") int toolId);
+    Call<ResponseBody> delete(@Header("Authorization") String token, @Path("tool_id") int toolId);
 
 
 
