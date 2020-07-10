@@ -1,7 +1,8 @@
 package vuong.hx.tayduky.remote.api;
 
 public class ApiConfig {
-    static final String BASE_URL = "http://10.0.2.2:2310/api/";
+    public static final String BASE_URL = "http://10.0.2.2:2310/api/";
+    public static final String HOST_URL = "http://10.0.2.2:2310/";
 
     public interface Apis{
          interface Auth{

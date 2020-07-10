@@ -12,7 +12,6 @@ import vuong.hx.tayduky.repositories.interfaces.ChallengeRepo;
 
 public class ChallengeRepoImpl implements ChallengeRepo {
 
-
     @Override
     public void getAll(final ApiCallBack<List<Challenge>> callBack) {
         Call<List<Challenge>> call = new ClientApi().getChallengeService().getAll();
@@ -21,6 +20,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
             @Override
             public void onResponse(Call<List<Challenge>> call, Response<List<Challenge>> response) {
                 if (response.isSuccessful() == false){
+
                     callBack.onFail("Retrieve Data failed!");
                 }else{
                     callBack.onSuccess(response.body());

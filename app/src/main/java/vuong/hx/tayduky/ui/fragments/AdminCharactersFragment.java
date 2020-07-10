@@ -61,7 +61,7 @@ public class AdminCharactersFragment extends Fragment
             mPresenter = new ManageCharactersPresenter(this);
         }
 
-        mPresenter.loadCharactersList();
+        //mPresenter.loadCharactersList();
     }
 
     @Override
