@@ -12,26 +12,24 @@ import vuong.hx.tayduky.ui.view_interfaces.ManageCharacterView;
 
 public class ManageCharactersPresenter {
     private ManageCharacterView manageCharacterView;
-    private CharacterRepo CharacterRepo;
+    private CharacterRepo mCharacterRepo;
 
     public ManageCharactersPresenter(ManageCharacterView manageCharacterView) {
         this.manageCharacterView = manageCharacterView;
 
-        CharacterRepo = new CharacterRepoImpl();
+        mCharacterRepo = new CharacterRepoImpl();
     }
 
     public void loadCharactersList(){
 
-        CharacterRepo.getAll(new ApiCallBack<List<Character>>() {
+        mCharacterRepo.getAll(new ApiCallBack<List<Character>>() {
             @Override
             public void onSuccess(List<Character> Characters) {
-                Log.println(Log.ASSERT,"CharacterS",  Characters.size() + "");
                 manageCharacterView.loadCharactersList(Characters);
             }
 
             @Override
             public void onFail(String message) {
-                Log.println(Log.ASSERT,"CharacterS",  message);
                 manageCharacterView.showToastMessage(message);
             }
         });

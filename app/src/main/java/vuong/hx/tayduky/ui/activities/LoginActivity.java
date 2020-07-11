@@ -39,15 +39,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
 
-        goToHomeActivity(null, null, null, UserRole.ADMIN.getVal());
-        /*if (isUserAuthenticated()){
+
+        //goToHomeActivity(null, null, null, UserRole.ADMIN.getVal());
+        if (isUserAuthenticated()){
 
             String userId = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_ID);
 
             refreshUserToken(userId);
 
             this.finish();
-        }*/
+        }
     }
 
     private void refreshUserToken(String userId){
@@ -94,8 +95,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void goToHomeActivity(String username, String password, String token, int role) {
         // Save token to preference
-
-
 
         if (username != null){ // First time
             token = ApiConfig.Apis.Auth.BEARER_PREFIX + token;

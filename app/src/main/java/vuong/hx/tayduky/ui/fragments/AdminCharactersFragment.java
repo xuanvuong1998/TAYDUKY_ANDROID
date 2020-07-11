@@ -61,7 +61,7 @@ public class AdminCharactersFragment extends Fragment
             mPresenter = new ManageCharactersPresenter(this);
         }
 
-        //mPresenter.loadCharactersList();
+        mPresenter.loadCharactersList();
     }
 
     @Override
@@ -71,18 +71,17 @@ public class AdminCharactersFragment extends Fragment
 
     @Override
     public void loadCharactersList(List<Character> characters) {
-        if (characters.isEmpty() == false){
-            mCharactersList = characters;
 
-            mCharacterAdapter = new CharactersAdapter(mCharactersList, getContext());
+        mCharactersList = characters;
 
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mCharacterAdapter = new CharactersAdapter(mCharactersList, getContext());
 
-            mRecyclerView.setAdapter(mCharacterAdapter);
+        mCharacterAdapter.setListener(this);
 
-        }else {
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        }
+        mRecyclerView.setAdapter(mCharacterAdapter);
+
     }
 
     @Override

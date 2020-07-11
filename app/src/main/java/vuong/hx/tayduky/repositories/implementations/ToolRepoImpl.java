@@ -13,19 +13,27 @@ import retrofit2.Response;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.remote.api.ClientApi;
+import vuong.hx.tayduky.remote.services.ToolService;
 import vuong.hx.tayduky.repositories.interfaces.ToolRepo;
 
 public class ToolRepoImpl implements ToolRepo {
+
+    private ToolService mToolService;
+
+    public ToolRepoImpl() {
+        mToolService = new ClientApi().getToolService();
+    }
+
     @Override
     public void getAll(final ApiCallBack<List<Tool>> callBack) {
-        Call<List<Tool>> call = new ClientApi().getToolService().getAll();
+        Call<List<Tool>> call = mToolService.getAll();
 
         call.enqueue(new Callback<List<Tool>>() {
             @Override
             public void onResponse(Call<List<Tool>> call, Response<List<Tool>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callBack.onSuccess(response.body());
-                }else{
+                } else {
                     callBack.onFail(response.message());
                 }
             }
@@ -50,10 +58,36 @@ public class ToolRepoImpl implements ToolRepo {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), image);
 
         MultipartBody.Part imagePart = MultipartBody.Part
-                    .createFormData("imageFile", image.getName(), fileReqBody);
+                .createFormData("imageFile", image.getName(), fileReqBody);
 
-        Call<ResponseBody> call = new ClientApi().getToolService()
-                    .createNew(token, toolName, desc, quantity, imagePart);
+        RequestBody reqName = RequestBody.create(MultipartBody.FORM, toolName);
+        RequestBody reqDesc = RequestBody.create(MultipartBody.FORM, desc);
+
+        Call<ResponseBody> call = mToolService.createNew(token, reqName,
+                                    reqDesc, quantity, imagePart);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callBack.onSuccess(response.body());
+                } else {
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+
+
+    }
+
+    @Override
+    public void delete(String token, int toolId, final ApiCallBack<ResponseBody> callBack){
+        Call<ResponseBody> call = mToolService.delete(token, toolId);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -70,9 +104,26 @@ public class ToolRepoImpl implements ToolRepo {
                 callBack.onFail(t.getMessage());
             }
         });
+    }
 
+    @Override
+    public void update(String token, Tool tool, final ApiCallBack<ResponseBody> callBack) {
+        Call<ResponseBody> call = mToolService.update(token, tool);
 
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
 
-
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
     }
 }

@@ -43,6 +43,7 @@ public class CreateToolDialogFragment extends DialogFragment
     private ImageView mImgvToolImage;
     private File mImageFile;
     private CreateToolPresenter mPresenter;
+    private String mUserToken;
 
     private final int SELECT_PHOTO = 99;
 
@@ -53,6 +54,8 @@ public class CreateToolDialogFragment extends DialogFragment
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         View view = inflater.inflate(R.layout.dialog_fragment_create_tool, container, false);
 
+        mUserToken = SharePreferenceHelper
+                .getString(getContext(), SharePreferenceKeys.USER_TOKEN);
 
         mEdtToolName = view.findViewById(R.id.edtToolName);
         mEdtToolQty = view.findViewById(R.id.edtToolQty);
@@ -85,10 +88,9 @@ public class CreateToolDialogFragment extends DialogFragment
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userToken = SharePreferenceHelper
-                            .getString(getContext(), SharePreferenceKeys.USER_TOKEN);
 
-                mPresenter.createNewTool(userToken, mEdtToolName.getText().toString(),
+
+                mPresenter.createNewTool(mUserToken, mEdtToolName.getText().toString(),
                                     Integer.parseInt(mEdtToolQty.getText().toString()),
                                     mEdtToolDesc.getText().toString(), mImageFile);
             }

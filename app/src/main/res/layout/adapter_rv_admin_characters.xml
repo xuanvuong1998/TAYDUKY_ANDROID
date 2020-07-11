@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="10dp"
-    android:layout_height="190dp">
+    android:layout_height="210dp">
 
 
     <LinearLayout
@@ -18,9 +18,9 @@
         <ImageView
             android:id="@+id/imgvCharacter"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="180dp"
             android:scaleType="fitXY"
-            android:src="@drawable/cover"
+            android:src="@drawable/no_image"
             />
         <TextView
             android:id="@+id/tvCharacterName"
@@ -30,8 +30,6 @@
             android:textSize="20sp"
             android:gravity="center"
             />
-
-
 
     </LinearLayout>
 

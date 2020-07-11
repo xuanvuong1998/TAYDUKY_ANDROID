@@ -17,12 +17,14 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ToolsAdapter;
+import vuong.hx.tayduky.constants.SharePreferenceKeys;
+import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
-public class AdminToolsFragment extends Fragment implements ManageToolView {
+public class AdminToolsFragment extends Fragment implements ManageToolView, ToolsAdapter.OnClickItem {
 
     private final int SELECT_PHOTO = 23;
     private final int CREATE_TOOL = 78;
@@ -35,10 +37,11 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
 
 
     private List<Tool> mToolsList, mToolsFilteredList;
-    private Button btnAddNew;
+    private Button mBtnAddNew;
+    private String mUserToken;
 
     public AdminToolsFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -58,12 +61,14 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_tools, container, false);
 
+        mUserToken = SharePreferenceHelper.getString(getContext(),
+                                            SharePreferenceKeys.USER_TOKEN);
         initViews(view);
         return view;
     }
 
     private void initViews(View view){
-        btnAddNew = view.findViewById(R.id.btnAddNewTool);
+        mBtnAddNew = view.findViewById(R.id.btnAddNewTool);
         mRecyclerView = view.findViewById(R.id.rcAdminTools);
 
         registerEvents();
@@ -76,7 +81,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
 
         fragment.setTargetFragment(this, CREATE_TOOL);
 
-        btnAddNew.setOnClickListener(new View.OnClickListener() {
+        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -109,7 +114,10 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
     @Override
     public void loadToolsList(List<Tool> list) {
 
+        mToolsList = list;
+
         mToolsAdapter = new ToolsAdapter(list, getContext());
+        mToolsAdapter.setListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -119,7 +127,24 @@ public class AdminToolsFragment extends Fragment implements ManageToolView {
     }
 
     @Override
+    public void refreshToolsList() {
+        mPresenter.loadToolsList();
+    }
+
+    @Override
     public void showToastMessage(String message) {
         ToastHelper.showLongMess(getContext(), message);
+    }
+
+    @Override
+    public void onClickDelete(Tool tool) {
+        mPresenter.deleteTool(mUserToken, tool.getId());
+    }
+
+    @Override
+    public void onClickEdit(Tool tool) {
+
+
+        //mPresenter.updateTool(mUserToken, tool);
     }
 }

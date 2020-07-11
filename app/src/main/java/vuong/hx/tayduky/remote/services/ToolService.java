@@ -3,6 +3,7 @@ package vuong.hx.tayduky.remote.services;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,7 +28,7 @@ public interface ToolService {
     @Multipart
     @POST(ApiConfig.Apis.Tool.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,
-                                 @Part("toolName") String name, @Part("toolDesc") String desc,
+                                 @Part("toolName") RequestBody name, @Part("toolDesc") RequestBody desc,
                                  @Part("toolQuantity") int qty, @Part MultipartBody.Part imageFile);
 
     @PUT(ApiConfig.Apis.Tool.UPDATE)

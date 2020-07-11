@@ -91,6 +91,9 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ch
             super(itemView);
             this.view = itemView;
 
+            tvCharacterName = itemView.findViewById(R.id.tvCharacterName);
+            imageViewCharacter = itemView.findViewById(R.id.imgvCharacter);
+
         }
 
         public void bindData(Character character) {
