@@ -46,18 +46,14 @@ public class ToolRepoImpl implements ToolRepo {
     @Override
     public void addNew(String token, String toolName, int quantity,
                        String desc, File image, final ApiCallBack<ResponseBody> callBack) {
-        Tool tool = new Tool();
-        tool.setName(toolName);
-        tool.setQuantity(quantity);
-        tool.setDescription(desc);
 
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), image);
 
-        MultipartBody.Part part = MultipartBody.Part
-                    .createFormData("toolImage", image.getName(), fileReqBody);
+        MultipartBody.Part imagePart = MultipartBody.Part
+                    .createFormData("imageFile", image.getName(), fileReqBody);
 
         Call<ResponseBody> call = new ClientApi().getToolService()
-                    .createNew(token, tool, part);
+                    .createNew(token, toolName, desc, quantity, imagePart);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

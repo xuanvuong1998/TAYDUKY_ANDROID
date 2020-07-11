@@ -27,7 +27,8 @@ public interface ToolService {
     @Multipart
     @POST(ApiConfig.Apis.Tool.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,
-                                 @Part("tool") Tool tool, @Part MultipartBody.Part imageFile);
+                                 @Part("toolName") String name, @Part("toolDesc") String desc,
+                                 @Part("toolQuantity") int qty, @Part MultipartBody.Part imageFile);
 
     @PUT(ApiConfig.Apis.Tool.UPDATE)
     Call<ResponseBody> update(@Header("Authorization") String token, @Body Tool Tool);

@@ -21,7 +21,8 @@ public class CreateToolPresenter {
 
     public void createNewTool(String token, String toolName, int quantity, String desc, File image){
 
-        mToolRepo.addNew(token, toolName, quantity, desc, image, new ApiCallBack<ResponseBody>() {
+        mToolRepo.addNew(token, toolName, quantity, desc,
+                image, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
                 mCreateView.showToastMessage("Created!");

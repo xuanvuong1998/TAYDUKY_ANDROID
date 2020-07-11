@@ -22,9 +22,12 @@ import androidx.fragment.app.DialogFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
+import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.presenters.CreateToolPresenter;
@@ -111,18 +114,26 @@ public class CreateToolDialogFragment extends DialogFragment
             if (requestCode == SELECT_PHOTO && data != null && data.getData() != null){
                 Uri imageUri = data.getData();
 
-                mImageFile = new File(imageUri.getPath());
+
+                String filePath = FileHelper.getPath(getActivity(),
+                        imageUri);
+
+                try {
+                    mImageFile = new File(new URI(filePath));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
 
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                                getActivity().getContentResolver(), imageUri );
+                                getActivity().getContentResolver(), imageUri);
+
 
                     mImgvToolImage.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                //mImgvToolImage.setImageResource(R.drawable.cover);
             }
         }
     }
