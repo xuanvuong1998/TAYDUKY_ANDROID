@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,21 +23,27 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.presenters.CreateToolPresenter;
+import vuong.hx.tayduky.repositories.implementations.ActorRepoImpl;
+import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 
 
 public class CreateToolDialogFragment extends DialogFragment
-                implements View.OnFocusChangeListener, CreateToolView {
+        implements View.OnFocusChangeListener, CreateToolView {
 
 
     private EditText mEdtToolName, mEdtToolQty, mEdtToolDesc;
+
     private Button mBtnUploadImage, mBtnCancel, mBtnSave;
     private ImageView mImgvToolImage;
     private File mImageFile;
@@ -51,7 +56,7 @@ public class CreateToolDialogFragment extends DialogFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         View view = inflater.inflate(R.layout.dialog_fragment_create_tool, container, false);
 
         mUserToken = SharePreferenceHelper
@@ -77,7 +82,7 @@ public class CreateToolDialogFragment extends DialogFragment
             @Override
             public void onClick(View v) {
                 getTargetFragment().onActivityResult(getTargetRequestCode(),
-                            Activity.RESULT_CANCELED, getActivity().getIntent());
+                        Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });
@@ -89,22 +94,24 @@ public class CreateToolDialogFragment extends DialogFragment
             @Override
             public void onClick(View v) {
 
-
                 mPresenter.createNewTool(mUserToken, mEdtToolName.getText().toString(),
-                                    Integer.parseInt(mEdtToolQty.getText().toString()),
-                                    mEdtToolDesc.getText().toString(), mImageFile);
+                        Integer.parseInt(mEdtToolQty.getText().toString()),
+                        mEdtToolDesc.getText().toString(), mImageFile);
             }
         });
 
         return view;
     }
 
-    private void openFileChooser(){
+
+
+    private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PHOTO);
+
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PHOTO);
     }
 
 
@@ -112,8 +119,8 @@ public class CreateToolDialogFragment extends DialogFragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == SELECT_PHOTO && data != null && data.getData() != null){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_PHOTO && data != null && data.getData() != null) {
                 Uri imageUri = data.getData();
 
 
@@ -128,7 +135,7 @@ public class CreateToolDialogFragment extends DialogFragment
 
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                                getActivity().getContentResolver(), imageUri);
+                            getActivity().getContentResolver(), imageUri);
 
 
                     mImgvToolImage.setImageBitmap(bitmap);
@@ -140,12 +147,13 @@ public class CreateToolDialogFragment extends DialogFragment
         }
     }
 
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if (v.getId() == R.id.edtToolName){
-            if (hasFocus == false){
+        if (v.getId() == R.id.edtToolName) {
+            if (hasFocus == false) {
                 InputMethodManager imm = (InputMethodManager)
-                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
@@ -156,7 +164,7 @@ public class CreateToolDialogFragment extends DialogFragment
     @Override
     public void refreshToolList() {
         getTargetFragment().onActivityResult(getTargetRequestCode(),
-                Activity.RESULT_OK, getActivity().getIntent() );
+                Activity.RESULT_OK, getActivity().getIntent());
         dismiss();
     }
 

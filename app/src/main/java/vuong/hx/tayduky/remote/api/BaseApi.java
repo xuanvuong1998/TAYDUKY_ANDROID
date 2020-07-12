@@ -14,16 +14,14 @@ public class BaseApi {
     public <T> T getService(Class<T> tClass, String url){
         if (retrofit == null){
             OkHttpClient client = new OkHttpClient.Builder()
-                            .connectTimeout(60, TimeUnit.SECONDS)
-                            .readTimeout(80, TimeUnit.SECONDS)
+                            .connectTimeout(5, TimeUnit.SECONDS)
+                            .readTimeout(3, TimeUnit.SECONDS)
                             .build();
-
             try {
                 retrofit = new Retrofit.Builder()
                         .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create())
-
-                        .client(client)
+                        //.client(client)
                         .build();
             }catch (Exception exp)
             {

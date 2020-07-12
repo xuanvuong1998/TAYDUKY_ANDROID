@@ -3,6 +3,7 @@ package vuong.hx.tayduky.models;
 public class SceneTool {
     private int challengeId;
     private int toolId;
+    private int quantity;
 
     @Override
     public String toString() {
@@ -46,5 +47,5 @@ public class SceneTool {
         this.quantity = quantity;
     }
 
-    private int quantity;
+
 }

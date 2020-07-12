@@ -34,7 +34,6 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
 
-
     private void initViews(){
         bottomNav = findViewById(R.id.bottom_nav);
 

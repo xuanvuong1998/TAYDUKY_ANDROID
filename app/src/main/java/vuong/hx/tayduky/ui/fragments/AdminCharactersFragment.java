@@ -1,10 +1,14 @@
 package vuong.hx.tayduky.ui.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +30,8 @@ public class AdminCharactersFragment extends Fragment
     private CharactersAdapter mCharacterAdapter;
     private RecyclerView mRecyclerView;
     private List<Character> mCharactersList;
+    private Button mBtnAddNew;
+    private final int CREATE_CHARACTER = 87;
 
     public AdminCharactersFragment() {
 
@@ -52,8 +58,33 @@ public class AdminCharactersFragment extends Fragment
 
     private void initViews(View view){
         mRecyclerView = view.findViewById(R.id.rcAdminCharacters);
+        mBtnAddNew = view.findViewById(R.id.btnAddCharacter);
+
+        final CreateCharacterDialogFragment frg = new CreateCharacterDialogFragment();
+        frg.setTargetFragment(this, CREATE_CHARACTER);
+        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                frg.show(getActivity().getSupportFragmentManager(), "create_character");
+            }
+        });
 
         initData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_CHARACTER){
+            if (resultCode == Activity.RESULT_OK){
+                showToastMessage("CREATED!");
+                mPresenter.loadCharactersList();
+            }else if (resultCode == Activity.RESULT_CANCELED){
+                showToastMessage("Nothing Changed!");
+            }
+        }
     }
 
     private void initData(){
