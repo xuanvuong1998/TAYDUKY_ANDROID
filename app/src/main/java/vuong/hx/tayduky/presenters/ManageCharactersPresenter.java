@@ -1,7 +1,5 @@
 package vuong.hx.tayduky.presenters;
 
-import android.util.Log;
-
 import java.util.List;
 
 import vuong.hx.tayduky.callbacks.ApiCallBack;
@@ -16,7 +14,6 @@ public class ManageCharactersPresenter {
 
     public ManageCharactersPresenter(ManageCharacterView manageCharacterView) {
         this.manageCharacterView = manageCharacterView;
-
         mCharacterRepo = new CharacterRepoImpl();
     }
 

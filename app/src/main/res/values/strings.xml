@@ -15,6 +15,7 @@
     <string name="menu_notif">Notification</string>
     <string name="menu_acc">Account</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="not_assigned_actor">Not assigned yet</string>
 
     <string-array name="challenge_filter">
         <item>All</item>

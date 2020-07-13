@@ -20,7 +20,7 @@ public interface ActorService {
     Call<Actor> getById(@Path("actor_id") String actor_id);
 
     @GET(ApiConfig.Apis.Actor.GET_ALL)
-    Call<List<Actor>> getAll();
+    Call<List<Actor>> getAll(@Header("Authorization") String token);
 
     @GET(ApiConfig.Apis.Actor.GET_INCOMING_ROLES)
     Call<List<SceneRole>> getIncomingRoles(@Path("actor_id") String actorId);

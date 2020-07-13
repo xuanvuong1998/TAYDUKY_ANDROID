@@ -134,7 +134,6 @@ public class CreateCharacterDialogFragment extends DialogFragment
                     e.printStackTrace();
                 }
 
-
             }
         }
     }
@@ -142,12 +141,18 @@ public class CreateCharacterDialogFragment extends DialogFragment
     private void setActorSpinnerAdapter(){
         List<String> actorNames = new ArrayList<>();
 
+        for(int i = 0; i < 10; i++){
+            actorNames.add("Default Actor");
+        }
+
         for(Actor actor: mActorsList){
             actorNames.add(actor.getName());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                        getContext(), android.R.layout.simple_list_item_1, actorNames);
+                        getContext(), android.R.layout.select_dialog_item, actorNames);
+
+        mSpActors.setPrompt("Choose default actor");
 
         mSpActors.setAdapter(arrayAdapter);
 
@@ -168,7 +173,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
     private void loadActorsList(){
         ActorRepo actorRepo = new ActorRepoImpl();
 
-        actorRepo.getAll(new ApiCallBack<List<Actor>>() {
+        actorRepo.getAll(mUserToken, new ApiCallBack<List<Actor>>() {
             @Override
             public void onSuccess(List<Actor> actors) {
                 mActorsList = actors;

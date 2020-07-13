@@ -32,8 +32,31 @@
             android:textColorHint="@color/colorBlack"
             android:textSize="20sp" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/btnAssignActor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assign Actor"
+                />
+
+            <TextView
+                android:id="@+id/tvAsignedActor"
+                android:layout_width="278dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="-2dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/not_assigned_actor"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
         <Spinner
             android:id="@+id/spActors"
+            android:spinnerMode="dialog"
             android:layout_width="match_parent"
             android:layout_height="41dp" />
         <Button

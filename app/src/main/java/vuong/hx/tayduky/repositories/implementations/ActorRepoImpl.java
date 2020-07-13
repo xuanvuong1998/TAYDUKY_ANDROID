@@ -15,18 +15,16 @@ import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 public class ActorRepoImpl implements ActorRepo {
 
     @Override
-    public void getAll(final ApiCallBack<List<Actor>> callBack) {
+    public void getAll(String token, final ApiCallBack<List<Actor>> callBack) {
         ActorService actorService = new ClientApi().getActorService();
 
-        actorService.getAll().enqueue(new Callback<List<Actor>>() {
+        actorService.getAll( token).enqueue(new Callback<List<Actor>>() {
             @Override
             public void onResponse(Call<List<Actor>> call, Response<List<Actor>> response) {
-                if (response != null && response.body() != null){
-                    if (response.code() == 200){
-                        callBack.onSuccess(response.body());
-                    }else{
-                        callBack.onFail(response.errorBody().toString());
-                    }
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
                 }
             }
 
