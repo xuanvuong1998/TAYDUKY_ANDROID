@@ -11,25 +11,29 @@ import vuong.hx.tayduky.ui.view_interfaces.CreateCharacterView;
 public class CreateCharacterPresenter {
     private CharacterRepo mCharacterRepo;
 
-    private CreateCharacterView mCreateView;
+    private CreateCharacterView createView;
 
-    public CreateCharacterPresenter(CreateCharacterView mCreateView) {
-        this.mCreateView = mCreateView;
+    public CreateCharacterPresenter(CreateCharacterView createView) {
+        this.createView = createView;
 
         mCharacterRepo = new CharacterRepoImpl();
+    }
+
+    public void setCreateView(CreateCharacterView createView) {
+        this.createView = createView;
     }
 
     public void createNewCharacter(String token, String name, String defaultActor, File image){
         mCharacterRepo.createNew(token, name, defaultActor, image, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
-                mCreateView.showToastMessage("Created!");
-                mCreateView.refreshCharacterList();
+                createView.showToastMessage("Created!");
+                createView.refreshCharacterList();
             }
 
             @Override
             public void onFail(String message) {
-                mCreateView.showToastMessage(message);
+                createView.showToastMessage(message);
             }
         });
     }

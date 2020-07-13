@@ -22,6 +22,10 @@ public class ManageChallengesPresenter {
         challengeRepo = new ChallengeRepoImpl();
     }
 
+    public void setManageChallengeView(ManageChallengeView manageChallengeView) {
+        this.manageChallengeView = manageChallengeView;
+    }
+
     public void loadChallengesList(String token){
         challengeRepo.getAll(new ApiCallBack<List<Challenge>>() {
             @Override

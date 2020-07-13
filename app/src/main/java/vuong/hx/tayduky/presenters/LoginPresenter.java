@@ -8,12 +8,16 @@ import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
 
 public class LoginPresenter {
     private AuthRepo mAuthRepo;
-    private LoginScreenView mLoginView;
+    private LoginScreenView loginView;
 
     public LoginPresenter(LoginScreenView loginView) {
         mAuthRepo = new AuthRepoImpl();
 
-        mLoginView = loginView;
+        loginView = loginView;
+    }
+
+    public void setLoginView(LoginScreenView loginView) {
+        this.loginView = loginView;
     }
 
     public void authenticate(final String username, final String password){
@@ -21,17 +25,17 @@ public class LoginPresenter {
             @Override
             public void onSuccess(AuthenticatedUser authenticatedUser) {
                 if (authenticatedUser != null){
-                    mLoginView.goToHomeActivity(username, password,authenticatedUser.getToken()
+                    loginView.goToHomeActivity(username, password,authenticatedUser.getToken()
                             , authenticatedUser.getRole());
                 }else{
-                    mLoginView.showToastMessage("Login failed!");
+                    loginView.showToastMessage("Login failed!");
                 }
 
             }
 
             @Override
             public void onFail(String message) {
-                mLoginView.showToastMessage(message);
+                loginView.showToastMessage(message);
             }
         });
     }

@@ -1,6 +1,11 @@
 package vuong.hx.tayduky.models;
 
-public class Actor {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Actor implements Parcelable, Serializable {
     private String username;
     private String name;
     private String phone;
@@ -26,6 +31,30 @@ public class Actor {
         this.joinDate = joinDate;
         this.password = password;
     }
+
+    protected Actor(Parcel in) {
+        username = in.readString();
+        name = in.readString();
+        phone = in.readString();
+        email = in.readString();
+        image = in.readString();
+        description = in.readString();
+        address = in.readString();
+        joinDate = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<Actor> CREATOR = new Creator<Actor>() {
+        @Override
+        public Actor createFromParcel(Parcel in) {
+            return new Actor(in);
+        }
+
+        @Override
+        public Actor[] newArray(int size) {
+            return new Actor[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -112,5 +141,23 @@ public class Actor {
                 ", joinDate='" + joinDate + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(name);
+        dest.writeString(phone);
+        dest.writeString(email);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeString(address);
+        dest.writeString(joinDate);
     }
 }

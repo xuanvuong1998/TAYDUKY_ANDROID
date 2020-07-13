@@ -9,8 +9,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,33 +22,34 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
+import vuong.hx.tayduky.presenters.ActorsListPresenter;
 import vuong.hx.tayduky.presenters.CreateCharacterPresenter;
-import vuong.hx.tayduky.repositories.implementations.ActorRepoImpl;
-import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
+import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 import vuong.hx.tayduky.ui.view_interfaces.CreateCharacterView;
 
 public class CreateCharacterDialogFragment extends DialogFragment
-                    implements CreateCharacterView {
+                    implements CreateCharacterView, ActorsListView {
 
-    private Actor mChosenActor;
-    private Button mBtnCancel, mBtnUploadImage, mBtnSave;
+    private String mChosenActor = "";
+    private Button mBtnCancel, mBtnUploadImage, mBtnSave, mBtnAssignActor;
     private Spinner mSpActors;
     private EditText mEdtCharacterName;
     private String mUserToken;
     private final int CREATE_CHARACTER = 87;
     private final int SELECT_PHOTO = 99;
+    private final int CHOOSE_ACTOR = 17;
+    private final String ASSIGN_ACTOR_TAG = "assign_actor";
     private ImageView mImgUploaded;
-    private CreateCharacterPresenter mPresenter;
+    private CreateCharacterPresenter mCreateCharacterPresenter;
+    private ActorsListPresenter mActorsPresenter;
     private File mFileUploaded;
     private List<Actor> mActorsList;
 
@@ -66,15 +65,14 @@ public class CreateCharacterDialogFragment extends DialogFragment
 
         mSpActors = view.findViewById(R.id.spActors);
 
-
+        mBtnAssignActor = view.findViewById(R.id.btnAssignActor);
         mBtnCancel = view.findViewById(R.id.btnCancelNewCharacter);
         mBtnSave = view.findViewById(R.id.btnSaveNewCharacter);
         mBtnUploadImage = view.findViewById(R.id.btnUploadCharacterImage);
         mImgUploaded = view.findViewById(R.id.imgvNewCharacter);
 
-        mPresenter = new CreateCharacterPresenter(this);
-
-        loadActorsList();
+        mCreateCharacterPresenter = new CreateCharacterPresenter(this);
+        mActorsPresenter = new ActorsListPresenter(this);
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +81,18 @@ public class CreateCharacterDialogFragment extends DialogFragment
                 getTargetFragment().onActivityResult(CREATE_CHARACTER,
                                     Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
+            }
+        });
+
+        final AssignActorDialogFragment fragment =
+                AssignActorDialogFragment.newInstance(mUserToken, mActorsList);
+
+        fragment.setTargetFragment(this, CHOOSE_ACTOR);
+
+        mBtnAssignActor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment.show(getActivity().getSupportFragmentManager(), ASSIGN_ACTOR_TAG);
             }
         });
 
@@ -97,12 +107,8 @@ public class CreateCharacterDialogFragment extends DialogFragment
             @Override
             public void onClick(View v) {
 
-                String chosenActorName = "";
-                if (mChosenActor != null){
-                    chosenActorName = mChosenActor.getUsername();
-                }
-                mPresenter.createNewCharacter(mUserToken,
-                            mEdtCharacterName.getText().toString(), chosenActorName, mFileUploaded);
+                mCreateCharacterPresenter.createNewCharacter(mUserToken,
+                            mEdtCharacterName.getText().toString(), mChosenActor, mFileUploaded);
             }
         });
         return view;
@@ -135,57 +141,15 @@ public class CreateCharacterDialogFragment extends DialogFragment
                 }
 
             }
+        }else if (requestCode == CHOOSE_ACTOR){
+            mChosenActor =  data.getStringExtra("chosenActor");
+
+            showToastMessage(mChosenActor + " chosen for this character");
         }
     }
 
-    private void setActorSpinnerAdapter(){
-        List<String> actorNames = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++){
-            actorNames.add("Default Actor");
-        }
 
-        for(Actor actor: mActorsList){
-            actorNames.add(actor.getName());
-        }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                        getContext(), android.R.layout.select_dialog_item, actorNames);
-
-        mSpActors.setPrompt("Choose default actor");
-
-        mSpActors.setAdapter(arrayAdapter);
-
-        mSpActors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mChosenActor = mActorsList.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
-
-    private void loadActorsList(){
-        ActorRepo actorRepo = new ActorRepoImpl();
-
-        actorRepo.getAll(mUserToken, new ApiCallBack<List<Actor>>() {
-            @Override
-            public void onSuccess(List<Actor> actors) {
-                mActorsList = actors;
-                setActorSpinnerAdapter();
-            }
-
-            @Override
-            public void onFail(String message) {
-                showToastMessage(message);
-            }
-        });
-    }
 
     private void openFileChooser(){
         Intent intent = new Intent();
@@ -206,5 +170,19 @@ public class CreateCharacterDialogFragment extends DialogFragment
     @Override
     public void showToastMessage(String message) {
         ToastHelper.showLongMess(getContext(), message);
+    }
+
+    @Override
+    public void loadActorsList(List<Actor> actors) {
+        mActorsList = actors;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Clean views
+        mActorsPresenter.setActorsView(null);
+        mCreateCharacterPresenter.setCreateView(null);
     }
 }

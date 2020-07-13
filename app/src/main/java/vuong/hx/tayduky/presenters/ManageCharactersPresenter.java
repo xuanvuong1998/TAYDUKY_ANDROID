@@ -32,4 +32,7 @@ public class ManageCharactersPresenter {
         });
     }
 
+    public void setManageCharacterView(ManageCharacterView manageCharacterView) {
+        this.manageCharacterView = manageCharacterView;
+    }
 }

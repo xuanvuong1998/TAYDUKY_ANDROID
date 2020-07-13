@@ -52,6 +52,12 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.setManageToolView(null);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

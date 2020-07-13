@@ -11,6 +11,4 @@ public interface ActorRepo {
     void getActorById(String token, String actorId, ApiCallBack<Actor> callBack);
     void getIncomingRoles(String actorId, ApiCallBack<List<SceneRole>> callBack);
     void getPlayedRoles(String actorId, ApiCallBack<List<SceneRole>> callBack);
-
-
 }

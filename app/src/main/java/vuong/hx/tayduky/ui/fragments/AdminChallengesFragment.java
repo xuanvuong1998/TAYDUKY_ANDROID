@@ -73,6 +73,12 @@ public class AdminChallengesFragment extends Fragment
         initData();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mChallengesPresenter.setManageChallengeView(null);
+    }
+
     private void initData(){
         if (mChallengesPresenter == null){
             mChallengesPresenter = new ManageChallengesPresenter(this);

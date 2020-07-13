@@ -13,26 +13,30 @@ import vuong.hx.tayduky.repositories.interfaces.ToolRepo;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class ManageToolsPresenter {
-    private ManageToolView mManageToolView;
+    private ManageToolView manageToolView;
     private ToolRepo toolRepo;
 
-    public ManageToolsPresenter(ManageToolView mManageToolView) {
-        this.mManageToolView = mManageToolView;
+    public ManageToolsPresenter(ManageToolView manageToolView) {
+        this.manageToolView = manageToolView;
 
         toolRepo = new ToolRepoImpl();
+    }
+
+    public void setManageToolView(ManageToolView manageToolView) {
+        this.manageToolView = manageToolView;
     }
 
     public void deleteTool(String token, int toolId){
         toolRepo.delete(token, toolId, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
-                mManageToolView.showToastMessage("Deleted!");
-                mManageToolView.refreshToolsList();
+                manageToolView.showToastMessage("Deleted!");
+                manageToolView.refreshToolsList();
             }
 
             @Override
             public void onFail(String message) {
-                mManageToolView.showToastMessage(message);
+                manageToolView.showToastMessage(message);
             }
         });
     }
@@ -43,13 +47,13 @@ public class ManageToolsPresenter {
             @Override
             public void onSuccess(List<Tool> Tools) {
                 Log.println(Log.ASSERT,"ToolS",  Tools.size() + "");
-                mManageToolView.loadToolsList(Tools);
+                manageToolView.loadToolsList(Tools);
             }
 
             @Override
             public void onFail(String message) {
                 Log.println(Log.ASSERT,"ToolS",  message);
-                mManageToolView.showToastMessage(message);
+                manageToolView.showToastMessage(message);
             }
         });
     }

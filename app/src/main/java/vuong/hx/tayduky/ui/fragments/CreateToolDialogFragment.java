@@ -23,18 +23,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
-import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.presenters.CreateToolPresenter;
-import vuong.hx.tayduky.repositories.implementations.ActorRepoImpl;
-import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 
 
@@ -171,5 +166,11 @@ public class CreateToolDialogFragment extends DialogFragment
     @Override
     public void showToastMessage(String message) {
         ToastHelper.showLongMess(getContext(), message);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.setCreateView(null);
     }
 }

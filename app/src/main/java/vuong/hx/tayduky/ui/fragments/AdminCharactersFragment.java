@@ -73,6 +73,13 @@ public class AdminCharactersFragment extends Fragment
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mPresenter.setManageCharacterView(null);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

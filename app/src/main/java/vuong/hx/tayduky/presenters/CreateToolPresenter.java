@@ -11,12 +11,16 @@ import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 public class CreateToolPresenter {
     private ToolRepo mToolRepo;
 
-    private CreateToolView mCreateView;
+    private CreateToolView createView;
 
-    public CreateToolPresenter(CreateToolView mCreateView) {
-        this.mCreateView = mCreateView;
+    public CreateToolPresenter(CreateToolView createView) {
+        this.createView = createView;
 
         mToolRepo = new ToolRepoImpl();
+    }
+
+    public void setCreateView(CreateToolView createView) {
+        this.createView = createView;
     }
 
     public void createNewTool(String token, String toolName, int quantity, String desc, File image){
@@ -25,13 +29,13 @@ public class CreateToolPresenter {
                 image, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
-                mCreateView.showToastMessage("Created!");
-                mCreateView.refreshToolList();
+                createView.showToastMessage("Created!");
+                createView.refreshToolList();
             }
 
             @Override
             public void onFail(String message) {
-                mCreateView.showToastMessage(message);
+                createView.showToastMessage(message);
             }
         });
 
