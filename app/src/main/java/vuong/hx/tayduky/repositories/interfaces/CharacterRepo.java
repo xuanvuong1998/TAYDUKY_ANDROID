@@ -13,4 +13,5 @@ public interface CharacterRepo {
 
     void createNew(String token, String name, String defaultActor,
                    File image, ApiCallBack<ResponseBody> callBack);
+
 }

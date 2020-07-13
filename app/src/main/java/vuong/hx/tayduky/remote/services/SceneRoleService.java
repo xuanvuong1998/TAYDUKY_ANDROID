@@ -1,5 +1,7 @@
 package vuong.hx.tayduky.remote.services;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,7 +20,7 @@ public interface SceneRoleService {
     Call<SceneRole> getById(@Path("sceneRole_id") int sceneRoleId);
 
     @GET(ApiConfig.Apis.SceneRole.GET_CHALLENGE_ROLES)
-    Call<SceneRole> getChallengeRoles(@Path("challenge_id") int challengeId);
+    Call<List<SceneRole>> getChallengeRoles(@Path("challenge_id") int challengeId);
 
     @POST(ApiConfig.Apis.SceneRole.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body SceneRole SceneRole);

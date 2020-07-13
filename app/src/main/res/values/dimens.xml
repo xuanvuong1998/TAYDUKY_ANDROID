@@ -3,5 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="popup_width">350dp</dimen>
+    <dimen name="popup_width_full_screen">1000dp</dimen>
+    <dimen name="popup_height_full_screen">1000dp</dimen>
     <dimen name="popup_height">700dp</dimen>
 </resources>

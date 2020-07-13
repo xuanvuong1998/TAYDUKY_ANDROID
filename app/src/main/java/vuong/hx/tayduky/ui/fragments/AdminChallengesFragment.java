@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -32,12 +33,14 @@ public class AdminChallengesFragment extends Fragment
 
     private RecyclerView mRecyclerView;
     private Spinner mChallengeFilter;
-
+    private Button mBtnAddNew;
     private List<Challenge> mChallengesList, mChallengesListFilter;
     private ManageChallengesPresenter mChallengesPresenter;
     private ChallengesAdapter mChallengeAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private String mUserToken;
+
+    private ChallengeDetailsFragment mDetailFragment;
 
     public AdminChallengesFragment() {
     }
@@ -75,6 +78,20 @@ public class AdminChallengesFragment extends Fragment
         mChallengeFilter = view.findViewById(R.id.spChallengeStt);
         mRecyclerView = view.findViewById(R.id.rcAdminChallenges);
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
+        mBtnAddNew = view.findViewById(R.id.btnAddChallenge);
+
+        mDetailFragment = ChallengeDetailsFragment.newInstance(true);
+
+        mDetailFragment.setTargetFragment(this, 111);
+
+        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDetailFragment.show(getActivity().getSupportFragmentManager(),
+                        "challenge_details");
+            }
+        });
 
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

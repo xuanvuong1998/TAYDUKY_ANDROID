@@ -46,13 +46,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
 
-        //goToHomeActivity(null, null, null, UserRole.ADMIN.getVal());
-        if (isUserAuthenticated()){
+        goToHomeActivity(null, null, null, UserRole.ADMIN.getVal());
+        /*if (isUserAuthenticated()){
 
             String userId = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_ID);
 
             refreshUserToken(userId);
-        }
+        }*/
     }
 
     private void refreshUserToken(String userId){

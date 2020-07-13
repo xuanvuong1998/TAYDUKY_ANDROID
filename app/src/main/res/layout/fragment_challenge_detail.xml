@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/popup_height_full_screen"
+    android:minWidth="@dimen/popup_width_full_screen"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="Name"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/edtChallengeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="Location"
+        android:textSize="19sp" />
+
+
+    <EditText
+        android:id="@+id/edtChallengeLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="Description"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/edtChallengeDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="From"
+        android:textSize="19sp" />
+
+    <EditText
+
+        android:id="@+id/edtStartTime"
+        android:inputType="datetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="To"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/edtEndTime"
+        android:inputType="datetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="ShotTimes"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/edtShotTime"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp" />
+
+    <Button
+        android:id="@+id/btnRoles"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:text="Roles"
+        android:textSize="19sp"
+        />
+
+    <Button
+        android:id="@+id/btnTools"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tools"
+        android:textSize="19sp"
+        />
+
+    <Button
+        android:id="@+id/btnSaveChallenge"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE CHANGES"
+        android:textSize="19sp"
+        android:background="@drawable/button_rectangle"/>
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:textSize="19sp"
+        android:background="@drawable/button_cancel"/>
+
+
+</LinearLayout>

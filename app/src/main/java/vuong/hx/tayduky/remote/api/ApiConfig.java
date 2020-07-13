@@ -67,6 +67,7 @@ public class ApiConfig {
             String CREATE = BASE_NAME;
             String DELETE = BASE_NAME + "/{challenge_id}/{tool_id}";
             String UPDATE = BASE_NAME ;
+            String GET_CHALLENGE_TOOLS = BASE_NAME + "/{challenge_id}";
         }
 
         
