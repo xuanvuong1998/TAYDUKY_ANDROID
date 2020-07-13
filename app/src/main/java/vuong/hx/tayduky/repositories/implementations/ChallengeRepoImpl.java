@@ -8,13 +8,26 @@ import retrofit2.Response;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.remote.api.ClientApi;
+import vuong.hx.tayduky.remote.services.ChallengeService;
+import vuong.hx.tayduky.remote.services.SceneRoleService;
+import vuong.hx.tayduky.remote.services.SceneToolService;
 import vuong.hx.tayduky.repositories.interfaces.ChallengeRepo;
 
 public class ChallengeRepoImpl implements ChallengeRepo {
 
+    private ChallengeService mChallengeService;
+    private SceneToolService mSceneToolService;
+    private SceneRoleService mSceneRoleService;
+
+    public ChallengeRepoImpl() {
+        mChallengeService = new ClientApi().getChallengeService();
+        mSceneRoleService = new ClientApi().getSceneRoleService();
+        mSceneToolService = new ClientApi().getSceneToolService();
+    }
+
     @Override
     public void getAll(final ApiCallBack<List<Challenge>> callBack) {
-        Call<List<Challenge>> call = new ClientApi().getChallengeService().getAll();
+        Call<List<Challenge>> call = mChallengeService.getAll();
 
         call.enqueue(new Callback<List<Challenge>>() {
             @Override
@@ -36,7 +49,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
 
     @Override
     public void getById(String token, int challengeId, final ApiCallBack<Challenge> callBack) {
-        Call<Challenge> call = new ClientApi().getChallengeService().getById(challengeId);
+        Call<Challenge> call = mChallengeService.getById(challengeId);
 
         call.enqueue(new Callback<Challenge>() {
             @Override
@@ -50,7 +63,6 @@ public class ChallengeRepoImpl implements ChallengeRepo {
                 callBack.onFail(t.getMessage());
             }
         });
-
 
     }
 }

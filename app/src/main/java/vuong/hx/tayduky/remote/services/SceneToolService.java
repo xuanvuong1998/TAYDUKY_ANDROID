@@ -1,7 +1,5 @@
 package vuong.hx.tayduky.remote.services;
 
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,11 +13,8 @@ import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ApiConfig;
 
 public interface SceneToolService {
-    @GET(ApiConfig.Apis.SceneTool.GET_BY_ID)
+    @GET(ApiConfig.Apis.SceneTool.GET_BY_IDs)
     Call<SceneTool> getById(@Path("challenge_id") int challengeId, @Path("tool_id") int toolId);
-
-    @GET(ApiConfig.Apis.SceneTool.GET_ALL)
-    Call<List<SceneTool>> getAll();
 
     @POST(ApiConfig.Apis.SceneTool.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body SceneTool SceneTool);

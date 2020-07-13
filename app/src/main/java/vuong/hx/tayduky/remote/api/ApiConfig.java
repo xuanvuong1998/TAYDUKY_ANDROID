@@ -54,7 +54,7 @@ public class ApiConfig {
 
         interface SceneRole{
             String BASE_NAME = "sceneroles";
-            String GET_ALL = BASE_NAME;
+            String GET_CHALLENGE_ROLES = BASE_NAME + "/{challenge_id}";
             String GET_BY_ID = BASE_NAME + "/{sceneRole_id}";
             String CREATE = BASE_NAME;
             String DELETE = BASE_NAME + "/{sceneRole_id}";
@@ -63,8 +63,7 @@ public class ApiConfig {
 
         interface SceneTool{
             String BASE_NAME = "scenetools";
-            String GET_ALL = BASE_NAME;
-            String GET_BY_ID = BASE_NAME + "/{challenge_id}/{tool_id}";
+            String GET_BY_IDs = BASE_NAME + "/{challenge_id}/{tool_id}";
             String CREATE = BASE_NAME;
             String DELETE = BASE_NAME + "/{challenge_id}/{tool_id}";
             String UPDATE = BASE_NAME ;
