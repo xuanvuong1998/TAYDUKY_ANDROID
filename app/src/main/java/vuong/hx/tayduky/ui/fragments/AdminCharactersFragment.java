@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class AdminCharactersFragment extends Fragment
         implements CharactersAdapter.OnClickItem, ManageCharacterView {
 
     private ManageCharactersPresenter mPresenter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private CharactersAdapter mCharacterAdapter;
     private RecyclerView mRecyclerView;
     private List<Character> mCharactersList;
@@ -69,6 +71,14 @@ public class AdminCharactersFragment extends Fragment
             }
         });
 
+        swipeRefreshLayout = view.findViewById(R.id.swipeCharacters);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadCharactersList();
+            }
+        });
         initData();
     }
 
@@ -87,6 +97,7 @@ public class AdminCharactersFragment extends Fragment
             if (resultCode == Activity.RESULT_OK){
                 showToastMessage("CREATED!");
                 mPresenter.loadCharactersList();
+
             }else if (resultCode == Activity.RESULT_CANCELED){
                 showToastMessage("Nothing Changed!");
             }
@@ -106,6 +117,10 @@ public class AdminCharactersFragment extends Fragment
 
     }
 
+    /**
+     * Receive
+     * @param characters
+     */
     @Override
     public void loadCharactersList(List<Character> characters) {
 
@@ -115,6 +130,7 @@ public class AdminCharactersFragment extends Fragment
 
         mCharacterAdapter.setListener(this);
 
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         mRecyclerView.setAdapter(mCharacterAdapter);

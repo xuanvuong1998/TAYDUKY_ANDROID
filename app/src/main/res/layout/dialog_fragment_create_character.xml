@@ -22,7 +22,6 @@
             android:textAlignment="center"
             android:textSize="30sp" />
 
-
         <EditText
             android:id="@+id/edtCharacterName"
             android:layout_width="match_parent"

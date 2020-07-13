@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,8 +40,8 @@ public class CreateCharacterDialogFragment extends DialogFragment
 
     private String mChosenActor = "";
     private Button mBtnCancel, mBtnUploadImage, mBtnSave, mBtnAssignActor;
-    private Spinner mSpActors;
     private EditText mEdtCharacterName;
+    private TextView mTvAssignedActor;
     private String mUserToken;
     private final int CREATE_CHARACTER = 87;
     private final int SELECT_PHOTO = 99;
@@ -63,16 +63,16 @@ public class CreateCharacterDialogFragment extends DialogFragment
 
         mEdtCharacterName = view.findViewById(R.id.edtCharacterName);
 
-        mSpActors = view.findViewById(R.id.spActors);
-
         mBtnAssignActor = view.findViewById(R.id.btnAssignActor);
         mBtnCancel = view.findViewById(R.id.btnCancelNewCharacter);
         mBtnSave = view.findViewById(R.id.btnSaveNewCharacter);
         mBtnUploadImage = view.findViewById(R.id.btnUploadCharacterImage);
         mImgUploaded = view.findViewById(R.id.imgvNewCharacter);
+        mTvAssignedActor = view.findViewById(R.id.tvAsignedActor);
 
         mCreateCharacterPresenter = new CreateCharacterPresenter(this);
         mActorsPresenter = new ActorsListPresenter(this);
+        mActorsPresenter.loadActorsList(mUserToken);
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,17 +84,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
             }
         });
 
-        final AssignActorDialogFragment fragment =
-                AssignActorDialogFragment.newInstance(mUserToken, mActorsList);
 
-        fragment.setTargetFragment(this, CHOOSE_ACTOR);
-
-        mBtnAssignActor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment.show(getActivity().getSupportFragmentManager(), ASSIGN_ACTOR_TAG);
-            }
-        });
 
         mBtnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +103,6 @@ public class CreateCharacterDialogFragment extends DialogFragment
         });
         return view;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -144,14 +133,22 @@ public class CreateCharacterDialogFragment extends DialogFragment
         }else if (requestCode == CHOOSE_ACTOR){
             mChosenActor =  data.getStringExtra("chosenActor");
 
-            showToastMessage(mChosenActor + " chosen for this character");
+            String actorName = "";
+            for(Actor actor : mActorsList){
+                if (actor.getUsername() == mChosenActor){
+                    actorName = actor.getName();
+                }
+            }
+
+            // Avoid displaying Actor's username on UI
+
+            mTvAssignedActor.setText(actorName);
         }
     }
 
-
-
-
     private void openFileChooser(){
+
+
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -161,7 +158,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
 
     @Override
     public void refreshCharacterList() {
-        getTargetFragment().onActivityResult(SELECT_PHOTO,
+        getTargetFragment().onActivityResult(CREATE_CHARACTER,
                         Activity.RESULT_OK, getActivity().getIntent());
 
         dismiss();
@@ -175,6 +172,18 @@ public class CreateCharacterDialogFragment extends DialogFragment
     @Override
     public void loadActorsList(List<Actor> actors) {
         mActorsList = actors;
+
+        final AssignActorDialogFragment fragment =
+                AssignActorDialogFragment.newInstance(mUserToken, mActorsList);
+
+        fragment.setTargetFragment(this, CHOOSE_ACTOR);
+
+        mBtnAssignActor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment.show(getActivity().getSupportFragmentManager(), ASSIGN_ACTOR_TAG);
+            }
+        });
     }
 
     @Override

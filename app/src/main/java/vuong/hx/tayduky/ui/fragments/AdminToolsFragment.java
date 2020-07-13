@@ -127,8 +127,8 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mToolsAdapter);
     }
 

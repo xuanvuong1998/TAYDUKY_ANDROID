@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import vuong.hx.tayduky.models.Actor;
 
 public class AssignActorDialogFragment extends DialogFragment implements ActorsAdapter.OnClickItem {
     private RecyclerView mRecyclerView;
+    private EditText mEdtSearchActor;
     private Button mBtnChoose;
     private ActorsAdapter mAdapter;
     private String mUserToken;
@@ -45,10 +47,17 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+        getDialog().getWindow().setLayout(width, height);
+
         View view = inflater.inflate(R.layout.dialog_fragment_chose_actors, container, false);
 
         mRecyclerView = view.findViewById(R.id.rcActorList);
         mBtnChoose = view.findViewById(R.id.btnChooseActor);
+        mEdtSearchActor = view.findViewById(R.id.edtActorSearch);
+
 
         mBtnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +70,7 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
                     getTargetFragment().onActivityResult(CHOOSE_ACTOR, Activity.RESULT_CANCELED, intent);
                 }
 
+                dismiss();
             }
         });
 
@@ -76,9 +86,11 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
     }
 
     private void setAdapter(List<Actor> actors){
+
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         mAdapter = new ActorsAdapter(actors, getContext());
+        mAdapter.setListener(this);
 
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -86,7 +98,10 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
 
     @Override
     public void onClickActor(Actor actor) {
+
         ToastHelper.showLongMess(getContext(), actor.getName() + " chosen!");
+        mEdtSearchActor.setText(actor.getName());
         mChosenActor = actor;
+
     }
 }

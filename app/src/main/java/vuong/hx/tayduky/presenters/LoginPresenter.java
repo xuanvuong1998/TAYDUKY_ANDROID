@@ -13,7 +13,7 @@ public class LoginPresenter {
     public LoginPresenter(LoginScreenView loginView) {
         mAuthRepo = new AuthRepoImpl();
 
-        loginView = loginView;
+        this.loginView = loginView;
     }
 
     public void setLoginView(LoginScreenView loginView) {

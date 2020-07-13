@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minWidth="@dimen/popup_width"
+    android:minHeight="@dimen/popup_height"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -15,7 +17,7 @@
             android:layout_height="wrap_content"
             android:hint="Search"
             android:inputType="textFilter"
-            android:textSize="15sp"
+            android:textSize="20sp"
             />
         <Button
             android:id="@+id/btnChooseActor"

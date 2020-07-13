@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +12,7 @@ import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.constants.UserRole;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.presenters.LoginPresenter;
 import vuong.hx.tayduky.remote.api.ApiConfig;
 import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         mLoginPresenter.setLoginView(null);
     }
 
@@ -51,8 +52,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String userId = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_ID);
 
             refreshUserToken(userId);
-
-            this.finish();
         }
     }
 
@@ -77,9 +76,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
     }
+
     @Override
     public void showToastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        ToastHelper.showLongMess(this, message);
 
     }
 
@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (intent != null){
+            finish();
             startActivity(intent);
         }
 
