@@ -6,28 +6,42 @@
     android:orientation="vertical"
     tools:context=".ui.fragments.AdminToolsFragment">
 
-    <Button
-        android:layout_margin="10dp"
-        android:id="@+id/btnAddNewTool"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textSize="17sp"
-        android:background="@drawable/button_rectangle"
-        android:text="ADD NEW"/>
-    <EditText
-        android:id="@+id/edtToolSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search"
-        android:inputType="textFilter"
-        android:textSize="15sp"
-       />
+        android:layout_height="match_parent"
+        >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
-        android:id="@+id/rcAdminTools"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnAddNewTool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_rectangle"
+            android:text="ADD NEW"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/edtToolSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search"
+            android:inputType="textFilter"
+            android:textSize="15sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcAdminTools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

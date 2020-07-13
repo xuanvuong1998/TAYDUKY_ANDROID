@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     private final int CREATE_TOOL = 78;
     private final String DIALOG_CREATE_TOOL_TAG = "create_tool_dialog";
 
+    private SwipeRefreshLayout mSwipeLayout;
 
     private ToolsAdapter mToolsAdapter;
     private RecyclerView mRecyclerView;
@@ -47,7 +49,6 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     public static AdminToolsFragment newInstance() {
         AdminToolsFragment fragment = new AdminToolsFragment();
-
         return fragment;
     }
 
@@ -76,6 +77,13 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     private void initViews(View view){
         mBtnAddNew = view.findViewById(R.id.btnAddNewTool);
         mRecyclerView = view.findViewById(R.id.rcAdminTools);
+        mSwipeLayout = view.findViewById(R.id.swipe_layout);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadToolsList();
+            }
+        });
 
         registerEvents();
         initData();
@@ -120,6 +128,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     @Override
     public void loadToolsList(List<Tool> list) {
 
+        mSwipeLayout.setRefreshing(false);
         mToolsList = list;
 
         mToolsAdapter = new ToolsAdapter(list, getContext());
@@ -139,6 +148,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     @Override
     public void showToastMessage(String message) {
+        mSwipeLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }
 

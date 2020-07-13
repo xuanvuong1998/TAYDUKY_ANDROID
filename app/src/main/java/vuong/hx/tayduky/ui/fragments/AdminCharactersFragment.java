@@ -28,7 +28,7 @@ public class AdminCharactersFragment extends Fragment
         implements CharactersAdapter.OnClickItem, ManageCharacterView {
 
     private ManageCharactersPresenter mPresenter;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private CharactersAdapter mCharacterAdapter;
     private RecyclerView mRecyclerView;
     private List<Character> mCharactersList;
@@ -71,9 +71,9 @@ public class AdminCharactersFragment extends Fragment
             }
         });
 
-        swipeRefreshLayout = view.findViewById(R.id.swipeCharacters);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.loadCharactersList();
@@ -124,6 +124,8 @@ public class AdminCharactersFragment extends Fragment
     @Override
     public void loadCharactersList(List<Character> characters) {
 
+        // data received! remove refreshing icon
+        mSwipeRefreshLayout.setRefreshing(false);
         mCharactersList = characters;
 
         mCharacterAdapter = new CharactersAdapter(mCharactersList, getContext());
@@ -139,6 +141,8 @@ public class AdminCharactersFragment extends Fragment
 
     @Override
     public void showToastMessage(String message) {
+        // data received! remove refreshing icon
+        mSwipeRefreshLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }
 }

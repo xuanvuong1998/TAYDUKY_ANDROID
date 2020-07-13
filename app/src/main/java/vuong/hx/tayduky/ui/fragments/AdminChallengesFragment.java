@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class AdminChallengesFragment extends Fragment
     private List<Challenge> mChallengesList, mChallengesListFilter;
     private ManageChallengesPresenter mChallengesPresenter;
     private ChallengesAdapter mChallengeAdapter;
+    private SwipeRefreshLayout mSwipeLayout;
+    private String mUserToken;
 
     public AdminChallengesFragment() {
     }
@@ -60,6 +63,9 @@ public class AdminChallengesFragment extends Fragment
         View view =  inflater.inflate(R.layout.fragment_admin_challenges
                             , container, false);
 
+        mUserToken = SharePreferenceHelper.getString(this.getContext(),
+                SharePreferenceKeys.USER_TOKEN);
+
         initViews(view);
 
         return view;
@@ -68,6 +74,14 @@ public class AdminChallengesFragment extends Fragment
     private void initViews(View view){
         mChallengeFilter = view.findViewById(R.id.spChallengeStt);
         mRecyclerView = view.findViewById(R.id.rcAdminChallenges);
+        mSwipeLayout = view.findViewById(R.id.swipe_layout);
+
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mChallengesPresenter.loadChallengesList(mUserToken);
+            }
+        });
 
         //setupDropdownList();
         initData();
@@ -76,7 +90,7 @@ public class AdminChallengesFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mChallengesPresenter.setManageChallengeView(null);
+        //mChallengesPresenter.setManageChallengeView(null);
     }
 
     private void initData(){
@@ -84,9 +98,8 @@ public class AdminChallengesFragment extends Fragment
             mChallengesPresenter = new ManageChallengesPresenter(this);
         }
 
-        String token = SharePreferenceHelper.getString(this.getContext(),
-                            SharePreferenceKeys.USER_TOKEN);
-        mChallengesPresenter.loadChallengesList(token);
+
+        mChallengesPresenter.loadChallengesList(mUserToken);
     }
 
     private void setupDropdownList(){
@@ -128,6 +141,8 @@ public class AdminChallengesFragment extends Fragment
 
     @Override
     public void loadChallengesList(List<Challenge> challenges) {
+
+        mSwipeLayout.setRefreshing(false);
         mChallengesList = challenges;
 
         if (mChallengeAdapter != null){
@@ -155,6 +170,7 @@ public class AdminChallengesFragment extends Fragment
 
     @Override
     public void showToastMessage(String message) {
+        mSwipeLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }
 }
