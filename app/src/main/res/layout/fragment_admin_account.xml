@@ -3,12 +3,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.AdminAccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ADMIN ACCOUNT" />
+        android:layout_height="500dp"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:src="@drawable/no_profile" />
+            <TextView
+
+                android:id="@+id/tvAdminName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:text="ADMIN"
+                android:textSize="30sp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_baseline_perm_identity_24" />
+
+                <TextView
+                    android:id="@+id/tvAdminUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xuanvuong1998"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_baseline_email_24" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hoxuanvuong1998@gmail.com"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnLogout"
+                android:background="@drawable/ic_baseline_logout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_baseline_logout"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 
 </FrameLayout>

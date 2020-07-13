@@ -30,7 +30,7 @@ public class SharePreferenceHelper {
     public static void remove(Context context, String key){
         SharedPreferences sharedPreferences = context.getSharedPreferences(key, Context.MODE_PRIVATE);
 
-        sharedPreferences.edit().remove(key);
+        sharedPreferences.edit().remove(key).apply();
     }
 
 }

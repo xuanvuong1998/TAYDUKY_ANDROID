@@ -23,6 +23,7 @@ public class ApiConfig {
              String BASE_NAME = "admins";
              String CREATE = BASE_NAME;
              String DELETE = BASE_NAME + "/{id}";
+             String GET_BY_ID = BASE_NAME + "/{id}" ;
         }
         interface Challenge{
             String BASE_NAME = "challenges";

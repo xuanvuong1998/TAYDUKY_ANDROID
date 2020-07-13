@@ -111,7 +111,7 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ToolHolder> 
 
         public void bindData(Tool tool) {
             tvToolName.setText(tool.getName());
-            tvToolQuantity.setText(tool.getQuantity() + "");
+            tvToolQuantity.setText("Quantity: " + tool.getQuantity() + "");
 
             ImageHelper.loadImageFromURI(tool.getImage(), imageViewTool);
         }

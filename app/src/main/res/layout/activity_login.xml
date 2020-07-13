@@ -8,17 +8,19 @@
     android:alpha="1"
     tools:context=".ui.activities.LoginActivity">
 
+
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="279dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="28dp"
-        android:text="TÂY DU KÝ"
+        android:layout_width="285dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/comic"
+        android:text="Journey to the West"
         android:textAlignment="center"
+        android:textColor="#BA4A4F6A"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,31 +28,31 @@
         android:id="@+id/edtUsername"
         android:layout_width="316dp"
         android:layout_height="56dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="252dp"
         android:background="@drawable/edit_text_retangle"
         android:hint="username"
         android:inputType="textPersonName"
         android:padding="10dp"
 
-        android:textSize="20sp"
+        android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorBlack"
-        android:textColor="@color/lightBlack"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="316dp"
         android:layout_height="56dp"
-        android:layout_marginTop="304dp"
+        android:layout_marginTop="336dp"
         android:background="@drawable/edit_text_retangle"
         android:hint="password"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/colorBlack"
-        android:textColorHint="@color/lightBlack"
+        android:textColorHint="@color/colorBlack"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -61,23 +63,25 @@
         android:id="@+id/btnLogin"
         android:layout_width="261dp"
         android:layout_height="53dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="532dp"
+        android:alpha="0.95"
         android:background="@drawable/button_rectangle"
         android:text="Login"
-        android:alpha="0.95"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="259dp"
-        android:alpha="0.95"
         android:layout_height="53dp"
-        android:layout_marginTop="528dp"
+        android:layout_marginTop="612dp"
+        android:alpha="0.95"
         android:background="@drawable/button_rectangle"
         android:text="Sign Up"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

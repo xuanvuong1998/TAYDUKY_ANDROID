@@ -109,8 +109,8 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
         public void bindData(Challenge challenge) {
             tvChallengeName.setText(challenge.getName());
             tvLocation.setText(challenge.getLocation());
-            tvEndDate.setText(challenge.getEndDate());
-            tvStartDate.setText(challenge.getStartDate());
+            tvEndDate.setText("From " + challenge.getEndDate());
+            tvStartDate.setText("To " + challenge.getStartDate());
             tvShootTimes.setText(challenge.getShootTimes() + "");
         }
     }

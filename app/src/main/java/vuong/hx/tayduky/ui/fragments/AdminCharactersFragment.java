@@ -114,7 +114,7 @@ public class AdminCharactersFragment extends Fragment
 
     @Override
     public void onClickDetails(Character character) {
-
+        
     }
 
     /**
