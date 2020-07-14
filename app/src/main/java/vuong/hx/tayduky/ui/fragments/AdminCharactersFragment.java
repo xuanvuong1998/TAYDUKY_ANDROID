@@ -59,7 +59,7 @@ public class AdminCharactersFragment extends Fragment
 
     private void initViews(View view){
         mRecyclerView = view.findViewById(R.id.rcAdminCharacters);
-        mBtnAddNew = view.findViewById(R.id.btnAddCharacter);
+        mBtnAddNew = view.findViewById(R.id.btnAddRole);
 
         final CreateCharacterDialogFragment frg = new CreateCharacterDialogFragment();
         frg.setTargetFragment(this, CREATE_CHARACTER);

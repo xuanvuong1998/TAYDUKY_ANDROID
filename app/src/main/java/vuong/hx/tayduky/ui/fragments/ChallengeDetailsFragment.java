@@ -1,5 +1,6 @@
 package vuong.hx.tayduky.ui.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,23 +14,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.List;
+
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
+import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Challenge;
+import vuong.hx.tayduky.models.SceneRole;
+import vuong.hx.tayduky.models.SceneTool;
+import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
+import vuong.hx.tayduky.ui.view_interfaces.ChallengeDetailsView;
 
 public class ChallengeDetailsFragment extends DialogFragment
-                    implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
+                    implements View.OnClickListener, DatePickerDialog.OnDateSetListener, ChallengeDetailsView {
     private EditText mEdtName, mEdtDesc, mEdtStartTime, mEdtEndTime, mEdtShotTimes, mEdtLocation;
     private String mChosenDate;
     private boolean isPickingStartingDate;
     private DatePickerFragment datePicker;
+    private Challenge curChallenge;
+    private List<SceneRole> mRoles;
+    private List<SceneTool> mTools;
+    private ManageChallengesPresenter mPresenter;
+    private String mUserToken;
+
+    private int CHALLENGE_DETAILS = 999;
 
 
-
-    public static ChallengeDetailsFragment newInstance(boolean createNewMode) {
-
-
+    public static ChallengeDetailsFragment newInstance(Challenge challenge) {
         Bundle args = new Bundle();
-        args.putBoolean("actionMode", createNewMode);
+        args.putParcelable("currentChallenge", challenge);
         
         ChallengeDetailsFragment fragment = new ChallengeDetailsFragment();
         fragment.setArguments(args);
@@ -40,7 +55,10 @@ public class ChallengeDetailsFragment extends DialogFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        mPresenter = new ManageChallengesPresenter(this);
+        mUserToken = SharePreferenceHelper.getString(getContext(),
+                            SharePreferenceKeys.USER_TOKEN);
+        curChallenge =  getArguments().getParcelable("currentChallenge");
     }
 
     @Nullable
@@ -51,8 +69,6 @@ public class ChallengeDetailsFragment extends DialogFragment
         initViews(view);
         return view;
     }
-
-
 
     private void initViews(View view){
         mEdtName = view.findViewById(R.id.edtChallengeName);
@@ -69,8 +85,21 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnSave = view.findViewById(R.id.btnSaveChallenge);
         mBtnCancel = view.findViewById(R.id.btnCancel);
 
+
+
         registerEvents();
 
+        if (curChallenge != null) setData();
+
+    }
+
+    private void setData(){
+        mEdtName.setText(curChallenge.getName());
+        mEdtDesc.setText(curChallenge.getDescription());
+        mEdtStartTime.setText(curChallenge.getStartDate());
+        mEdtEndTime.setText(curChallenge.getEndDate());
+        mEdtShotTimes.setText(curChallenge.getShootTimes() + "");
+        mEdtLocation.setText(curChallenge.getLocation());
     }
 
     private void registerEvents(){
@@ -80,6 +109,8 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnTools.setOnClickListener(this);
         mEdtStartTime.setOnClickListener(this);
         mEdtEndTime.setOnClickListener(this);
+
+
     }
 
 
@@ -87,7 +118,8 @@ public class ChallengeDetailsFragment extends DialogFragment
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnRoles:
-                ChallengeRolesDialogFragment fr = new ChallengeRolesDialogFragment();
+                ChallengeRolesDialogFragment fr =
+                        ChallengeRolesDialogFragment.newInstance(curChallenge.getId());
 
                 fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
                 break;
@@ -95,11 +127,10 @@ public class ChallengeDetailsFragment extends DialogFragment
 
                 break;
             case R.id.btnSaveChallenge:
-                //getTargetFragment().onActivityResult(111, Activity.RESULT_CANCELED, );
-                dismiss();
+                saveChanges();
                 break;
             case R.id.btnCancel:
-                dismiss();
+                finishAndRequestRefresh();
                 break;
             case R.id.edtStartTime:
                 isPickingStartingDate = true;
@@ -114,6 +145,33 @@ public class ChallengeDetailsFragment extends DialogFragment
         }
     }
 
+    private void saveChanges(){
+        if (curChallenge == null){ // create new
+            Challenge newChallenge = new Challenge();
+
+            newChallenge.setName(mEdtName.getText().toString());
+            newChallenge.setDescription(mEdtDesc.getText().toString());
+            newChallenge.setLocation(mEdtLocation.getText().toString());
+            newChallenge.setStartDate(mEdtStartTime.getText().toString());
+
+            mPresenter.createNewChallenge(mUserToken, newChallenge, mRoles, mTools);
+
+        }else{ // update
+            mPresenter.update(mUserToken, curChallenge, mRoles, mTools);
+        }
+    }
+
+    private void finishAndRequestRefresh(){
+        getTargetFragment().onActivityResult(CHALLENGE_DETAILS
+                    , Activity.RESULT_OK, getActivity().getIntent());
+        dismiss();
+    }
+
+    private void cancel(){
+        getTargetFragment().onActivityResult(CHALLENGE_DETAILS
+                , Activity.RESULT_CANCELED, getActivity().getIntent());
+        dismiss();
+    }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -124,5 +182,16 @@ public class ChallengeDetailsFragment extends DialogFragment
         }else{
             mEdtEndTime.setText(mChosenDate);
         }
+    }
+
+
+    @Override
+    public void notifyModelErr() {
+        ToastHelper.showLongMess(getContext(), "Failed! Check data again");
+    }
+
+    @Override
+    public void notifyCreateSuccess() {
+        ToastHelper.showLongMess(getContext(), "created!");
     }
 }

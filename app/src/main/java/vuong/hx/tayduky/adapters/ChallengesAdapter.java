@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,13 +56,6 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
         holder.bindData(challenge);
 
-        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClickEdit(challenge);
-            }
-        });
-
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,35 +75,34 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
     public interface OnClickItem {
         void onClickDetails(Challenge challenge);
-
-        void onClickEdit(Challenge challenge);
     }
 
     class ChallengeHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvChallengeName, tvShootTimes, tvStartDate, tvEndDate, tvLocation;
+        private TextView tvChallengeName, tvStartDate, tvEndDate, tvLocation;
         public View view;
 
-        public Button btnUpdate;
 
         public ChallengeHolder(@NonNull View itemView) {
             super(itemView);
             this.view = itemView;
 
             tvChallengeName = itemView.findViewById(R.id.tvChallengeTitle);
-            tvShootTimes = itemView.findViewById(R.id.tvShootTimes);
             tvStartDate = itemView.findViewById(R.id.tvStartDate);
             tvEndDate = itemView.findViewById(R.id.tvEndDate);
             tvLocation = itemView.findViewById(R.id.tvChallengeLocation);
-            btnUpdate = itemView.findViewById(R.id.btnUpdateChallenge);
         }
 
         public void bindData(Challenge challenge) {
             tvChallengeName.setText(challenge.getName());
-            tvLocation.setText(challenge.getLocation());
-            tvEndDate.setText("From " + challenge.getEndDate());
-            tvStartDate.setText("To " + challenge.getStartDate());
-            tvShootTimes.setText(challenge.getShootTimes() + "");
+            tvLocation.setText("Location: " + challenge.getLocation());
+            if (challenge.getEndDate() == null){
+                tvEndDate.setText("To: .....");
+            }else{
+                tvEndDate.setText("To: " + challenge.getEndDate());
+            }
+
+            tvStartDate.setText("From: " + challenge.getStartDate());
         }
     }
 }

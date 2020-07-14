@@ -1,10 +1,9 @@
 package vuong.hx.tayduky.models;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.List;
-
-public class Challenge {
+public class Challenge implements Parcelable {
     private int id;
     private String name;
     private String description;
@@ -13,11 +12,28 @@ public class Challenge {
     private String endDate;
     private int shootTimes;
 
-    @SerializedName("SceneRole")
-    private List<SceneRole> sceneRoles;
 
-    private List<SceneTool> sceneTools;
+    protected Challenge(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        location = in.readString();
+        startDate = in.readString();
+        endDate = in.readString();
+        shootTimes = in.readInt();
+    }
 
+    public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
+        @Override
+        public Challenge createFromParcel(Parcel in) {
+            return new Challenge(in);
+        }
+
+        @Override
+        public Challenge[] newArray(int size) {
+            return new Challenge[size];
+        }
+    };
 
     @Override
     public String toString() {
@@ -99,5 +115,21 @@ public class Challenge {
         this.startDate = startDate;
         this.endDate = endDate;
         this.shootTimes = shootTimes;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(location);
+        dest.writeString(startDate);
+        dest.writeString(endDate);
+        dest.writeInt(shootTimes);
     }
 }

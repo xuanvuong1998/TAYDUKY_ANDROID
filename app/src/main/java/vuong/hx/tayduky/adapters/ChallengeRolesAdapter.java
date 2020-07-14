@@ -74,7 +74,6 @@ public class ChallengeRolesAdapter extends RecyclerView.Adapter<ChallengeRolesAd
             btnSaveChange = itemView.findViewById(R.id.btnSaveChanges);
             btnDeleteRole = itemView.findViewById(R.id.btnDeleteRole);
 
-
         }
 
         public void bindData(SceneRoleFullInfo role){

@@ -2,11 +2,13 @@ package vuong.hx.tayduky.repositories.implementations;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Challenge;
+import vuong.hx.tayduky.models.ChallengeCreateModel;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ClientApi;
@@ -34,10 +36,10 @@ public class ChallengeRepoImpl implements ChallengeRepo {
         call.enqueue(new Callback<List<Challenge>>() {
             @Override
             public void onResponse(Call<List<Challenge>> call, Response<List<Challenge>> response) {
-                if (response.isSuccessful() == false){
+                if (response.isSuccessful() == false) {
 
                     callBack.onFail("Retrieve Data failed!");
-                }else{
+                } else {
                     callBack.onSuccess(response.body());
                 }
             }
@@ -73,9 +75,9 @@ public class ChallengeRepoImpl implements ChallengeRepo {
         mSceneToolService.getChallengeTools(challengeId).enqueue(new Callback<List<SceneTool>>() {
             @Override
             public void onResponse(Call<List<SceneTool>> call, Response<List<SceneTool>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callBack.onSuccess(response.body());
-                }else{
+                } else {
                     callBack.onFail(response.message());
                 }
             }
@@ -92,9 +94,9 @@ public class ChallengeRepoImpl implements ChallengeRepo {
         mChallengeService.getChallengeRoles(challengeId).enqueue(new Callback<List<SceneRoleFullInfo>>() {
             @Override
             public void onResponse(Call<List<SceneRoleFullInfo>> call, Response<List<SceneRoleFullInfo>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callBack.onSuccess(response.body());
-                }else{
+                } else {
                     callBack.onFail(response.message());
                 }
             }
@@ -105,4 +107,45 @@ public class ChallengeRepoImpl implements ChallengeRepo {
             }
         });
     }
+
+    @Override
+    public void createNewChallenge(String token, ChallengeCreateModel model, final ApiCallBack<ResponseBody> callBack) {
+        mChallengeService.createNew(token, model).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callBack.onSuccess(response.body());
+                } else {
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public void updateChallenge(String token, ChallengeCreateModel model, final ApiCallBack<ResponseBody> callBack) {
+        mChallengeService.update(token, model).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callBack.onSuccess(response.body());
+                } else {
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+    }
+
+
 }

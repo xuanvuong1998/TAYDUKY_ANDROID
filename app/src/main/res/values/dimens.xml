@@ -6,4 +6,9 @@
     <dimen name="popup_width_full_screen">1000dp</dimen>
     <dimen name="popup_height_full_screen">1000dp</dimen>
     <dimen name="popup_height">700dp</dimen>
+    <dimen name="image_small_width">100dp</dimen>
+    <dimen name="image_small_height">120dp</dimen>
+    <dimen name="button_small_width">100dp</dimen>
+    <dimen name="button_small_height">35dp</dimen>
+
 </resources>

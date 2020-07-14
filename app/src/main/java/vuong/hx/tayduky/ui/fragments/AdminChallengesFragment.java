@@ -1,6 +1,8 @@
 package vuong.hx.tayduky.ui.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,8 +42,7 @@ public class AdminChallengesFragment extends Fragment
     private ChallengesAdapter mChallengeAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private String mUserToken;
-
-    private ChallengeDetailsFragment mDetailFragment;
+    private int CHALLENGE_DETAILS = 999;
 
     public AdminChallengesFragment() {
     }
@@ -48,7 +50,6 @@ public class AdminChallengesFragment extends Fragment
 
     public static AdminChallengesFragment newInstance() {
         AdminChallengesFragment fragment = new AdminChallengesFragment();
-
 
         return fragment;
     }
@@ -80,16 +81,12 @@ public class AdminChallengesFragment extends Fragment
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
         mBtnAddNew = view.findViewById(R.id.btnAddChallenge);
 
-        mDetailFragment = ChallengeDetailsFragment.newInstance(true);
-
-        mDetailFragment.setTargetFragment(this, 111);
-
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mDetailFragment.show(getActivity().getSupportFragmentManager(),
-                        "challenge_details");
+                ChallengeDetailsFragment fr =  ChallengeDetailsFragment.newInstance(null);
+                fr.show(getActivity().getSupportFragmentManager(),
+                        "new-challenge");
             }
         });
 
@@ -144,16 +141,25 @@ public class AdminChallengesFragment extends Fragment
             }
         });
 
-
     }
     @Override
     public void onClickDetails(Challenge challenge) {
-        ToastHelper.showLongMess(getContext(), "DETAILS");
+        ChallengeDetailsFragment fr = ChallengeDetailsFragment.newInstance(challenge);
+
+        fr.setTargetFragment(this, CHALLENGE_DETAILS);
+        fr.show(getActivity().getSupportFragmentManager(), "challenge-details");
+
     }
 
     @Override
-    public void onClickEdit(Challenge challenge) {
-        ToastHelper.showLongMess(getContext(), "EDITS");
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CHALLENGE_DETAILS){
+            if (resultCode == Activity.RESULT_OK){
+                mChallengesPresenter.loadChallengesList(mUserToken);
+            }
+        }
     }
 
     @Override

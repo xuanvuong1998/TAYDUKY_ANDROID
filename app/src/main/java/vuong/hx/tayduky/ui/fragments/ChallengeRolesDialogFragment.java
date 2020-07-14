@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +26,18 @@ public class ChallengeRolesDialogFragment extends DialogFragment
 
     private ChallengeRolesAdapter mAdapter;
     private ManageChallengesPresenter mPresenter;
+    private Button mBtnAddNew, mBtnCancel;
     private RecyclerView mRecyclerView;
+    private int mChallengeId;
 
+    public static ChallengeRolesDialogFragment newInstance(int challengeId) {
+
+        Bundle args = new Bundle();
+        args.putInt("challengeId", challengeId);
+        ChallengeRolesDialogFragment fragment = new ChallengeRolesDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -34,11 +45,26 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         View view = inflater.inflate(R.layout.dialog_fragment_challenge_roles, container, false);
 
         mRecyclerView = view.findViewById(R.id.rcChallengeRoles);
+        mBtnAddNew = view.findViewById(R.id.btnAddRole);
+        mBtnCancel = view.findViewById(R.id.btnCancel);
 
+        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // add new roles
+            }
+        });
         mPresenter = new ManageChallengesPresenter(this);
 
-
-        mPresenter.loadChallengeRoles(1);
+        mChallengeId = getArguments().getInt("challengeId");
+        mPresenter.loadChallengeRoles(mChallengeId);
         return view;
     }
 
