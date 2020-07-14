@@ -9,14 +9,24 @@ import vuong.hx.tayduky.remote.api.ApiConfig;
 
 public class ImageHelper {
 
-    public static void loadImageFromURI(String imageURI, ImageView imgView){
+    /**
+     * Load image from internal storage in WEB API
+     * @param imageURI relative path which stored in SQL SERVER
+     * @param imgView
+     */
+    public static void loadImageFromInternal(String imageURI, ImageView imgView){
 
         String fullUrl = ApiConfig.HOST_URL + imageURI;
 
         Picasso.get().load(fullUrl).error(R.drawable.no_image).into(imgView);
     }
 
-    public static void loadImageFromFullURL(String publicUrl, ImageView imgView){
+    /**
+     * Load iamge from public resource on the internet
+     * @param publicUrl absolute path
+     * @param imgView
+     */
+    public static void loadImageFromExternal(String publicUrl, ImageView imgView){
         Picasso.get().load(publicUrl).error(R.drawable.no_image).into(imgView);
     }
 }

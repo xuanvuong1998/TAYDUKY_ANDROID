@@ -12,6 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import vuong.hx.tayduky.models.SceneRole;
+import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.remote.api.ApiConfig;
 
 public interface SceneRoleService {
@@ -19,8 +20,7 @@ public interface SceneRoleService {
     @GET(ApiConfig.Apis.SceneRole.GET_BY_ID)
     Call<SceneRole> getById(@Path("sceneRole_id") int sceneRoleId);
 
-    @GET(ApiConfig.Apis.SceneRole.GET_CHALLENGE_ROLES)
-    Call<List<SceneRole>> getChallengeRoles(@Path("challenge_id") int challengeId);
+
 
     @POST(ApiConfig.Apis.SceneRole.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,  @Body SceneRole SceneRole);

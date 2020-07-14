@@ -61,14 +61,14 @@
 
     <EditText
 
+        android:inputType="none"
         android:id="@+id/edtStartTime"
-        android:inputType="datetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="19sp" />
 
     <TextView
-
+        android:inputType="none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
@@ -87,7 +87,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:text="ShotTimes"
         android:textSize="19sp" />
 
     <EditText

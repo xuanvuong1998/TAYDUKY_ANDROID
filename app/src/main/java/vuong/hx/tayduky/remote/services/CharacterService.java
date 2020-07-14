@@ -25,6 +25,7 @@ public interface CharacterService {
     @GET(ApiConfig.Apis.Character.GET_ALL)
     Call<List<Character>> getAll();
 
+
     @Multipart
     @POST(ApiConfig.Apis.Character.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token,

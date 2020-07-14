@@ -113,7 +113,7 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ToolHolder> 
             tvToolName.setText(tool.getName());
             tvToolQuantity.setText("Quantity: " + tool.getQuantity() + "");
 
-            ImageHelper.loadImageFromURI(tool.getImage(), imageViewTool);
+            ImageHelper.loadImageFromInternal(tool.getImage(), imageViewTool);
         }
     }
 }

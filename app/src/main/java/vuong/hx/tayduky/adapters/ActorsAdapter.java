@@ -99,7 +99,7 @@ public class ActorsAdapter extends RecyclerView.Adapter<ActorsAdapter.ActorHolde
         public void bindData(Actor actor) {
             tvActorName.setText(actor.getName());
 
-            ImageHelper.loadImageFromURI(actor.getImage(), imageViewActor);
+            ImageHelper.loadImageFromInternal(actor.getImage(), imageViewActor);
         }
     }
 }

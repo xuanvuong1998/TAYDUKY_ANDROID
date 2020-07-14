@@ -7,7 +7,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Challenge;
-import vuong.hx.tayduky.models.SceneRole;
+import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ClientApi;
 import vuong.hx.tayduky.remote.services.ChallengeService;
@@ -88,10 +88,10 @@ public class ChallengeRepoImpl implements ChallengeRepo {
     }
 
     @Override
-    public void getChallengeRoles(int challengeId, final ApiCallBack<List<SceneRole>> callBack) {
-        mSceneRoleService.getChallengeRoles(challengeId).enqueue(new Callback<List<SceneRole>>() {
+    public void getChallengeRoles(int challengeId, final ApiCallBack<List<SceneRoleFullInfo>> callBack) {
+        mChallengeService.getChallengeRoles(challengeId).enqueue(new Callback<List<SceneRoleFullInfo>>() {
             @Override
-            public void onResponse(Call<List<SceneRole>> call, Response<List<SceneRole>> response) {
+            public void onResponse(Call<List<SceneRoleFullInfo>> call, Response<List<SceneRoleFullInfo>> response) {
                 if (response.isSuccessful()){
                     callBack.onSuccess(response.body());
                 }else{
@@ -100,7 +100,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
             }
 
             @Override
-            public void onFailure(Call<List<SceneRole>> call, Throwable t) {
+            public void onFailure(Call<List<SceneRoleFullInfo>> call, Throwable t) {
                 callBack.onFail(t.getMessage());
             }
         });

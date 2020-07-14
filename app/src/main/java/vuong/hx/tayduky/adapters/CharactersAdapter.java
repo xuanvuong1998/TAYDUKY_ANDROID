@@ -99,7 +99,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ch
         public void bindData(Character character) {
             tvCharacterName.setText(character.getName());
 
-            ImageHelper.loadImageFromURI(character.getImage(), imageViewCharacter);
+            ImageHelper.loadImageFromInternal(character.getImage(), imageViewCharacter);
         }
     }
 }

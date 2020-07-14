@@ -4,7 +4,7 @@ import java.util.List;
 
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Challenge;
-import vuong.hx.tayduky.models.SceneRole;
+import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 
 public interface ChallengeRepo {
@@ -14,6 +14,6 @@ public interface ChallengeRepo {
 
     void getChallengeTools(int challengeId, ApiCallBack<List<SceneTool>> callBack);
 
-    void getChallengeRoles(int challengeId, ApiCallBack<List<SceneRole>> callBack);
+    void getChallengeRoles(int challengeId, ApiCallBack<List<SceneRoleFullInfo>> callBack);
 
 }

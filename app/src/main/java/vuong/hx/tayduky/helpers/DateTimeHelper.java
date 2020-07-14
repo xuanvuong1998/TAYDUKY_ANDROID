@@ -1,7 +1,9 @@
 package vuong.hx.tayduky.helpers;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateTimeHelper {
@@ -20,6 +22,18 @@ public class DateTimeHelper {
             e.printStackTrace();
             return -2;
         }
+    }
 
+    public static String formatDate(Date date){
+
+        return DateFormat.getDateTimeInstance().format(date);
+
+    }
+    public static String GetDateString(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month, day);
+
+        return formatDate(calendar.getTime());
     }
 }
