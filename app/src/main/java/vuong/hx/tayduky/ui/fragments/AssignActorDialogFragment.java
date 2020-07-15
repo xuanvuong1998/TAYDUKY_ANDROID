@@ -20,6 +20,8 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ActorsAdapter;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
 
@@ -30,13 +32,12 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
     private ActorsAdapter mAdapter;
     private String mUserToken;
     private Actor mChosenActor;
-    private final int CHOOSE_ACTOR = 17;
 
-    public static AssignActorDialogFragment newInstance(String userToken, List<Actor> actorList) {
+
+    public static AssignActorDialogFragment newInstance(List<Actor> actorList) {
         
         Bundle args = new Bundle();
 
-        args.putString("userToken", userToken);
         args.putSerializable("actorsList", (Serializable) actorList);
 
         AssignActorDialogFragment fragment = new AssignActorDialogFragment();
@@ -65,18 +66,21 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
                 Intent intent = getActivity().getIntent();
                 if (mChosenActor != null){
                     intent.putExtra("chosenActor", mChosenActor.getUsername());
-                    getTargetFragment().onActivityResult(CHOOSE_ACTOR, Activity.RESULT_OK, intent);
+
+                    intent.putExtra("chosenActorFullInfo", mChosenActor);
+                    getTargetFragment().onActivityResult(ReqCode.ASSIGN_ACTOR, Activity.RESULT_OK, intent);
                 }else{
-                    getTargetFragment().onActivityResult(CHOOSE_ACTOR, Activity.RESULT_CANCELED, intent);
+                    getTargetFragment().onActivityResult(ReqCode.ASSIGN_ACTOR, Activity.RESULT_CANCELED, intent);
                 }
 
                 dismiss();
             }
         });
 
-        Bundle bundle = getArguments();
 
-        mUserToken = bundle.getString("userToken");
+        mUserToken = TempDataHelper.getUserToken();
+
+        Bundle bundle = getArguments();
 
         List<Actor> actors = (List<Actor>) bundle.getSerializable("actorsList");
 

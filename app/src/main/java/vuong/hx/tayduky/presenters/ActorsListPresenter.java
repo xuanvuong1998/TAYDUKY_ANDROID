@@ -3,6 +3,7 @@ package vuong.hx.tayduky.presenters;
 import java.util.List;
 
 import vuong.hx.tayduky.callbacks.ApiCallBack;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.repositories.implementations.ActorRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
@@ -23,22 +24,28 @@ public class ActorsListPresenter {
     }
 
     public void loadActorsList(String userToken){
-        ActorRepo actorRepo = new ActorRepoImpl();
 
-        actorRepo.getAll(userToken, new ApiCallBack<List<Actor>>() {
-            @Override
-            public void onSuccess(List<Actor> actors) {
-                if (actorsView != null){
-                    actorsView.loadActorsList(actors);
-                }
-            }
+        if (TempDataHelper.getActors() != null){
+            actorsView.loadActorsList(TempDataHelper.getActors());
+        }else{
+            ActorRepo actorRepo = new ActorRepoImpl();
 
-            @Override
-            public void onFail(String message) {
-                if (actorsView != null){
-                    actorsView.showToastMessage(message);
+            actorRepo.getAll(userToken, new ApiCallBack<List<Actor>>() {
+                @Override
+                public void onSuccess(List<Actor> actors) {
+                    TempDataHelper.setActors(actors);
+                    if (actorsView != null){
+                        actorsView.loadActorsList(actors);
+                    }
                 }
-            }
-        });
+
+                @Override
+                public void onFail(String message) {
+                    if (actorsView != null){
+                        actorsView.showToastMessage(message);
+                    }
+                }
+            });
+        }
     }
 }

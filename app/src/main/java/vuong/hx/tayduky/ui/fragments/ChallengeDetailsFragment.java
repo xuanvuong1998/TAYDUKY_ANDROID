@@ -17,9 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.SceneRole;
@@ -56,8 +55,7 @@ public class ChallengeDetailsFragment extends DialogFragment
         super.onCreate(savedInstanceState);
 
         mPresenter = new ManageChallengesPresenter(this);
-        mUserToken = SharePreferenceHelper.getString(getContext(),
-                            SharePreferenceKeys.USER_TOKEN);
+        mUserToken = TempDataHelper.getUserToken();
         curChallenge =  getArguments().getParcelable("currentChallenge");
     }
 
@@ -86,13 +84,24 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnCancel = view.findViewById(R.id.btnCancel);
 
 
-
         registerEvents();
 
         if (curChallenge != null) setData();
 
     }
 
+    private void updateUI(){
+        if (curChallenge == null){ // Create New
+            mBtnSave.setText("Create");
+            mBtnTools.setText("Add tools");
+            mBtnRoles.setText("Add roles");
+
+        }else{ // Update
+            mBtnSave.setText("Save changes");
+            mBtnRoles.setText("Roles");
+            mBtnTools.setText("Tools");
+        }
+    }
     private void setData(){
         mEdtName.setText(curChallenge.getName());
         mEdtDesc.setText(curChallenge.getDescription());
@@ -118,8 +127,8 @@ public class ChallengeDetailsFragment extends DialogFragment
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnRoles:
-                ChallengeRolesDialogFragment fr =
-                        ChallengeRolesDialogFragment.newInstance(curChallenge.getId());
+                ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
+                        .newInstance(curChallenge != null ? curChallenge.getId() : null);
 
                 fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
                 break;

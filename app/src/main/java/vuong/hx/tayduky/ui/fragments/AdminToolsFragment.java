@@ -18,8 +18,7 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ToolsAdapter;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
@@ -68,8 +67,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_tools, container, false);
 
-        mUserToken = SharePreferenceHelper.getString(getContext(),
-                                            SharePreferenceKeys.USER_TOKEN);
+        mUserToken = TempDataHelper.getUserToken();
         initViews(view);
         return view;
     }

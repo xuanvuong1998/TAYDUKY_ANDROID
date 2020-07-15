@@ -1,5 +1,6 @@
 package vuong.hx.tayduky.helpers;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -28,5 +29,14 @@ public class ImageHelper {
      */
     public static void loadImageFromExternal(String publicUrl, ImageView imgView){
         Picasso.get().load(publicUrl).error(R.drawable.no_image).into(imgView);
+    }
+
+    /**
+     * After pick a image from gallery, convert to Bitmap ->
+     * @param bitmap
+     * @param imgView
+     */
+    public static void loadImageFromBitmap(Bitmap bitmap, ImageView imgView){
+        imgView.setImageBitmap(bitmap);
     }
 }

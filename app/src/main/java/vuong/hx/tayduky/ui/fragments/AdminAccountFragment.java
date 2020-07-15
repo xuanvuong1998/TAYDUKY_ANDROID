@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.AuthHelper;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Admin;
 import vuong.hx.tayduky.repositories.implementations.AdminRepoImpl;
@@ -48,11 +47,9 @@ public class AdminAccountFragment extends Fragment {
         mTvFullname = view.findViewById(R.id.tvAdminName);
         mTvUsername = view.findViewById(R.id.tvAdminUsername);
 
-        String username = SharePreferenceHelper
-                .getString(getContext(), SharePreferenceKeys.USER_ID);
+        String username = TempDataHelper.getUserId();
 
-        String token = SharePreferenceHelper
-                .getString(getContext(), SharePreferenceKeys.USER_TOKEN);
+        String token = TempDataHelper.getUserToken();
         mTvUsername.setText(username);
 
         new AdminRepoImpl().getInfoById(token,username, new ApiCallBack<Admin>() {

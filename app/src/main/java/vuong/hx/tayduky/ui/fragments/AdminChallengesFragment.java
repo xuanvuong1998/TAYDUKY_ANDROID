@@ -23,8 +23,7 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ChallengesAdapter;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
@@ -67,8 +66,7 @@ public class AdminChallengesFragment extends Fragment
         View view =  inflater.inflate(R.layout.fragment_admin_challenges
                             , container, false);
 
-        mUserToken = SharePreferenceHelper.getString(this.getContext(),
-                SharePreferenceKeys.USER_TOKEN);
+        mUserToken = TempDataHelper.getUserToken();
 
         initViews(view);
 

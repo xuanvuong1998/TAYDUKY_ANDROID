@@ -1,6 +1,7 @@
 package vuong.hx.tayduky.presenters;
 
 import vuong.hx.tayduky.callbacks.ApiCallBack;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.models.AuthenticatedUser;
 import vuong.hx.tayduky.repositories.implementations.AuthRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.AuthRepo;
@@ -24,6 +25,8 @@ public class LoginPresenter {
         mAuthRepo.authenticate(username, password, new ApiCallBack<AuthenticatedUser>() {
             @Override
             public void onSuccess(AuthenticatedUser authenticatedUser) {
+                TempDataHelper.setUserToken(authenticatedUser.getToken());
+                TempDataHelper.setUserId(username);
                 if (authenticatedUser != null){
                     loginView.goToHomeActivity(username, password,authenticatedUser.getToken()
                             , authenticatedUser.getRole());

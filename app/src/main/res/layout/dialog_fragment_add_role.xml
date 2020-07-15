@@ -105,20 +105,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnSaveChanges"
+                android:id="@+id/btnAddRole"
                 android:layout_width="@dimen/button_small_width"
-                android:layout_height="@dimen/button_small_height"
+                android:layout_height="30dp"
                 android:background="@drawable/button_rectangle"
-                android:text="Save changes"
+                android:text="Add"
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnDeleteRole"
+                android:id="@+id/btnCancel"
                 android:layout_marginLeft="50dp"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
-                android:background="@drawable/button_delete"
-                android:text="Delete" />
+                android:background="@drawable/button_cancel"
+                android:text="Cancel" />
         </LinearLayout>
 
     </LinearLayout>

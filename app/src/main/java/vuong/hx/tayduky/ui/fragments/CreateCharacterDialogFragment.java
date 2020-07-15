@@ -25,9 +25,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.FileHelper;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.presenters.ActorsListPresenter;
@@ -59,7 +58,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View view = inflater.inflate(R.layout.dialog_fragment_create_character, container, false);
 
-        mUserToken = SharePreferenceHelper.getString(getContext(), SharePreferenceKeys.USER_TOKEN);
+        mUserToken = TempDataHelper.getUserToken();
 
         mEdtCharacterName = view.findViewById(R.id.edtCharacterName);
 
@@ -174,7 +173,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
         mActorsList = actors;
 
         final AssignActorDialogFragment fragment =
-                AssignActorDialogFragment.newInstance(mUserToken, mActorsList);
+                AssignActorDialogFragment.newInstance( mActorsList);
 
         fragment.setTargetFragment(this, CHOOSE_ACTOR);
 

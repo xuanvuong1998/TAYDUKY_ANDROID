@@ -25,9 +25,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.helpers.FileHelper;
-import vuong.hx.tayduky.helpers.SharePreferenceHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.presenters.CreateToolPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
@@ -54,8 +53,7 @@ public class CreateToolDialogFragment extends DialogFragment
         //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         View view = inflater.inflate(R.layout.dialog_fragment_create_tool, container, false);
 
-        mUserToken = SharePreferenceHelper
-                .getString(getContext(), SharePreferenceKeys.USER_TOKEN);
+        mUserToken = TempDataHelper.getUserToken();
 
         mEdtToolName = view.findViewById(R.id.edtToolName);
         mEdtToolQty = view.findViewById(R.id.edtToolQty);
