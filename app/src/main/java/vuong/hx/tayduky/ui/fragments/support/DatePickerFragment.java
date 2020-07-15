@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.support;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

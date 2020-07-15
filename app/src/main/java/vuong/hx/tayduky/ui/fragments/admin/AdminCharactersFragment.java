@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.admin;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,11 +21,12 @@ import vuong.hx.tayduky.adapters.CharactersAdapter;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Character;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
-import vuong.hx.tayduky.ui.view_interfaces.ManageCharacterView;
+import vuong.hx.tayduky.ui.fragments.dialogs.CreateCharacterDialogFragment;
+import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 
 
 public class AdminCharactersFragment extends Fragment
-        implements CharactersAdapter.OnClickItem, ManageCharacterView {
+        implements CharactersAdapter.OnClickItem, CharacterListView {
 
     private ManageCharactersPresenter mPresenter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -58,7 +59,7 @@ public class AdminCharactersFragment extends Fragment
     }
 
     private void initViews(View view){
-        mRecyclerView = view.findViewById(R.id.rcAdminCharacters);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnAddNew = view.findViewById(R.id.btnAddRole);
 
         final CreateCharacterDialogFragment frg = new CreateCharacterDialogFragment();
@@ -86,7 +87,7 @@ public class AdminCharactersFragment extends Fragment
     public void onDestroy() {
         super.onDestroy();
 
-        mPresenter.setManageCharacterView(null);
+        mPresenter.setCharacterListView(null);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class AdminCharactersFragment extends Fragment
     }
 
     @Override
-    public void onClickDetails(Character character) {
+    public void onClickCharacter(Character character) {
         
     }
 

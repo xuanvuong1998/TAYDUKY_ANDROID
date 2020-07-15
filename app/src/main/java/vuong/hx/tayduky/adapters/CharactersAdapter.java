@@ -61,7 +61,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ch
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClickDetails(character);
+                listener.onClickCharacter(character);
             }
         });
 
@@ -77,7 +77,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ch
     }
 
     public interface OnClickItem {
-        void onClickDetails(Character character);
+        void onClickCharacter(Character character);
     }
 
     class CharacterHolder extends RecyclerView.ViewHolder {

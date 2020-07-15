@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
-import vuong.hx.tayduky.presenters.ActorsListPresenter;
+import vuong.hx.tayduky.presenters.ManageActorsPresenter;
 import vuong.hx.tayduky.presenters.CreateCharacterPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 import vuong.hx.tayduky.ui.view_interfaces.CreateCharacterView;
@@ -48,7 +48,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
     private final String ASSIGN_ACTOR_TAG = "assign_actor";
     private ImageView mImgUploaded;
     private CreateCharacterPresenter mCreateCharacterPresenter;
-    private ActorsListPresenter mActorsPresenter;
+    private ManageActorsPresenter mActorsPresenter;
     private File mFileUploaded;
     private List<Actor> mActorsList;
 
@@ -70,7 +70,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
         mTvAssignedActor = view.findViewById(R.id.tvAsignedActor);
 
         mCreateCharacterPresenter = new CreateCharacterPresenter(this);
-        mActorsPresenter = new ActorsListPresenter(this);
+        mActorsPresenter = new ManageActorsPresenter(this);
         mActorsPresenter.loadActorsList(mUserToken);
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +172,8 @@ public class CreateCharacterDialogFragment extends DialogFragment
     public void loadActorsList(List<Actor> actors) {
         mActorsList = actors;
 
-        final AssignActorDialogFragment fragment =
-                AssignActorDialogFragment.newInstance( mActorsList);
+        final ChooseActorDialogFragment fragment =
+                ChooseActorDialogFragment.newInstance( mActorsList);
 
         fragment.setTargetFragment(this, CHOOSE_ACTOR);
 

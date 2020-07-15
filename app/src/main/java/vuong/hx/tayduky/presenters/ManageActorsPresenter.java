@@ -9,12 +9,12 @@ import vuong.hx.tayduky.repositories.implementations.ActorRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 
-public class ActorsListPresenter {
+public class ManageActorsPresenter {
     private ActorsListView actorsView;
 
     private ActorRepo actorRepo;
 
-    public ActorsListPresenter(ActorsListView actorsView) {
+    public ManageActorsPresenter(ActorsListView actorsView) {
         this.actorsView = actorsView;
         actorRepo = new ActorRepoImpl();
     }
@@ -23,7 +23,8 @@ public class ActorsListPresenter {
         this.actorsView = actorsView;
     }
 
-    public void loadActorsList(String userToken){
+    public void loadActorsList(String userToken) {
+
 
         if (TempDataHelper.getActors() != null){
             actorsView.loadActorsList(TempDataHelper.getActors());

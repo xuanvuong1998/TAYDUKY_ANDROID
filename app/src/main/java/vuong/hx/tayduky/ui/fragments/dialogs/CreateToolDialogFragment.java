@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.app.Activity;
 import android.content.Context;

@@ -13,11 +13,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.AdminMenuItem;
-import vuong.hx.tayduky.ui.fragments.AdminAccountFragment;
-import vuong.hx.tayduky.ui.fragments.AdminChallengesFragment;
-import vuong.hx.tayduky.ui.fragments.AdminCharactersFragment;
-import vuong.hx.tayduky.ui.fragments.AdminNotificationFragment;
-import vuong.hx.tayduky.ui.fragments.AdminToolsFragment;
+import vuong.hx.tayduky.ui.fragments.admin.AdminAccountFragment;
+import vuong.hx.tayduky.ui.fragments.admin.AdminChallengesFragment;
+import vuong.hx.tayduky.ui.fragments.admin.AdminCharactersFragment;
+import vuong.hx.tayduky.ui.fragments.admin.AdminNotificationFragment;
+import vuong.hx.tayduky.ui.fragments.admin.AdminToolsFragment;
 
 public class AdminHomeActivity extends AppCompatActivity {
 

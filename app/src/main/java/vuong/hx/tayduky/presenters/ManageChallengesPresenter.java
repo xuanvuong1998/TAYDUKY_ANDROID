@@ -84,7 +84,7 @@ public class ManageChallengesPresenter {
 
             @Override
             public void onFail(String message) {
-                mDetailsView.notifyModelErr();
+                mDetailsView.notifyModelErr(message);
             }
         });
     }
@@ -100,7 +100,7 @@ public class ManageChallengesPresenter {
 
             @Override
             public void onFail(String message) {
-                mDetailsView.notifyModelErr();
+                mDetailsView.notifyModelErr(message);
             }
         });
     }

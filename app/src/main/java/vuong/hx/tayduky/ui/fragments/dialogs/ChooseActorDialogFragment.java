@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
 
-public class AssignActorDialogFragment extends DialogFragment implements ActorsAdapter.OnClickItem {
+public class ChooseActorDialogFragment extends DialogFragment implements ActorsAdapter.OnClickItem {
     private RecyclerView mRecyclerView;
     private EditText mEdtSearchActor;
     private Button mBtnChoose;
@@ -34,13 +34,13 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
     private Actor mChosenActor;
 
 
-    public static AssignActorDialogFragment newInstance(List<Actor> actorList) {
+    public static ChooseActorDialogFragment newInstance(List<Actor> actorList) {
         
         Bundle args = new Bundle();
 
         args.putSerializable("actorsList", (Serializable) actorList);
 
-        AssignActorDialogFragment fragment = new AssignActorDialogFragment();
+        ChooseActorDialogFragment fragment = new ChooseActorDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,9 +53,9 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
         int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
         getDialog().getWindow().setLayout(width, height);
 
-        View view = inflater.inflate(R.layout.dialog_fragment_chose_actors, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment_choose_actors, container, false);
 
-        mRecyclerView = view.findViewById(R.id.rcActorList);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnChoose = view.findViewById(R.id.btnChooseActor);
         mEdtSearchActor = view.findViewById(R.id.edtActorSearch);
 
@@ -68,9 +68,10 @@ public class AssignActorDialogFragment extends DialogFragment implements ActorsA
                     intent.putExtra("chosenActor", mChosenActor.getUsername());
 
                     intent.putExtra("chosenActorFullInfo", mChosenActor);
-                    getTargetFragment().onActivityResult(ReqCode.ASSIGN_ACTOR, Activity.RESULT_OK, intent);
+
+                    getTargetFragment().onActivityResult(ReqCode.CHOOSE_ACTOR, Activity.RESULT_OK, intent);
                 }else{
-                    getTargetFragment().onActivityResult(ReqCode.ASSIGN_ACTOR, Activity.RESULT_CANCELED, intent);
+                    getTargetFragment().onActivityResult(ReqCode.CHOOSE_ACTOR, Activity.RESULT_CANCELED, intent);
                 }
 
                 dismiss();

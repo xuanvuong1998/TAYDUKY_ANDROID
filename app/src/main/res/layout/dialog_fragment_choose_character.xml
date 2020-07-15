@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="@dimen/popup_width"
-    android:minHeight="@dimen/popup_height"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.fragments.admin.AdminCharactersFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         >
         <EditText
             android:layout_margin="5dp"
-            android:id="@+id/edtActorSearch"
+            android:id="@+id/edtCharacterSearch"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:hint="Search"
@@ -22,7 +22,7 @@
             />
         <Button
             android:layout_margin="5dp"
-            android:id="@+id/btnChooseActor"
+            android:id="@+id/btnChooseCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_rectangle"
@@ -31,11 +31,7 @@
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-    
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
-        android:id="@+id/rcActorList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
+    <include layout="@layout/recyclerview_with_swipe_refresh"/>
 
 </LinearLayout>

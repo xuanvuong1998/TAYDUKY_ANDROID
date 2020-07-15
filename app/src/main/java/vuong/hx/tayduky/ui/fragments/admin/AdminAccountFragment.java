@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.admin;
 
 import android.content.Intent;
 import android.os.Bundle;

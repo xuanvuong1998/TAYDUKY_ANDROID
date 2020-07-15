@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ChallengeRolesAdapter;
+import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
@@ -44,7 +45,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_challenge_roles, container, false);
 
-        mRecyclerView = view.findViewById(R.id.rcChallengeRoles);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnAddNew = view.findViewById(R.id.btnAddRole);
         mBtnCancel = view.findViewById(R.id.btnCancel);
 
@@ -58,7 +59,9 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add new roles
+                AddRoleDialogFragment fr = new AddRoleDialogFragment();
+
+                fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
             }
         });
         mPresenter = new ManageChallengesPresenter(this);
@@ -68,6 +71,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         return view;
     }
 
+    
     @Override
     public void onClickCharacter() {
         showToastMessage("CLicked character");

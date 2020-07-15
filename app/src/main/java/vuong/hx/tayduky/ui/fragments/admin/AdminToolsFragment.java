@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.admin;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,17 +18,16 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ToolsAdapter;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
+import vuong.hx.tayduky.ui.fragments.dialogs.CreateToolDialogFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class AdminToolsFragment extends Fragment implements ManageToolView, ToolsAdapter.OnClickItem {
-
-    private final int SELECT_PHOTO = 23;
-    private final int CREATE_TOOL = 78;
-    private final String DIALOG_CREATE_TOOL_TAG = "create_tool_dialog";
 
     private SwipeRefreshLayout mSwipeLayout;
 
@@ -74,7 +73,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     private void initViews(View view){
         mBtnAddNew = view.findViewById(R.id.btnAddNewTool);
-        mRecyclerView = view.findViewById(R.id.rcAdminTools);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,13 +90,13 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     private void registerEvents(){
         final CreateToolDialogFragment fragment = new CreateToolDialogFragment();
 
-        fragment.setTargetFragment(this, CREATE_TOOL);
+        fragment.setTargetFragment(this, ReqCode.CREATE_TOOL);
 
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                fragment.show(getActivity().getSupportFragmentManager(), DIALOG_CREATE_TOOL_TAG);
+                fragment.show(getActivity().getSupportFragmentManager(), ReqTag.CREATE_TOOL_TAG);
             }
         });
     }
@@ -106,7 +105,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CREATE_TOOL){
+        if (requestCode == ReqCode.CREATE_TOOL){
             if (resultCode == Activity.RESULT_OK){
                 mPresenter.loadToolsList();
             }else if (resultCode == Activity.RESULT_CANCELED){

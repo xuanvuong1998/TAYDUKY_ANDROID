@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.admin;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,6 +23,7 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ChallengesAdapter;
+import vuong.hx.tayduky.constants.ReqCode;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;
@@ -41,7 +42,6 @@ public class AdminChallengesFragment extends Fragment
     private ChallengesAdapter mChallengeAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private String mUserToken;
-    private int CHALLENGE_DETAILS = 999;
 
     public AdminChallengesFragment() {
     }
@@ -75,7 +75,7 @@ public class AdminChallengesFragment extends Fragment
 
     private void initViews(View view){
         mChallengeFilter = view.findViewById(R.id.spChallengeStt);
-        mRecyclerView = view.findViewById(R.id.rcAdminChallenges);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
         mBtnAddNew = view.findViewById(R.id.btnAddChallenge);
 
@@ -144,7 +144,7 @@ public class AdminChallengesFragment extends Fragment
     public void onClickDetails(Challenge challenge) {
         ChallengeDetailsFragment fr = ChallengeDetailsFragment.newInstance(challenge);
 
-        fr.setTargetFragment(this, CHALLENGE_DETAILS);
+        fr.setTargetFragment(this, ReqCode.CHALLENGE_DETAILS);
         fr.show(getActivity().getSupportFragmentManager(), "challenge-details");
 
     }
@@ -153,7 +153,7 @@ public class AdminChallengesFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CHALLENGE_DETAILS){
+        if (requestCode == ReqCode.CHALLENGE_DETAILS){
             if (resultCode == Activity.RESULT_OK){
                 mChallengesPresenter.loadChallengesList(mUserToken);
             }

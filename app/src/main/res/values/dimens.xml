@@ -10,5 +10,7 @@
     <dimen name="image_small_height">120dp</dimen>
     <dimen name="button_small_width">100dp</dimen>
     <dimen name="button_small_height">35dp</dimen>
+    <dimen name="image_medium_width">150dp</dimen>
+    <dimen name="image_medium_height">170dp</dimen>
 
 </resources>

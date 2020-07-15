@@ -5,63 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.AdminChallengesFragment">
+    tools:context=".ui.fragments.admin.AdminChallengesFragment">
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_layout"
+    <Button
+        android:id="@+id/btnAddChallenge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_rectangle"
+        android:text="ADD NEW"
+        android:textSize="17sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvChallengeFilter"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Filter"
+            android:textSize="25sp" />
+
+        <Spinner
+            android:id="@+id/spChallengeStt"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
 
-            <Button
-                android:id="@+id/btnAddChallenge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_rectangle"
-                android:text="ADD NEW"
-                android:textSize="17sp" />
+            android:layout_alignRight="@+id/tvChallengeFilter"
+            android:layout_marginLeft="40dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvChallengeFilter"
-                    android:layout_width="84dp"
-                    android:layout_height="wrap_content"
-                    android:text="Filter"
-                    android:textSize="25sp" />
-
-                <Spinner
-                    android:id="@+id/spChallengeStt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:layout_alignRight="@+id/tvChallengeFilter"
-                    android:layout_marginLeft="40dp" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcAdminChallenges"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical" />
-
-        </LinearLayout>
-
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <include layout="@layout/recyclerview_with_swipe_refresh"/>
 
 
 </LinearLayout>

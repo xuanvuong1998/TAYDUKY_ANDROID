@@ -4,18 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.AdminToolsFragment">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    tools:context=".ui.fragments.admin.AdminToolsFragment">
 
         <Button
             android:id="@+id/btnAddNewTool"
@@ -35,13 +24,6 @@
             android:inputType="textFilter"
             android:textSize="15sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcAdminTools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
-
-    </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+       <include layout="@layout/recyclerview_with_swipe_refresh"/>
 
 </LinearLayout>

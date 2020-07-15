@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments;
+package vuong.hx.tayduky.ui.fragments.admin;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
@@ -24,6 +26,9 @@ import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
+import vuong.hx.tayduky.ui.fragments.dialogs.AddRoleDialogFragment;
+import vuong.hx.tayduky.ui.fragments.dialogs.ChallengeRolesDialogFragment;
+import vuong.hx.tayduky.ui.fragments.support.DatePickerFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeDetailsView;
 
 public class ChallengeDetailsFragment extends DialogFragment
@@ -37,9 +42,6 @@ public class ChallengeDetailsFragment extends DialogFragment
     private List<SceneTool> mTools;
     private ManageChallengesPresenter mPresenter;
     private String mUserToken;
-
-    private int CHALLENGE_DETAILS = 999;
-
 
     public static ChallengeDetailsFragment newInstance(Challenge challenge) {
         Bundle args = new Bundle();
@@ -83,23 +85,29 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnSave = view.findViewById(R.id.btnSaveChallenge);
         mBtnCancel = view.findViewById(R.id.btnCancel);
 
-
         registerEvents();
 
-        if (curChallenge != null) setData();
+        if (isCreateNewMode() == false) setData();
+
+        updateUI();
 
     }
 
     private void updateUI(){
-        if (curChallenge == null){ // Create New
+        if (isCreateNewMode()){ // Create New
             mBtnSave.setText("Create");
-            mBtnTools.setText("Add tools");
-            mBtnRoles.setText("Add roles");
+            /*mBtnTools.setText("Add tools");
+            mBtnRoles.setText("Add roles");*/
+            mBtnRoles.setVisibility(View.GONE);
+            mBtnTools.setVisibility(View.GONE);
 
         }else{ // Update
             mBtnSave.setText("Save changes");
-            mBtnRoles.setText("Roles");
-            mBtnTools.setText("Tools");
+            /*mBtnRoles.setText("Roles");
+            mBtnTools.setText("Tools");*/
+
+            mBtnTools.setVisibility(View.VISIBLE);
+            mBtnRoles.setVisibility(View.VISIBLE);
         }
     }
     private void setData(){
@@ -122,15 +130,33 @@ public class ChallengeDetailsFragment extends DialogFragment
 
     }
 
+    private void showCreateNewRoleDialog(){
+        AddRoleDialogFragment fr = new AddRoleDialogFragment();
+
+        fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
+    }
+
+    private void showChallengeRolesList(){
+        ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
+                .newInstance(curChallenge != null ? curChallenge.getId() : -1);
+
+        fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
+    }
+
+    private boolean isCreateNewMode(){
+        return curChallenge ==  null;
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnRoles:
-                ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
-                        .newInstance(curChallenge != null ? curChallenge.getId() : null);
+                if (isCreateNewMode()){
+                    showCreateNewRoleDialog();
+                }else{
+                    showChallengeRolesList();
+                }
 
-                fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
                 break;
             case R.id.btnTools:
 
@@ -163,7 +189,7 @@ public class ChallengeDetailsFragment extends DialogFragment
             newChallenge.setLocation(mEdtLocation.getText().toString());
             newChallenge.setStartDate(mEdtStartTime.getText().toString());
 
-            mPresenter.createNewChallenge(mUserToken, newChallenge, mRoles, mTools);
+            mPresenter.createNewChallenge(mUserToken, newChallenge, null, null);
 
         }else{ // update
             mPresenter.update(mUserToken, curChallenge, mRoles, mTools);
@@ -171,13 +197,13 @@ public class ChallengeDetailsFragment extends DialogFragment
     }
 
     private void finishAndRequestRefresh(){
-        getTargetFragment().onActivityResult(CHALLENGE_DETAILS
+        getTargetFragment().onActivityResult(ReqCode.CHALLENGE_DETAILS
                     , Activity.RESULT_OK, getActivity().getIntent());
         dismiss();
     }
 
     private void cancel(){
-        getTargetFragment().onActivityResult(CHALLENGE_DETAILS
+        getTargetFragment().onActivityResult(ReqCode.CHALLENGE_DETAILS
                 , Activity.RESULT_CANCELED, getActivity().getIntent());
         dismiss();
     }
@@ -195,12 +221,17 @@ public class ChallengeDetailsFragment extends DialogFragment
 
 
     @Override
-    public void notifyModelErr() {
-        ToastHelper.showLongMess(getContext(), "Failed! Check data again");
+    public void notifyModelErr(String mess) {
+        ToastHelper.showLongMess(getContext(), mess);
     }
 
     @Override
     public void notifyCreateSuccess() {
         ToastHelper.showLongMess(getContext(), "created!");
+
+        getTargetFragment().onActivityResult(ReqCode.CHALLENGE_DETAILS,
+                            Activity.RESULT_OK, getActivity().getIntent());
+
+        dismiss();
     }
 }
