@@ -22,9 +22,12 @@ public class ManageToolsPresenter {
         toolRepo = new ToolRepoImpl();
     }
 
+
     public void setManageToolView(ManageToolView manageToolView) {
         this.manageToolView = manageToolView;
     }
+
+
 
     public void deleteTool(String token, int toolId){
         toolRepo.delete(token, toolId, new ApiCallBack<ResponseBody>() {

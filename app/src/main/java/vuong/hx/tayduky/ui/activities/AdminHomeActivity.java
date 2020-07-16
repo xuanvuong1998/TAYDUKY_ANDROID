@@ -32,8 +32,12 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         initViews();
 
+        loadCartData();
     }
 
+    private void loadCartData(){
+
+    }
 
     private void initViews(){
         bottomNav = findViewById(R.id.bottom_nav);

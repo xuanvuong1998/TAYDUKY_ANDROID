@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/button_rectangle"
+        android:background="@drawable/button_primary"
         android:text="ADD NEW"
         android:textSize="17sp" />
 

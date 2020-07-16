@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:textSize="17sp"
-                android:background="@drawable/button_rectangle"
+                android:background="@drawable/button_primary"
                 android:text="SAVE"/>
         </LinearLayout>
 

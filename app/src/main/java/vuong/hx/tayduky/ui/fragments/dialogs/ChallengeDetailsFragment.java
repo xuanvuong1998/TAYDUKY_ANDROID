@@ -141,9 +141,24 @@ public class ChallengeDetailsFragment extends DialogFragment
         fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
     }
 
+    private void showCreateNewSceneToolDialog(){
+        AddRoleDialogFragment fr = new AddRoleDialogFragment();
+
+        fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
+    }
+
+    private void showCreateSceneToolListDialog(){
+        ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
+                .newInstance(curChallenge);
+
+        fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
+    }
+
     private boolean isCreateNewMode(){
         return curChallenge ==  null;
     }
+
+
 
     @Override
     public void onClick(View v) {

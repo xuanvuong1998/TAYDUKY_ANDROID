@@ -25,7 +25,7 @@
             android:id="@+id/btnChooseCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_rectangle"
+            android:background="@drawable/button_primary"
             android:text="Choose"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"

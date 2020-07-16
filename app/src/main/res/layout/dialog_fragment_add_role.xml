@@ -119,7 +119,7 @@
         android:padding="5dp">
 
         <Button
-            android:background="@drawable/button_rectangle"
+            android:background="@drawable/button_primary"
             android:id="@+id/btnAddRole"
             android:layout_height="@dimen/button_small_height"
             android:layout_width="@dimen/button_small_width"

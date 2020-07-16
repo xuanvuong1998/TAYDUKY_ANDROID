@@ -1,12 +1,14 @@
 package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -17,8 +19,11 @@ import androidx.fragment.app.DialogFragment;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.callbacks.SetDocumentCallBack;
 import vuong.hx.tayduky.constants.ReqCode;
 import vuong.hx.tayduky.constants.ReqTag;
+import vuong.hx.tayduky.helpers.CartHelper;
+import vuong.hx.tayduky.helpers.DateTimeHelper;
 import vuong.hx.tayduky.helpers.ImageHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
@@ -28,11 +33,13 @@ import vuong.hx.tayduky.models.Character;
 import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.presenters.ManageActorsPresenter;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
+import vuong.hx.tayduky.ui.fragments.support.ConfirmGotoCartDialog;
+import vuong.hx.tayduky.ui.fragments.support.DatePickerFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 
 public class AddRoleDialogFragment extends DialogFragment
-                implements View.OnClickListener, ActorsListView, CharacterListView {
+                implements View.OnClickListener, ActorsListView, CharacterListView, DatePickerDialog.OnDateSetListener {
 
     private Character mCharacter;
     private Actor mAssignedActor;
@@ -42,6 +49,7 @@ public class AddRoleDialogFragment extends DialogFragment
     private ManageActorsPresenter mActorsPresenter;
     private ManageCharactersPresenter mCharactersPresenter;
     private List<Actor> mActorsList;
+    private DatePickerFragment datePicker;
     private List<Character> mCharactersList;
     private Challenge mChallenge;
 
@@ -101,12 +109,25 @@ public class AddRoleDialogFragment extends DialogFragment
      */
     private void addRoleToCart(){
         SceneRole newRole = new SceneRole();
-        newRole.setChallengeId(mChallengeId);
+        newRole.setChallengeId(mChallenge.getId());
         newRole.setAssignedActor(mAssignedActor.getUsername());
         newRole.setChallengeId(mCharacter.getId());
         newRole.setDescription(mEdtDesc.getText().toString());
+        newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());
 
-        
+        CartHelper.addNewRole(newRole, new SetDocumentCallBack() {
+            @Override
+            public void onSuccess() {
+                ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
+
+                dialog.show(getActivity().getSupportFragmentManager(), "confirm-gotocart");
+            }
+
+            @Override
+            public void onFail(String message) {
+                ToastHelper.showLongMess(getContext(), message);
+            }
+        });
     }
 
     @Override
@@ -117,6 +138,12 @@ public class AddRoleDialogFragment extends DialogFragment
                 break;
             case R.id.btnAddRole:
                 addRoleToCart();
+                break;
+            case R.id.btnPickStartDate:
+                datePicker = new DatePickerFragment();
+
+                datePicker.show(getActivity().getSupportFragmentManager(), "date-picker");
+
                 break;
                 
             case R.id.imgvAssignedActor:
@@ -172,5 +199,12 @@ public class AddRoleDialogFragment extends DialogFragment
     @Override
     public void loadCharactersList(List<Character> characters) {
         mCharactersList = characters;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date = DateTimeHelper.GetDateString(year, month, dayOfMonth);
+
+        mEdtJoinedDate.setText(date);
     }
 }

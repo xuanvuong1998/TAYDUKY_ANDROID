@@ -108,7 +108,7 @@
                 android:id="@+id/btnSaveChanges"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
-                android:background="@drawable/button_rectangle"
+                android:background="@drawable/button_primary"
                 android:text="Save changes"
                 android:textSize="12sp" />
 

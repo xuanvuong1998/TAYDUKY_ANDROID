@@ -157,7 +157,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_rectangle"
+        android:background="@drawable/button_primary"
         android:text="SAVE CHANGES"
         android:textSize="19sp" />
 
