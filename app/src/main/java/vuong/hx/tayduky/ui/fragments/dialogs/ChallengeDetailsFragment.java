@@ -44,7 +44,7 @@ public class ChallengeDetailsFragment extends DialogFragment
 
     public static ChallengeDetailsFragment newInstance(Challenge challenge) {
         Bundle args = new Bundle();
-        args.putParcelable("currentChallenge", challenge);
+        args.putSerializable("currentChallenge", challenge);
         
         ChallengeDetailsFragment fragment = new ChallengeDetailsFragment();
         fragment.setArguments(args);
@@ -57,7 +57,7 @@ public class ChallengeDetailsFragment extends DialogFragment
 
         mPresenter = new ManageChallengesPresenter(this);
         mUserToken = TempDataHelper.getUserToken();
-        curChallenge =  getArguments().getParcelable("currentChallenge");
+        curChallenge = (Challenge) getArguments().getSerializable("currentChallenge");
     }
 
     @Nullable
@@ -136,7 +136,7 @@ public class ChallengeDetailsFragment extends DialogFragment
 
     private void showChallengeRolesList(){
         ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
-                .newInstance(curChallenge != null ? curChallenge.getId() : -1);
+                .newInstance(curChallenge);
 
         fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
     }

@@ -1,9 +1,8 @@
 package vuong.hx.tayduky.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class Challenge implements Parcelable {
+public class Challenge implements Serializable {
     private int id;
     private String name;
     private String description;
@@ -13,27 +12,7 @@ public class Challenge implements Parcelable {
     private int shootTimes;
 
 
-    protected Challenge(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        description = in.readString();
-        location = in.readString();
-        startDate = in.readString();
-        endDate = in.readString();
-        shootTimes = in.readInt();
-    }
 
-    public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
-        @Override
-        public Challenge createFromParcel(Parcel in) {
-            return new Challenge(in);
-        }
-
-        @Override
-        public Challenge[] newArray(int size) {
-            return new Challenge[size];
-        }
-    };
 
     @Override
     public String toString() {
@@ -117,19 +96,5 @@ public class Challenge implements Parcelable {
         this.shootTimes = shootTimes;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(location);
-        dest.writeString(startDate);
-        dest.writeString(endDate);
-        dest.writeInt(shootTimes);
-    }
 }

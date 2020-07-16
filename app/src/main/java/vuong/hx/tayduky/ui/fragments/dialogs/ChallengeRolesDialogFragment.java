@@ -18,6 +18,7 @@ import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ChallengeRolesAdapter;
 import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeRolesView;
@@ -29,12 +30,13 @@ public class ChallengeRolesDialogFragment extends DialogFragment
     private ManageChallengesPresenter mPresenter;
     private Button mBtnAddNew, mBtnCancel;
     private RecyclerView mRecyclerView;
-    private int mChallengeId;
+    private Challenge mChallenge;
 
-    public static ChallengeRolesDialogFragment newInstance(int challengeId) {
+    public static ChallengeRolesDialogFragment newInstance(Challenge challenge) {
 
         Bundle args = new Bundle();
-        args.putInt("challengeId", challengeId);
+
+        args.putSerializable("challenge", challenge);
         ChallengeRolesDialogFragment fragment = new ChallengeRolesDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -59,15 +61,15 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddRoleDialogFragment fr = AddRoleDialogFragment.newInstance(mChallengeId);
+                AddRoleDialogFragment fr = AddRoleDialogFragment.newInstance(mChallenge);
 
                 fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
             }
         });
         mPresenter = new ManageChallengesPresenter(this);
 
-        mChallengeId = getArguments().getInt("challengeId");
-        mPresenter.loadChallengeRoles(mChallengeId);
+        mChallenge = (Challenge) getArguments().getSerializable("challenge");
+        mPresenter.loadChallengeRoles(mChallenge.getId());
         return view;
     }
 

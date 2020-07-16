@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.constants.UserRole;
-import vuong.hx.tayduky.firebase.FirebaseHelper;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
@@ -34,9 +33,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mLoginPresenter = new LoginPresenter(this);
         }
 
-        FirebaseHelper.initEvents();
-        FirebaseHelper.setData("VUONG DEP TRAI");
         initViews();
+
+        //CartHelper.getRoles();
     }
 
     @Override

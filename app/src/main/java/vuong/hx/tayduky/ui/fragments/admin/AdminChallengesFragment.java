@@ -43,6 +43,7 @@ public class AdminChallengesFragment extends Fragment
     private ChallengesAdapter mChallengeAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private String mUserToken;
+    private int counter = 1;
 
     public AdminChallengesFragment() {
     }
@@ -85,6 +86,20 @@ public class AdminChallengesFragment extends Fragment
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*CartHelper.addNewRole(counter++, "2020-10-10",
+                        "ltld", 1, "dien cho hay vao nhes");
+
+                CartHelper.getRoles(new QuerySnapshotCallBack() {
+                    @Override
+                    public void onComplete(List list) {
+
+                        List<SceneRole> rols = list;
+
+                        LogHelper.printAssert(list.get(0).toString());
+                    }
+                });*/
+
 
                 fr.show(getActivity().getSupportFragmentManager(),
                         "new-challenge");

@@ -9,15 +9,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import vuong.hx.tayduky.helpers.LogHelper;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseHelper {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private static DatabaseReference messRef = database.getReference("message");
 
     public static void initEvents(){
+
         messRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -39,7 +42,12 @@ public class FirebaseHelper {
         return database.getReference(refKey);
     }
 
-    public static String getData(String refKey){
-        getRef(refKey).
+    public static CollectionReference getCollection(String id){
+        return firestore.collection(id);
     }
+
+    public static DocumentReference getDocument(CollectionReference col, String docId){
+        return col.document(docId);
+    }
+
 }

@@ -23,7 +23,9 @@ import vuong.hx.tayduky.helpers.ImageHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
+import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.Character;
+import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.presenters.ManageActorsPresenter;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
@@ -32,23 +34,34 @@ import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 public class AddRoleDialogFragment extends DialogFragment
                 implements View.OnClickListener, ActorsListView, CharacterListView {
 
-    private int mChallengeId;
     private Character mCharacter;
     private Actor mAssignedActor;
-    private String mDesc;
-    private EditText mEdtDesc;
+    private EditText mEdtDesc, mEdtJoinedDate;
     private ImageView mImgvCharacter, mImgvAssignedActor;
-    private Button mBtnAddRole, mBtnCancel;
+    private Button mBtnAddRole, mBtnCancel, mBtnPickdate;
     private ManageActorsPresenter mActorsPresenter;
     private ManageCharactersPresenter mCharactersPresenter;
     private List<Actor> mActorsList;
     private List<Character> mCharactersList;
+    private Challenge mChallenge;
+
+    public static AddRoleDialogFragment newInstance(Challenge challenge) {
+
+        Bundle args = new Bundle();
+
+        args.putSerializable("challenge", challenge);
+
+        AddRoleDialogFragment fragment = new AddRoleDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_add_role, container, false);
 
+        mChallenge = (Challenge) getArguments().getSerializable("challenge");
         loadData();
 
         initViews(view);
@@ -72,6 +85,8 @@ public class AddRoleDialogFragment extends DialogFragment
         mImgvCharacter.setOnClickListener(this);
 
         mEdtDesc = view.findViewById(R.id.edtRoleDesc);
+        mEdtJoinedDate = view.findViewById(R.id.edtStartTime);
+        mEdtJoinedDate.setText(mChallenge.getStartDate());
 
         mBtnAddRole = view.findViewById(R.id.btnAddRole);
         mBtnAddRole.setOnClickListener(this);
@@ -85,6 +100,12 @@ public class AddRoleDialogFragment extends DialogFragment
      * Add role to The Cart
      */
     private void addRoleToCart(){
+        SceneRole newRole = new SceneRole();
+        newRole.setChallengeId(mChallengeId);
+        newRole.setAssignedActor(mAssignedActor.getUsername());
+        newRole.setChallengeId(mCharacter.getId());
+        newRole.setDescription(mEdtDesc.getText().toString());
+
         
     }
 
