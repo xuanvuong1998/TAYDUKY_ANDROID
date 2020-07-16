@@ -32,7 +32,7 @@ public class CartRolesAdapter extends RecyclerView.Adapter<CartRolesAdapter.Cart
     public CartRolesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_cart_roles, parent, false);
+                    .inflate(R.layout.adapter_rv_cart_roles, parent, false);
 
         return new CartRolesViewHolder(view);
     }
@@ -74,16 +74,17 @@ public class CartRolesAdapter extends RecyclerView.Adapter<CartRolesAdapter.Cart
 
             imgCharacter = itemView.findViewById(R.id.imgvCharacter);
             imgAssignedActor = itemView.findViewById(R.id.imgvAssignedActor);
-
+            tvChallengeName = itemView.findViewById(R.id.tvChallengeName);
             tvDesc = itemView.findViewById(R.id.tvDesc);
 
-            btnDeleteRole = itemView.findViewById(R.id.btnDeleteRole);
+            btnDeleteRole = itemView.findViewById(R.id.btnDelRole);
 
         }
 
         public void bindData(SceneRoleFullInfo role){
             tvDesc.setText(role.getDesc());
             tvChallengeName.setText(role.getChallenge().getName());
+
             ImageHelper.loadImageFromInternal(role.getCharacter().getImage(), imgCharacter);
             ImageHelper.loadImageFromInternal(role.getAssignedActor().getImage(), imgAssignedActor);
 

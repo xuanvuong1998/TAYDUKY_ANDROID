@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneToolFullInfo;
 
 public class CartHelper {
+
+
     private static CollectionReference cartRoles = FirebaseHelper.getCollection("cart-roles");
     private static CollectionReference cartTools = FirebaseHelper.getCollection("cart-tools");
 
@@ -43,7 +46,9 @@ public class CartHelper {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (DocumentSnapshot doc : task.getResult()) {
+
                     SceneRoleFullInfo role = doc.toObject(SceneRoleFullInfo.class);
+
                     list.add(role);
                 }
                 callBack.onComplete(list);
@@ -86,4 +91,26 @@ public class CartHelper {
 
     }
 
+    public static void checkoutRoles(){
+
+        cartRoles.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(QueryDocumentSnapshot doc : task.getResult()){
+                    cartRoles.document(doc.getId()).delete();
+                }
+            }
+        });
+    }
+
+    public static void checkoutTools(){
+        cartTools.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(QueryDocumentSnapshot doc : task.getResult()){
+                    cartTools.document(doc.getId()).delete();
+                }
+            }
+        });
+    }
 }

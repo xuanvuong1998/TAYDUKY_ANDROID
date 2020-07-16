@@ -151,7 +151,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     @Override
     public void onClickDelete(Tool tool) {
-        mPresenter.deleteTool(mUserToken, tool.getId());
+        mPresenter.deleteTool(mUserToken, (int) tool.getId());
     }
 
     @Override

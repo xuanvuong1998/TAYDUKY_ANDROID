@@ -3,9 +3,9 @@ package vuong.hx.tayduky.models;
 import java.io.Serializable;
 
 public class SceneRole implements Serializable {
-    private int id;
-    private int challengeId;
-    private int characterId;
+    private long id;
+    private long challengeId;
+    private long characterId;
     private String assignedActor;
     private String description;
     private String participatedDate;
@@ -26,27 +26,27 @@ public class SceneRole implements Serializable {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getChallengeId() {
+    public long getChallengeId() {
         return challengeId;
     }
 
-    public void setChallengeId(int challengeId) {
+    public void setChallengeId(long challengeId) {
         this.challengeId = challengeId;
     }
 
-    public int getCharacterId() {
+    public long getCharacterId() {
         return characterId;
     }
 
-    public void setCharacterId(int characterId) {
+    public void setCharacterId(long characterId) {
         this.characterId = characterId;
     }
 
@@ -85,7 +85,7 @@ public class SceneRole implements Serializable {
     public SceneRole() {
     }
 
-    public SceneRole(int id, int challengeId, int characterId, String assignedActor, String description, String participatedDate, String finishedDate) {
+    public SceneRole(long id, long challengeId, long characterId, String assignedActor, String description, String participatedDate, String finishedDate) {
         this.id = id;
         this.challengeId = challengeId;
         this.characterId = characterId;

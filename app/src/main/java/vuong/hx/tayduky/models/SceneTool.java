@@ -3,9 +3,9 @@ package vuong.hx.tayduky.models;
 import java.io.Serializable;
 
 public class SceneTool implements Serializable {
-    private int challengeId;
-    private int toolId;
-    private int quantity;
+    private long challengeId;
+    private long toolId;
+    private long quantity;
     private Challenge challenge;
     private Tool tool;
 
@@ -34,7 +34,7 @@ public class SceneTool implements Serializable {
         this.tool = tool;
     }
 
-    public SceneTool(int challengeId, int toolId, int quantity, Challenge challenge, Tool tool) {
+    public SceneTool(long challengeId, long toolId, long quantity, Challenge challenge, Tool tool) {
         this.challengeId = challengeId;
         this.toolId = toolId;
         this.quantity = quantity;
@@ -42,34 +42,34 @@ public class SceneTool implements Serializable {
         this.tool = tool;
     }
 
-    public int getChallengeId() {
+    public long getChallengeId() {
         return challengeId;
     }
 
-    public void setChallengeId(int challengeId) {
+    public void setChallengeId(long challengeId) {
         this.challengeId = challengeId;
     }
 
-    public int getToolId() {
+    public long getToolId() {
         return toolId;
     }
 
-    public void setToolId(int toolId) {
+    public void setToolId(long toolId) {
         this.toolId = toolId;
     }
 
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
     public SceneTool() {
     }
 
-    public SceneTool(int challengeId, int toolId, int quantity) {
+    public SceneTool(long challengeId, long toolId, long quantity) {
         this.challengeId = challengeId;
         this.toolId = toolId;
         this.quantity = quantity;

@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class Character implements Serializable {
     
-    private int id;
+    private long id;
     private String name;
     private String image;
     private String defaultActor;
-    private int status;
+    private long status;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -53,18 +53,18 @@ public class Character implements Serializable {
         this.defaultActor = defaultActor;
     }
 
-    public int getStatus() {
+    public long getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(long status) {
         this.status = status;
     }
 
     public Character() {
     }
 
-    public Character(int id, String name, String image, String defaultActor, int status) {
+    public Character(long id, String name, String image, String defaultActor, long status) {
         this.id = id;
         this.name = name;
         this.image = image;

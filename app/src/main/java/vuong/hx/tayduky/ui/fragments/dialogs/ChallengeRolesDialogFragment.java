@@ -73,7 +73,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mPresenter = new ManageChallengesPresenter(this);
 
         mChallenge = (Challenge) getArguments().getSerializable("challenge");
-        mPresenter.loadChallengeRoles(mChallenge.getId());
+        mPresenter.loadChallengeRoles((int) mChallenge.getId());
         return view;
     }
 

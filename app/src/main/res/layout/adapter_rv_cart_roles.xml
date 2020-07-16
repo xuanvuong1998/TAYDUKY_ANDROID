@@ -20,7 +20,7 @@
         <RelativeLayout
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:background="#72009688"
+            android:background="#C7CC97"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -95,6 +95,7 @@
             android:id="@+id/tvChallengeName"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:textSize="23sp"
             android:gravity="start" />
 
         <TextView
@@ -108,9 +109,9 @@
         <TextView
             android:id="@+id/tvDesc"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:textSize="23sp"
             android:gravity="start" />
-
 
 
         <LinearLayout

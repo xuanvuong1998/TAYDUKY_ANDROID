@@ -1,7 +1,6 @@
 package vuong.hx.tayduky.models;
 
 import java.io.Serializable;
-
 public class SceneRoleFullInfo implements Serializable {
     private Character character;
     private Actor assignedActor;
@@ -13,6 +12,8 @@ public class SceneRoleFullInfo implements Serializable {
     public Challenge getChallenge() {
         return challenge;
     }
+
+
 
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
@@ -79,4 +80,5 @@ public class SceneRoleFullInfo implements Serializable {
 
     public SceneRoleFullInfo() {
     }
+
 }

@@ -3,11 +3,11 @@ package vuong.hx.tayduky.models;
 import java.io.Serializable;
 
 public class Tool implements Serializable {
-    private int id;
+    private long id;
     private String name;
     private String description;
     private String image;
-    private int quantity;
+    private long quantity;
 
     @Override
     public String toString() {
@@ -21,11 +21,11 @@ public class Tool implements Serializable {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -53,26 +53,26 @@ public class Tool implements Serializable {
         this.image = image;
     }
 
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
-    public int getStatus() {
+    public long getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(long status) {
         this.status = status;
     }
 
     public Tool() {
     }
 
-    public Tool(int id, String name, String description, String image, int quantity, int status) {
+    public Tool(long id, String name, String description, String image, long quantity, long status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -81,5 +81,5 @@ public class Tool implements Serializable {
         this.status = status;
     }
 
-    private int status;
+    private long status;
 }

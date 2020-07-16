@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SceneToolFullInfo implements Serializable {
     private Challenge challenge;
     private Tool tool;
-    private int quantity;
+    private long quantity;
 
     public Challenge getChallenge() {
         return challenge;
@@ -26,15 +26,15 @@ public class SceneToolFullInfo implements Serializable {
         this.tool = tool;
     }
 
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
-    public SceneToolFullInfo(Challenge challenge, Tool tool, int quantity) {
+    public SceneToolFullInfo(Challenge challenge, Tool tool, long quantity) {
         this.challenge = challenge;
         this.tool = tool;
         this.quantity = quantity;

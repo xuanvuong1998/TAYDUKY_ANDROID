@@ -3,16 +3,13 @@ package vuong.hx.tayduky.models;
 import java.io.Serializable;
 
 public class Challenge implements Serializable {
-    private int id;
+    private long id;
     private String name;
     private String description;
     private String location;
     private String startDate;
     private String endDate;
-    private int shootTimes;
-
-
-
+    private long shootTimes;
 
     @Override
     public String toString() {
@@ -27,11 +24,11 @@ public class Challenge implements Serializable {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -75,18 +72,18 @@ public class Challenge implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getShootTimes() {
+    public long getShootTimes() {
         return shootTimes;
     }
 
-    public void setShootTimes(int shootTimes) {
+    public void setShootTimes(long shootTimes) {
         this.shootTimes = shootTimes;
     }
 
     public Challenge() {
     }
 
-    public Challenge(int id, String name, String description, String location, String startDate, String endDate, int shootTimes) {
+    public Challenge(long id, String name, String description, String location, String startDate, String endDate, long shootTimes) {
         this.id = id;
         this.name = name;
         this.description = description;

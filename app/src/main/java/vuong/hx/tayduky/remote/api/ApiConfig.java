@@ -60,12 +60,14 @@ public class ApiConfig {
             String CREATE = BASE_NAME;
             String DELETE = BASE_NAME + "/{sceneRole_id}";
             String UPDATE = BASE_NAME ;
+            String CREATE_RANGE = BASE_NAME + "/ranges";
         }
 
         interface SceneTool{
             String BASE_NAME = "scenetools";
             String GET_BY_IDs = BASE_NAME + "/{challenge_id}/{tool_id}";
             String CREATE = BASE_NAME;
+            String CREATE_RANGE = BASE_NAME + "/ranges";
             String DELETE = BASE_NAME + "/{challenge_id}/{tool_id}";
             String UPDATE = BASE_NAME ;
             String GET_CHALLENGE_TOOLS = BASE_NAME + "/{challenge_id}";
