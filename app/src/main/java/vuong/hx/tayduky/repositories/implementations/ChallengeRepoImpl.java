@@ -110,7 +110,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
 
     @Override
     public void createNewChallenge(String token, ChallengeCreateModel model, final ApiCallBack<ResponseBody> callBack) {
-        mChallengeService.createNew(token, model).enqueue(new Callback<ResponseBody>() {
+        mChallengeService.createNew(token, model.getChallenge()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -122,10 +122,9 @@ public class ChallengeRepoImpl implements ChallengeRepo {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                callBack.onFail(t.getMessage());
+                callBack.onFail(t.getLocalizedMessage());
             }
         });
-
     }
 
     @Override

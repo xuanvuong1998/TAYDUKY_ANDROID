@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "142134308640",
+    "firebase_url": "https://tayduky-5ae7c.firebaseio.com",
+    "project_id": "tayduky-5ae7c",
+    "storage_bucket": "tayduky-5ae7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142134308640:android:1d399f1cdf1c34b97bf145",
+        "android_client_info": {
+          "package_name": "vuong.hx.tayduky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142134308640-gc4nj0g192j43fi9vp0v2cc8p7g1knat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vuong.hx.tayduky",
+            "certificate_hash": "3d58e3ed572769e305b372ca675b09737ff25724"
+          }
+        },
+        {
+          "client_id": "142134308640-lap6p08gers836e450bfp5v9ir19i6uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCXBH7yhla9OIDl2N_bRuCH8iXTaQYqxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142134308640-lap6p08gers836e450bfp5v9ir19i6uh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

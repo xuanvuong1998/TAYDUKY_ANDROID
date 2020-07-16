@@ -27,7 +27,7 @@ public interface ChallengeService {
     Call<List<SceneRoleFullInfo>> getChallengeRoles(@Path("challenge_id") int challengeId);
 
     @POST(ApiConfig.Apis.Challenge.CREATE)
-    Call<ResponseBody> createNew(@Header("Authorization") String token, @Body ChallengeCreateModel challenge);
+    Call<ResponseBody> createNew(@Header("Authorization") String token, @Body Challenge challenge);
 
     @PUT(ApiConfig.Apis.Challenge.UPDATE)
     Call<ResponseBody> update(@Header("Authorization") String token, @Body ChallengeCreateModel challenge);

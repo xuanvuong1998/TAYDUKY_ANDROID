@@ -59,7 +59,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddRoleDialogFragment fr = new AddRoleDialogFragment();
+                AddRoleDialogFragment fr = AddRoleDialogFragment.newInstance(mChallengeId);
 
                 fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
             }

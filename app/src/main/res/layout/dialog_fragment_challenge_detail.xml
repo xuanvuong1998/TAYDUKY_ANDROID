@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="@dimen/popup_height_full_screen"
     android:minWidth="@dimen/popup_width_full_screen"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:minHeight="@dimen/popup_height_full_screen"
+    android:orientation="vertical"
+    android:padding="10dp">
 
 
     <TextView
@@ -59,29 +59,67 @@
         android:text="From"
         android:textSize="19sp" />
 
-    <EditText
-
-        android:inputType="datetime"
-        android:id="@+id/edtStartTime"
-
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="19sp" />
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+
+        <EditText
+
+            android:id="@+id/edtStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:layout_weight="0.95"
+            android:textSize="19sp" />
+        <Button
+            android:id="@+id/btnPickStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick date"
+            android:layout_weight="0.05"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
 
     <TextView
-        android:inputType="none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
+        android:inputType="none"
         android:text="To"
         android:textSize="19sp" />
 
-    <EditText
-        android:id="@+id/edtEndTime"
-        android:inputType="datetime"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="19sp" />
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/edtEndTime"
+            android:layout_weight="0.95"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:textSize="19sp" />
+        <Button
+            android:id="@+id/btnPickEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:text="Pick date"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+
+
+
 
     <TextView
 
@@ -93,45 +131,44 @@
 
     <EditText
         android:id="@+id/edtShotTime"
-        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:textSize="19sp" />
 
     <Button
         android:id="@+id/btnRoles"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="Roles"
-        android:textSize="19sp"
-        />
+        android:textSize="19sp" />
 
     <Button
         android:id="@+id/btnTools"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="Tools"
-        android:textSize="19sp"
-        />
+        android:textSize="19sp" />
 
     <Button
         android:id="@+id/btnSaveChallenge"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_rectangle"
         android:text="SAVE CHANGES"
-        android:textSize="19sp"
-        android:background="@drawable/button_rectangle"/>
+        android:textSize="19sp" />
+
     <Button
         android:id="@+id/btnCancel"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_cancel"
         android:text="CANCEL"
-        android:textSize="19sp"
-        android:background="@drawable/button_cancel"/>
+        android:textSize="19sp" />
 
 
 </LinearLayout>

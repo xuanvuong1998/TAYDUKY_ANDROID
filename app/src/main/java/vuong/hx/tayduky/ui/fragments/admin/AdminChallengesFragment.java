@@ -28,6 +28,7 @@ import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
+import vuong.hx.tayduky.ui.fragments.dialogs.ChallengeDetailsFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ManageChallengeView;
 
 
@@ -69,7 +70,6 @@ public class AdminChallengesFragment extends Fragment
         mUserToken = TempDataHelper.getUserToken();
 
         initViews(view);
-
         return view;
     }
 
@@ -79,10 +79,13 @@ public class AdminChallengesFragment extends Fragment
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
         mBtnAddNew = view.findViewById(R.id.btnAddChallenge);
 
+        final ChallengeDetailsFragment fr =  ChallengeDetailsFragment.newInstance(null);
+        fr.setTargetFragment(this, ReqCode.CHALLENGE_DETAILS);
+
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChallengeDetailsFragment fr =  ChallengeDetailsFragment.newInstance(null);
+
                 fr.show(getActivity().getSupportFragmentManager(),
                         "new-challenge");
             }
@@ -143,7 +146,6 @@ public class AdminChallengesFragment extends Fragment
     @Override
     public void onClickDetails(Challenge challenge) {
         ChallengeDetailsFragment fr = ChallengeDetailsFragment.newInstance(challenge);
-
         fr.setTargetFragment(this, ReqCode.CHALLENGE_DETAILS);
         fr.show(getActivity().getSupportFragmentManager(), "challenge-details");
 

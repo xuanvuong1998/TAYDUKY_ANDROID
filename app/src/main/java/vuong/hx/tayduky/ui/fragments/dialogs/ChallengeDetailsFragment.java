@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.fragments.admin;
+package vuong.hx.tayduky.ui.fragments.dialogs;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -26,14 +26,13 @@ import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
-import vuong.hx.tayduky.ui.fragments.dialogs.AddRoleDialogFragment;
-import vuong.hx.tayduky.ui.fragments.dialogs.ChallengeRolesDialogFragment;
 import vuong.hx.tayduky.ui.fragments.support.DatePickerFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeDetailsView;
 
 public class ChallengeDetailsFragment extends DialogFragment
                     implements View.OnClickListener, DatePickerDialog.OnDateSetListener, ChallengeDetailsView {
     private EditText mEdtName, mEdtDesc, mEdtStartTime, mEdtEndTime, mEdtShotTimes, mEdtLocation;
+    private Button mBtnRoles, mBtnTools, mBtnSave, mBtnCancel, mBtnPickStartDate, mBtnPickEndDate;
     private String mChosenDate;
     private boolean isPickingStartingDate;
     private DatePickerFragment datePicker;
@@ -51,7 +50,7 @@ public class ChallengeDetailsFragment extends DialogFragment
         fragment.setArguments(args);
         return fragment;
     }
-    private Button mBtnRoles, mBtnTools, mBtnSave, mBtnCancel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +83,9 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnTools = view.findViewById(R.id.btnTools);
         mBtnSave = view.findViewById(R.id.btnSaveChallenge);
         mBtnCancel = view.findViewById(R.id.btnCancel);
+        mBtnPickStartDate = view.findViewById(R.id.btnPickStartDate);
+        mBtnPickEndDate = view.findViewById(R.id.btnPickEndDate);
+
 
         registerEvents();
 
@@ -96,18 +98,15 @@ public class ChallengeDetailsFragment extends DialogFragment
     private void updateUI(){
         if (isCreateNewMode()){ // Create New
             mBtnSave.setText("Create");
-            /*mBtnTools.setText("Add tools");
-            mBtnRoles.setText("Add roles");*/
             mBtnRoles.setVisibility(View.GONE);
             mBtnTools.setVisibility(View.GONE);
+            mEdtShotTimes.setVisibility(View.GONE);
 
         }else{ // Update
             mBtnSave.setText("Save changes");
-            /*mBtnRoles.setText("Roles");
-            mBtnTools.setText("Tools");*/
-
             mBtnTools.setVisibility(View.VISIBLE);
             mBtnRoles.setVisibility(View.VISIBLE);
+            mEdtShotTimes.setVisibility(View.VISIBLE);
         }
     }
     private void setData(){
@@ -124,9 +123,8 @@ public class ChallengeDetailsFragment extends DialogFragment
         mBtnSave.setOnClickListener(this);
         mBtnRoles.setOnClickListener(this);
         mBtnTools.setOnClickListener(this);
-        mEdtStartTime.setOnClickListener(this);
-        mEdtEndTime.setOnClickListener(this);
-
+        mBtnPickStartDate.setOnClickListener(this);
+        mBtnPickEndDate.setOnClickListener(this);
 
     }
 
@@ -167,12 +165,12 @@ public class ChallengeDetailsFragment extends DialogFragment
             case R.id.btnCancel:
                 finishAndRequestRefresh();
                 break;
-            case R.id.edtStartTime:
+            case R.id.btnPickStartDate:
                 isPickingStartingDate = true;
                 datePicker = DatePickerFragment.newInstance(this);
                 datePicker.show(getActivity().getSupportFragmentManager(), "DatePicker");
                 break;
-            case R.id.edtEndTime:
+            case R.id.btnPickEndDate:
                 isPickingStartingDate = false;
                 datePicker = DatePickerFragment.newInstance(this);
                 datePicker.show(getActivity().getSupportFragmentManager(), "DatePicker");

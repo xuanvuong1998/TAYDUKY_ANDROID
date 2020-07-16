@@ -103,7 +103,6 @@ public class ChooseActorDialogFragment extends DialogFragment implements ActorsA
 
     @Override
     public void onClickActor(Actor actor) {
-
         ToastHelper.showLongMess(getContext(), actor.getName() + " chosen!");
         mEdtSearchActor.setText(actor.getName());
         mChosenActor = actor;
