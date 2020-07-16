@@ -5,4 +5,5 @@ public class ReqCode {
     public static final int CHOOSE_ACTOR = 1;
     public static final int CREATE_TOOL = 3 ;
     public static final int CHOOSE_CHARACTER = 4 ;
+    public static final int CONFIRM_GOTOCART = 5 ;
 }

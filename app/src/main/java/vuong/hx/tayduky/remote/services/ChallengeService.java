@@ -14,6 +14,7 @@ import retrofit2.http.Path;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.ChallengeCreateModel;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
+import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ApiConfig;
 
 public interface ChallengeService {
@@ -25,6 +26,9 @@ public interface ChallengeService {
 
     @GET(ApiConfig.Apis.Challenge.GET_CHALLENGE_ROLES)
     Call<List<SceneRoleFullInfo>> getChallengeRoles(@Path("challenge_id") int challengeId);
+
+    @GET(ApiConfig.Apis.Challenge.GET_CHALLENGE_TOOLS)
+    Call<List<SceneTool>> getChallengeTools(@Path("challenge_id") int challengeId);
 
     @POST(ApiConfig.Apis.Challenge.CREATE)
     Call<ResponseBody> createNew(@Header("Authorization") String token, @Body Challenge challenge);

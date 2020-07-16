@@ -148,8 +148,8 @@ public class ChallengeDetailsFragment extends DialogFragment
     }
 
     private void showCreateSceneToolListDialog(){
-        ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
-                .newInstance(curChallenge);
+        ChallengeToolsDialogFragment fr
+                = ChallengeToolsDialogFragment.newInstance(curChallenge);
 
         fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
     }
@@ -172,7 +172,11 @@ public class ChallengeDetailsFragment extends DialogFragment
 
                 break;
             case R.id.btnTools:
-
+                if (isCreateNewMode()){
+                    showCreateNewSceneToolDialog();
+                }else{
+                    showCreateSceneToolListDialog();
+                }
                 break;
             case R.id.btnSaveChallenge:
                 saveChanges();

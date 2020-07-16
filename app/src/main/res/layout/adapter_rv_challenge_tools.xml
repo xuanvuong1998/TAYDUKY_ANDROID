@@ -5,9 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="30dp"
     android:elevation="30dp"
-    android:layout_gravity="center"
-    android:minWidth="@dimen/popup_width"
     android:layout_marginHorizontal="30dp"
+    app:cardBackgroundColor="#A8CCD850"
     android:orientation="vertical"
     android:scrollbars="vertical"
 
@@ -22,27 +21,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose Tool"
+            android:textStyle="bold"
+            android:text="Tool name"
             android:textSize="20sp"/>
 
-        <Spinner
-            android:id="@+id/spnTools"
+        <EditText
+            android:id="@+id/edtToolName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             />
         <TextView
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Quantity"
 
             android:textSize="20sp"/>
+
         <EditText
-            android:id="@+id/edtQuantity"
+            android:id="@+id/edtToolQuantity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quantity"
-            android:inputType="number"
-            />
+            android:layout_height="41dp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="4dp"
@@ -51,7 +50,6 @@
             android:background="@drawable/line_black" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -59,20 +57,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnAddTool"
+                android:id="@+id/btnSaveChanges"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
                 android:background="@drawable/button_primary"
-                android:text="Add tool"
+                android:text="Save changes"
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnCancel"
+                android:id="@+id/btnDeleteTool"
                 android:layout_marginLeft="50dp"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
-                android:background="@drawable/button_cancel"
-                android:text="Cancel" />
+                android:background="@drawable/button_delete"
+                android:text="Delete" />
         </LinearLayout>
 
     </LinearLayout>

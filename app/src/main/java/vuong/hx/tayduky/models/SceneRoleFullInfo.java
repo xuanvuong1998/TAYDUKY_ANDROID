@@ -1,11 +1,22 @@
 package vuong.hx.tayduky.models;
 
-public class SceneRoleFullInfo {
+import java.io.Serializable;
+
+public class SceneRoleFullInfo implements Serializable {
     private Character character;
     private Actor assignedActor;
     private String desc;
     private String participatedDate;
     private String finishedDate;
+    private Challenge challenge;
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
 
     public SceneRoleFullInfo(Character character, Actor assignedActor, String desc, String participatedDate, String finishedDate) {
         this.character = character;

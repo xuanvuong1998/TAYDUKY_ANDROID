@@ -17,11 +17,13 @@ import vuong.hx.tayduky.repositories.implementations.ChallengeRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.ChallengeRepo;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeDetailsView;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeRolesView;
+import vuong.hx.tayduky.ui.view_interfaces.ChallengeToolsView;
 import vuong.hx.tayduky.ui.view_interfaces.ManageChallengeView;
 
 public class ManageChallengesPresenter {
     private ManageChallengeView manageChallengeView;
     private ChallengeRolesView rolesView;
+    private ChallengeToolsView toolsView;
     private ChallengeDetailsView mDetailsView;
 
     private ChallengeRepo challengeRepo = new ChallengeRepoImpl();
@@ -38,6 +40,9 @@ public class ManageChallengesPresenter {
     public ManageChallengesPresenter(ChallengeRolesView rolesView) {
         this.rolesView = rolesView;
     }
+    public ManageChallengesPresenter(ChallengeToolsView toolView) {
+        this.toolsView = toolView;
+    }
 
     public void setManageChallengeView(ManageChallengeView manageChallengeView) {
         this.manageChallengeView = manageChallengeView;
@@ -53,6 +58,20 @@ public class ManageChallengesPresenter {
             @Override
             public void onFail(String message) {
                 rolesView.showToastMessage(message);
+            }
+        });
+    }
+
+    public void loadChallengeTools(int challengeId){
+        challengeRepo.getChallengeTools(challengeId, new ApiCallBack<List<SceneTool>>() {
+            @Override
+            public void onSuccess(List<SceneTool> sceneTools) {
+                toolsView.loadChallengeTools(sceneTools);
+            }
+
+            @Override
+            public void onFail(String message) {
+                toolsView.showToastMessage(message);
             }
         });
     }

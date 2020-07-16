@@ -11,14 +11,15 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import vuong.hx.tayduky.R;
-import vuong.hx.tayduky.ui.activities.ui.main.SectionsPagerAdapter;
+import vuong.hx.tayduky.ui.fragments.cart.SectionsPagerAdapter;
 
-public class TodoCart extends AppCompatActivity {
+public class TodoCartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_cart);
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);

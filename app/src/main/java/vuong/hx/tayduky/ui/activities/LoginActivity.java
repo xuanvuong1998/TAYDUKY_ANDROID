@@ -10,12 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
-import vuong.hx.tayduky.constants.UserRole;
 import vuong.hx.tayduky.helpers.SharePreferenceHelper;
-import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.presenters.LoginPresenter;
-import vuong.hx.tayduky.remote.api.ApiConfig;
 import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginScreenView{
@@ -102,9 +99,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void goToHomeActivity(String username, String password, String token, int role) {
+
+        Intent intent = new Intent(this, TodoCartActivity.class);
+        startActivity(intent);
+
         // Save token to preference
 
-        if (username != null){ // First time
+        /*if (username != null){ // First time
             token = ApiConfig.Apis.Auth.BEARER_PREFIX + token;
             TempDataHelper.setUserToken(token);
             TempDataHelper.setUserId(username);
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (intent != null){
             finish();
             startActivity(intent);
-        }
+        }*/
 
     }
 

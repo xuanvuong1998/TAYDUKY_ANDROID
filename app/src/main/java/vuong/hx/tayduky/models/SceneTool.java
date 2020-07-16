@@ -1,9 +1,13 @@
 package vuong.hx.tayduky.models;
 
-public class SceneTool {
+import java.io.Serializable;
+
+public class SceneTool implements Serializable {
     private int challengeId;
     private int toolId;
     private int quantity;
+    private Challenge challenge;
+    private Tool tool;
 
     @Override
     public String toString() {
@@ -12,6 +16,30 @@ public class SceneTool {
                 ", toolId=" + toolId +
                 ", quantity=" + quantity +
                 '}';
+    }
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
+
+    public Tool getTool() {
+        return tool;
+    }
+
+    public void setTool(Tool tool) {
+        this.tool = tool;
+    }
+
+    public SceneTool(int challengeId, int toolId, int quantity, Challenge challenge, Tool tool) {
+        this.challengeId = challengeId;
+        this.toolId = toolId;
+        this.quantity = quantity;
+        this.challenge = challenge;
+        this.tool = tool;
     }
 
     public int getChallengeId() {

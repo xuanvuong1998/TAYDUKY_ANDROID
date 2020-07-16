@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="30dp"
     android:elevation="30dp"
-    android:layout_gravity="center"
-    android:minWidth="@dimen/popup_width"
     android:layout_marginHorizontal="30dp"
     android:orientation="vertical"
     android:scrollbars="vertical"
@@ -22,27 +20,40 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose Tool"
+            android:textStyle="bold"
+            android:text="Challenge "
             android:textSize="20sp"/>
 
-        <Spinner
-            android:id="@+id/spnTools"
+        <TextView
+            android:id="@+id/tvChallengeName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Tool name"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvToolName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             />
         <TextView
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Quantity"
 
             android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/edtQuantity"
+
+        <TextView
+            android:id="@+id/tvToolQuantity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quantity"
-            android:inputType="number"
-            />
+            android:layout_height="41dp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="4dp"
@@ -51,7 +62,6 @@
             android:background="@drawable/line_black" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -59,20 +69,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnAddTool"
+                android:id="@+id/btnDelTool"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
-                android:background="@drawable/button_primary"
-                android:text="Add tool"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_marginLeft="50dp"
-                android:layout_width="@dimen/button_small_width"
-                android:layout_height="@dimen/button_small_height"
-                android:background="@drawable/button_cancel"
-                android:text="Cancel" />
+                android:background="@drawable/button_delete"
+                android:text="Delete" />
         </LinearLayout>
 
     </LinearLayout>

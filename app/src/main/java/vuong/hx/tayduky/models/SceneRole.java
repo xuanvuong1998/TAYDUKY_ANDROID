@@ -1,6 +1,8 @@
 package vuong.hx.tayduky.models;
 
-public class SceneRole {
+import java.io.Serializable;
+
+public class SceneRole implements Serializable {
     private int id;
     private int challengeId;
     private int characterId;
@@ -8,6 +10,8 @@ public class SceneRole {
     private String description;
     private String participatedDate;
     private String finishedDate;
+
+
 
     @Override
     public String toString() {

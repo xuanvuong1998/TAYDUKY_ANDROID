@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.activities.ui.main;
+package vuong.hx.tayduky.ui.fragments.cart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

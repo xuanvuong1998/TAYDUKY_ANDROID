@@ -13,20 +13,14 @@ import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ClientApi;
 import vuong.hx.tayduky.remote.services.ChallengeService;
-import vuong.hx.tayduky.remote.services.SceneRoleService;
-import vuong.hx.tayduky.remote.services.SceneToolService;
 import vuong.hx.tayduky.repositories.interfaces.ChallengeRepo;
 
 public class ChallengeRepoImpl implements ChallengeRepo {
 
     private ChallengeService mChallengeService;
-    private SceneToolService mSceneToolService;
-    private SceneRoleService mSceneRoleService;
 
     public ChallengeRepoImpl() {
         mChallengeService = new ClientApi().getChallengeService();
-        mSceneRoleService = new ClientApi().getSceneRoleService();
-        mSceneToolService = new ClientApi().getSceneToolService();
     }
 
     @Override
@@ -72,7 +66,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
 
     @Override
     public void getChallengeTools(int challengeId, final ApiCallBack<List<SceneTool>> callBack) {
-        mSceneToolService.getChallengeTools(challengeId).enqueue(new Callback<List<SceneTool>>() {
+        mChallengeService.getChallengeTools(challengeId).enqueue(new Callback<List<SceneTool>>() {
             @Override
             public void onResponse(Call<List<SceneTool>> call, Response<List<SceneTool>> response) {
                 if (response.isSuccessful()) {

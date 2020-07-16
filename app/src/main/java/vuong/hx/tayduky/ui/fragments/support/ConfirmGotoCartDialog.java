@@ -1,6 +1,8 @@
 package vuong.hx.tayduky.ui.fragments.support;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.ui.activities.TodoCartActivity;
 
 public class ConfirmGotoCartDialog extends DialogFragment {
     private Button mBtnGotocart, mBtnAddMore;
@@ -45,15 +49,17 @@ public class ConfirmGotoCartDialog extends DialogFragment {
         mBtnGotocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: CREATE CART
+                Intent intent = new Intent(getActivity(), TodoCartActivity.class);
 
+                startActivity(intent);
             }
         });
 
         mBtnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getTargetFragment().onActivityResult(ReqCode.CONFIRM_GOTOCART,
+                                    Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });

@@ -1,14 +1,11 @@
-package vuong.hx.tayduky.ui.activities.ui.main;
+package vuong.hx.tayduky.ui.fragments.cart;
 
 import android.content.Context;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import vuong.hx.tayduky.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -16,8 +13,7 @@ import vuong.hx.tayduky.R;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final String[] TAB_TITLES = new String[]{"Scene Roles", "Scene Tools"};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -27,20 +23,27 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        Fragment curFrag;
+        if (position == 0){
+            curFrag = new CartRolesFragment();
+        }else if (position == 1){
+            curFrag = new CartToolsFragment();
+        }else{
+            curFrag = new PlaceholderFragment();
+        }
+
+        return curFrag;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return (TAB_TITLES[position]);
     }
 
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return TAB_TITLES.length;
     }
 }

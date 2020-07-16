@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vuong.hx.tayduky">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -17,23 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activities.TodoCart"
+            android:name=".ui.activities.TodoCartActivity"
             android:label="@string/title_activity_todo_cart"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.activities.CartActivity"
             android:label="@string/title_activity_cart" />
 
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+
 
         <activity android:name=".ui.activities.ActorHomeActivity" />
         <activity android:name=".ui.activities.AdminHomeActivity" />

@@ -1,4 +1,4 @@
-package vuong.hx.tayduky.ui.activities.ui.main;
+package vuong.hx.tayduky.ui.fragments.cart;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -10,7 +10,7 @@ public class PageViewModel extends ViewModel {
 
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
     private LiveData<String> mText = Transformations.map(mIndex, new Function<Integer, String>() {
-        @Override
+        @Override 
         public String apply(Integer input) {
             return "Hello world from section: " + input;
         }

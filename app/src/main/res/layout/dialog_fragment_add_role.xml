@@ -101,6 +101,7 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:text="Description" />
 
@@ -108,8 +109,7 @@
         android:gravity="start"
         android:id="@+id/edtRoleDesc"
         android:layout_height="200dp"
-        android:layout_width="match_parent"
-        android:text="Description" />
+        android:layout_width="match_parent" />
 
     <LinearLayout
         android:gravity="center_horizontal"

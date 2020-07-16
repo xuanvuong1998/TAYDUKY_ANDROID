@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/popup_height_full_screen"
+    android:minWidth="@dimen/popup_width_full_screen"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <Button
+        android:id="@+id/btnAddTool"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_primary"
+        android:text="ADD NEW"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_cancel"
+        android:text="Cancel"
+        android:textSize="17sp" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/recyclerview_with_swipe_refresh"/>
+
+</LinearLayout>

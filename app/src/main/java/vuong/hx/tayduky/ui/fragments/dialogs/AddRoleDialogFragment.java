@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.models.Character;
-import vuong.hx.tayduky.models.SceneRole;
+import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.presenters.ManageActorsPresenter;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
 import vuong.hx.tayduky.ui.fragments.support.ConfirmGotoCartDialog;
@@ -85,6 +86,7 @@ public class AddRoleDialogFragment extends DialogFragment
 
     }
 
+
     void initViews(View view){
         mImgvAssignedActor = view.findViewById(R.id.imgvAssignedActor);
         mImgvAssignedActor.setOnClickListener(this);
@@ -108,18 +110,30 @@ public class AddRoleDialogFragment extends DialogFragment
      * Add role to The Cart
      */
     private void addRoleToCart(){
-        SceneRole newRole = new SceneRole();
+
+        SceneRoleFullInfo newRole = new SceneRoleFullInfo();
+
+        newRole.setAssignedActor(mAssignedActor);
+        newRole.setCharacter(mCharacter);
+        newRole.setDesc(mEdtDesc.getText().toString());
+        newRole.setChallenge(mChallenge);
+        newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());
+
+        /*SceneRole newRole = new SceneRole();
         newRole.setChallengeId(mChallenge.getId());
         newRole.setAssignedActor(mAssignedActor.getUsername());
         newRole.setChallengeId(mCharacter.getId());
         newRole.setDescription(mEdtDesc.getText().toString());
-        newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());
+        newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());*/
+
+        final Fragment thisFr = this;
 
         CartHelper.addNewRole(newRole, new SetDocumentCallBack() {
             @Override
             public void onSuccess() {
                 ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
 
+                dialog.setTargetFragment(thisFr, ReqCode.CONFIRM_GOTOCART);
                 dialog.show(getActivity().getSupportFragmentManager(), "confirm-gotocart");
             }
 
@@ -129,6 +143,8 @@ public class AddRoleDialogFragment extends DialogFragment
             }
         });
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -181,9 +197,40 @@ public class AddRoleDialogFragment extends DialogFragment
             if (resultCode == Activity.RESULT_OK){
                 mCharacter= (Character) data.getSerializableExtra("chosenCharacterFullInfo");
 
+                // Get default actor image
+                mAssignedActor = getActorById(mCharacter.getDefaultActor());
+
                 ImageHelper.loadImageFromInternal(mCharacter.getImage(), mImgvCharacter);
+
+                if (mAssignedActor != null){
+                    ImageHelper.loadImageFromInternal(mAssignedActor.getImage(), mImgvAssignedActor);
+                }
             }
         }
+
+        if (requestCode == ReqCode.CONFIRM_GOTOCART){
+            if (resultCode == Activity.RESULT_CANCELED){
+                resetInputs();
+            }
+        }
+    }
+
+    private Actor getActorById(String actorId){
+        for(Actor actor: mActorsList){
+            if (actor.getUsername().equals(actorId)){
+                return actor;
+            }
+        }
+
+        return null;
+    }
+
+    private void resetInputs(){
+        mImgvAssignedActor.setImageResource(R.drawable.no_image);
+        mImgvCharacter.setImageResource(R.drawable.no_image);
+        mEdtDesc.setText("");
+        mAssignedActor = null;
+        mCharacter = null;
     }
 
     @Override
