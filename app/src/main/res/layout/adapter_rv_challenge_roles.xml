@@ -20,7 +20,7 @@
         <RelativeLayout
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:background="#72009688"
+            android:background="@color/card_item"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 

@@ -17,7 +17,7 @@ import vuong.hx.tayduky.remote.api.ApiConfig;
 
 public interface ActorService {
     @GET(ApiConfig.Apis.Actor.GET_BY_ID)
-    Call<Actor> getById(@Path("actor_id") String actor_id);
+    Call<Actor> getById(@Header("Authorization") String token, @Path("actor_id") String actor_id);
 
     @GET(ApiConfig.Apis.Actor.GET_ALL)
     Call<List<Actor>> getAll(@Header("Authorization") String token);

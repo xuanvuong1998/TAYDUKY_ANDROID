@@ -53,7 +53,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.setManageToolView(null);
+        //mPresenter.setManageToolView(null);
     }
 
     @Override

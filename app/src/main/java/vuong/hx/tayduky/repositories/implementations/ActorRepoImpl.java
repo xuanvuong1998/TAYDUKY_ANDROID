@@ -13,10 +13,9 @@ import vuong.hx.tayduky.remote.services.ActorService;
 import vuong.hx.tayduky.repositories.interfaces.ActorRepo;
 
 public class ActorRepoImpl implements ActorRepo {
-
+    private ActorService actorService = new ClientApi().getActorService();
     @Override
     public void getAll(String token, final ApiCallBack<List<Actor>> callBack) {
-        ActorService actorService = new ClientApi().getActorService();
 
         actorService.getAll( token).enqueue(new Callback<List<Actor>>() {
             @Override
@@ -36,18 +35,61 @@ public class ActorRepoImpl implements ActorRepo {
     }
 
     @Override
-    public void getActorById(String token, String actorId, ApiCallBack<Actor> callBack) {
+    public void getActorById(String token, String actorId, final ApiCallBack<Actor> callBack) {
+        actorService.getById(token, actorId).enqueue(new Callback<Actor>() {
+            @Override
+            public void onResponse(Call<Actor> call, Response<Actor> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
 
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Actor> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
     }
 
     @Override
-    public void getIncomingRoles(String actorId, ApiCallBack<List<SceneRole>> callBack) {
+    public void getIncomingRoles(String actorId, final ApiCallBack<List<SceneRole>> callBack) {
+        actorService.getIncomingRoles(actorId).enqueue(new Callback<List<SceneRole>>() {
+            @Override
+            public void onResponse(Call<List<SceneRole>> call, Response<List<SceneRole>> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<SceneRole>> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
     }
 
     @Override
-    public void getPlayedRoles(String actorId, ApiCallBack<List<SceneRole>> callBack) {
+    public void getPlayedRoles(String actorId, final ApiCallBack<List<SceneRole>> callBack) {
+        actorService.getPlayedRoles(actorId).enqueue(new Callback<List<SceneRole>>() {
+            @Override
+            public void onResponse(Call<List<SceneRole>> call, Response<List<SceneRole>> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<SceneRole>> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
     }
 
 

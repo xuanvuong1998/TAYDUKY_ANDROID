@@ -10,8 +10,24 @@ public class SceneRole implements Serializable {
     private String description;
     private String participatedDate;
     private String finishedDate;
+    private Challenge challenge;
+    private Character character;
 
+    public Challenge getChallenge() {
+        return challenge;
+    }
 
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
 
     @Override
     public String toString() {

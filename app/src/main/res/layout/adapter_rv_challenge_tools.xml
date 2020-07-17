@@ -6,7 +6,7 @@
     android:layout_marginVertical="30dp"
     android:elevation="30dp"
     android:layout_marginHorizontal="30dp"
-    app:cardBackgroundColor="#A8CCD850"
+    app:cardBackgroundColor="@color/card_item"
     android:orientation="vertical"
     android:scrollbars="vertical"
 

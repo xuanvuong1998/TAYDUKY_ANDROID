@@ -49,7 +49,7 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
-        viewPager = findViewById(R.id.viewPagerAdmin);
+        viewPager = findViewById(R.id.viewPagerActor);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

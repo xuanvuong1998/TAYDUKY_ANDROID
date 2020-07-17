@@ -18,7 +18,6 @@ public class ManageToolsPresenter {
 
     public ManageToolsPresenter(ManageToolView manageToolView) {
         this.manageToolView = manageToolView;
-
         toolRepo = new ToolRepoImpl();
     }
 

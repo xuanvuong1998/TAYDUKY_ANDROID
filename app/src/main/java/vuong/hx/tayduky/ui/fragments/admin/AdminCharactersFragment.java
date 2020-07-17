@@ -87,7 +87,7 @@ public class AdminCharactersFragment extends Fragment
     public void onDestroy() {
         super.onDestroy();
 
-        mPresenter.setCharacterListView(null);
+        //mPresenter.setCharacterListView(null);
     }
 
     @Override

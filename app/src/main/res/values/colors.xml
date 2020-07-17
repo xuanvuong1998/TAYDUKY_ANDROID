@@ -18,6 +18,8 @@
     <color name="text_color_invalid">#EA6060</color>
     <color name="opacity">#00000000</color>
     <color name="lightBlack">#353235</color>
+    <color name="card_item">#5C9E5F</color>
+    <color name="card_title">#3F51B5</color>
 
     <array name="colors">
         <item name="All" type="color">#827f93</item>
