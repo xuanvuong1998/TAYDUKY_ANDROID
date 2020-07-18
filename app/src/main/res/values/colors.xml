@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#EFF0EC</color>
+    <color name="colorPrimaryWhite">#EFF0EC</color>
     <color name="colorAccent">#6ec5ff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
@@ -18,7 +18,7 @@
     <color name="text_color_invalid">#EA6060</color>
     <color name="opacity">#00000000</color>
     <color name="lightBlack">#353235</color>
-    <color name="card_item">#5C9E5F</color>
+    <color name="card_item">@color/colorPrimaryWhite</color>
     <color name="card_title">#3F51B5</color>
 
     <array name="colors">

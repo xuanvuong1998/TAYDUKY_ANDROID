@@ -30,8 +30,6 @@ public class CartPresenter {
 
     public void checkoutRoles(List<SceneRoleFullInfo> roles){
 
-        CartHelper.checkoutRoles();
-
         List<SceneRole> newList = new ArrayList<>();
 
         for(SceneRoleFullInfo info : roles){
@@ -40,6 +38,7 @@ public class CartPresenter {
             r.setChallengeId(info.getChallenge().getId());
             r.setAssignedActor(info.getAssignedActor().getUsername());
             r.setDescription(info.getDesc());
+            r.setCharacterId(info.getCharacter().getId());
             r.setParticipatedDate(info.getParticipatedDate());
 
             newList.add(r);
@@ -61,7 +60,6 @@ public class CartPresenter {
     }
     public void checkoutTools(List<SceneToolFullInfo> tools){
 
-        CartHelper.checkoutTools();
 
         List<SceneTool> newList = new ArrayList<>();
 

@@ -55,21 +55,24 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ToolHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ToolHolder holder, int position) {
-        final Tool Tool = listData.get(position);
+        final Tool tool = listData.get(position);
 
-        holder.bindData(Tool);
+        holder.bindData(tool);
 
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClickEdit(Tool);
+                listener.onClickEdit(tool);
             }
+
+            
         });
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClickDelete(Tool);
+
+                listener.onClickDelete(tool);
             }
         });
 

@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,15 +29,17 @@ import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.helpers.FileHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
+import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.CreateToolPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 
 
-public class CreateToolDialogFragment extends DialogFragment
+public class ToolDetailsDialogFragment extends DialogFragment
         implements View.OnFocusChangeListener, CreateToolView {
 
 
     private EditText mEdtToolName, mEdtToolQty, mEdtToolDesc;
+    private TextView mTvTitle;
 
     private Button mBtnUploadImage, mBtnCancel, mBtnSave;
     private ImageView mImgvToolImage;
@@ -45,14 +48,24 @@ public class CreateToolDialogFragment extends DialogFragment
     private String mUserToken;
 
     private final int SELECT_PHOTO = 99;
+    private Tool mCurTool;
 
+    public static ToolDetailsDialogFragment newInstance(Tool tool) {
+
+        Bundle args = new Bundle();
+
+        args.putSerializable("curTool", tool);
+        ToolDetailsDialogFragment fragment = new ToolDetailsDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        View view = inflater.inflate(R.layout.dialog_fragment_create_tool, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment_tool_details, container, false);
 
+        mCurTool =(Tool) getArguments().getSerializable("curTool");
         mUserToken = TempDataHelper.getUserToken();
 
         mEdtToolName = view.findViewById(R.id.edtToolName);
@@ -93,15 +106,22 @@ public class CreateToolDialogFragment extends DialogFragment
             }
         });
 
+        if (isCreateMode() == false){
+            setData();
+        }
         return view;
     }
 
+    private boolean isCreateMode(){
+        return mCurTool == null;
+    }
+    private void setData(){
 
+    }
 
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
 
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PHOTO);
@@ -169,6 +189,7 @@ public class CreateToolDialogFragment extends DialogFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.setCreateView(null);
+
+        //mPresenter.setCreateView(null);
     }
 }

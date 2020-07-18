@@ -32,6 +32,7 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
     private Button mBtnCheckout;
     private CartPresenter mPresenter;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnCheckout = view.findViewById(R.id.btnCheckoutCartRoles);
+
         mPresenter = new CartPresenter(this);
 
         mBtnCheckout.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +92,7 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
     @Override
     public void removeRolesInCart() {
         showToastMessage("ASSIGNED SUCCESSFULLY!");
+        CartHelper.checkoutRoles();
         mRoles.clear();
         mAdapter.notifyDataSetChanged();
     }

@@ -9,8 +9,9 @@
        android:layout_margin="15dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="ASSIGN ROLES"
-       android:textSize="30sp"
+       android:text="Assign all"
+       android:textAllCaps="false"
+       android:textSize="20sp"
        android:background="@drawable/button_primary"
       />
    <include layout="@layout/recyclerview_with_swipe_refresh"/>

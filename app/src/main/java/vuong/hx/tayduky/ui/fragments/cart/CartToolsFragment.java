@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class CartToolsFragment extends Fragment implements
             }
         });
         mPresenter = new CartPresenter(this);
+
+        SwipeRefreshLayout mRefreshLayout = view.findViewById(R.id.swipe_layout);
+        mRefreshLayout.setEnabled(false);
 
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
@@ -97,6 +101,7 @@ public class CartToolsFragment extends Fragment implements
 
     @Override
     public void removeToolsInCart() {
+        CartHelper.checkoutTools();
         mTools.clear();
         mAdapter.notifyDataSetChanged();
         showToastMessage("ADD TOOLS SUCCESSFULLY");

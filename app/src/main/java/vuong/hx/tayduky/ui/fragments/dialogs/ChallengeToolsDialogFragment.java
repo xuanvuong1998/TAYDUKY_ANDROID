@@ -76,6 +76,13 @@ public class ChallengeToolsDialogFragment extends DialogFragment
         mChallenge = (Challenge) getArguments().getSerializable("challenge");
 
         mPresenter.loadChallengeTools((int) mChallenge.getId());
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadChallengeTools((int) mChallenge.getId());
+            }
+        });
         return view;
     }
 

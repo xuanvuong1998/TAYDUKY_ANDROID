@@ -55,6 +55,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mBtnCancel = view.findViewById(R.id.btnCancel);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
 
+
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +75,13 @@ public class ChallengeRolesDialogFragment extends DialogFragment
 
         mChallenge = (Challenge) getArguments().getSerializable("challenge");
         mPresenter.loadChallengeRoles((int) mChallenge.getId());
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadChallengeRoles((int) mChallenge.getId());
+            }
+        });
         return view;
     }
 

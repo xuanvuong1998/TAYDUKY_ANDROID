@@ -24,7 +24,7 @@ import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
-import vuong.hx.tayduky.ui.fragments.dialogs.CreateToolDialogFragment;
+import vuong.hx.tayduky.ui.fragments.dialogs.ToolDetailsDialogFragment;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class AdminToolsFragment extends Fragment implements ManageToolView, ToolsAdapter.OnClickItem {
@@ -88,7 +88,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
 
     private void registerEvents(){
-        final CreateToolDialogFragment fragment = new CreateToolDialogFragment();
+        final ToolDetailsDialogFragment fragment = new ToolDetailsDialogFragment();
 
         fragment.setTargetFragment(this, ReqCode.CREATE_TOOL);
 
@@ -156,7 +156,6 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     @Override
     public void onClickEdit(Tool tool) {
-
 
         //mPresenter.updateTool(mUserToken, tool);
     }

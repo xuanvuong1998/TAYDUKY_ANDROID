@@ -1,7 +1,9 @@
 package vuong.hx.tayduky.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.AdminMenuItem;
@@ -23,6 +26,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
     private ViewPager2 viewPager;
+    private FloatingActionButton mFab;
 
 
     @Override
@@ -32,15 +36,20 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         initViews();
 
-        loadCartData();
-    }
-
-    private void loadCartData(){
-
     }
 
     private void initViews(){
         bottomNav = findViewById(R.id.bottom_nav);
+        mFab = findViewById(R.id.fabCart);
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminHomeActivity.this, TodoCartActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -65,8 +74,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         bottomNav.setSelectedItemId(R.id.mnHome);
                         break;
                     case AdminMenuItem.ACTORS:
-                        bottomNav.setSelectedItemId(R.id.mnActors);
-
+                        bottomNav.setSelectedItemId(R.id.mnActors); 
                         break;
                     case AdminMenuItem.TOOLS:
                         bottomNav.setSelectedItemId(R.id.mnTools);
