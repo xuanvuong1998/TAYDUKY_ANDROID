@@ -65,7 +65,9 @@ public class ToolDetailsDialogFragment extends DialogFragment
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View view = inflater.inflate(R.layout.dialog_fragment_tool_details, container, false);
 
-        mCurTool =(Tool) getArguments().getSerializable("curTool");
+        if (getArguments() != null){
+            mCurTool =(Tool) getArguments().getSerializable("curTool");
+        }
         mUserToken = TempDataHelper.getUserToken();
 
         mEdtToolName = view.findViewById(R.id.edtToolName);
