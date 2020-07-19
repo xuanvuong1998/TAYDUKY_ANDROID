@@ -44,7 +44,6 @@ public class CartPresenter {
             newList.add(r);
         }
 
-
         roleRepo.createRange(TempDataHelper.getUserToken(), newList, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {

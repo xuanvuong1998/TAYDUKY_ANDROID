@@ -36,9 +36,16 @@ public class NotificationHelper {
     }
 
     public static void updateRole(List<SceneRoleFullInfo> roles){
+
+
         for(SceneRoleFullInfo role: roles){
             DatabaseReference actorNotifRef = FirebaseHelper.getRef(role.getAssignedActor().getUsername());
-            actorNotifRef.setValue(role);
+            actorNotifRef.setValue("123456");
+
+            DatabaseReference abc = FirebaseHelper.getRef("mess");
+
+            abc.setValue("vuong");
+            //actorNotifRef.setValue(role);
         }
     }
 }

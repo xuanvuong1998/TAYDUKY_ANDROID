@@ -1,5 +1,6 @@
 package vuong.hx.tayduky.repositories.implementations;
 
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -24,7 +25,11 @@ public class SceneToolRepoImpl implements SceneToolRepo {
                 if (response.isSuccessful()) {
                     callBack.onSuccess(response.body());
                 } else {
-                    callBack.onFail(response.message());
+                    if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST){
+                        callBack.onFail("Duplicated tool");
+                    }else{
+                        callBack.onFail(response.message());
+                    }
                 }
             }
 
@@ -52,5 +57,45 @@ public class SceneToolRepoImpl implements SceneToolRepo {
                 callBack.onFail(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void remove(String token, SceneTool tool, final ApiCallBack<ResponseBody> callBack) {
+        mService.delete(token, (int) tool.getChallengeId(), (int) tool.getToolId())
+                .enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void update(String token, SceneTool tool, final ApiCallBack<ResponseBody> callBack) {
+        mService.update(token,  tool)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            callBack.onSuccess(response.body());
+                        }else{
+                            callBack.onFail(response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        callBack.onFail(t.getMessage());
+                    }
+                });
     }
 }

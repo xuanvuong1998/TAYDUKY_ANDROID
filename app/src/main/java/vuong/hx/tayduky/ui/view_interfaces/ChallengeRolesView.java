@@ -6,4 +6,6 @@ import vuong.hx.tayduky.models.SceneRoleFullInfo;
 
 public interface ChallengeRolesView extends ToastView{
     void loadChallengeRoles(List<SceneRoleFullInfo> roles);
+
+    void refreshTheList();
 }

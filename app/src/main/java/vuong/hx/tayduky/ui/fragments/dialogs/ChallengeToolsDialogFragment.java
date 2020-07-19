@@ -98,6 +98,11 @@ public class ChallengeToolsDialogFragment extends DialogFragment
     }
 
     @Override
+    public void refreshList() {
+        mPresenter.loadChallengeTools((int) mChallenge.getId());
+    }
+
+    @Override
     public void showToastMessage(String message) {
         mSwipeRefreshLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
@@ -106,11 +111,11 @@ public class ChallengeToolsDialogFragment extends DialogFragment
 
     @Override
     public void onDeleteChallengeTool(SceneTool tool) {
-
+        mPresenter.removeTool(tool);
     }
 
     @Override
     public void onSaveChangeTool(SceneTool tool) {
-
+        mPresenter.updateTool(tool);
     }
 }

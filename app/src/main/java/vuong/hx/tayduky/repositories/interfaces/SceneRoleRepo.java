@@ -10,4 +10,8 @@ public interface SceneRoleRepo {
 
     void createRange(String token, List<SceneRole> roles, ApiCallBack<ResponseBody> callBack);
     void create(String token, SceneRole role, ApiCallBack<ResponseBody> callBack);
+    void update(String token, SceneRole role, ApiCallBack<ResponseBody> callBack);
+
+    void remove(String userToken, int id, ApiCallBack<ResponseBody> callBack);
+
 }

@@ -68,7 +68,6 @@ public class ActorNotificationFragment extends Fragment implements NotifAdapter.
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
 
-
         return view;
     }
 

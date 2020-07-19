@@ -12,18 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+       <!-- <service
+            android:name=".firebase.FirebaseMessService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+
+        </service>-->
+
         <activity
             android:name=".ui.activities.TodoCartActivity"
             android:label="@string/title_activity_todo_cart"
-
             android:theme="@style/AppTheme.NoActionBar">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
-
-
         <activity android:name=".ui.activities.ActorHomeActivity" />
         <activity android:name=".ui.activities.AdminHomeActivity" />
         <activity android:name=".ui.activities.LoginActivity">
@@ -33,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

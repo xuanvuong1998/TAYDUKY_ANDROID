@@ -38,10 +38,24 @@ public class ChallengeRolesAdapter extends RecyclerView.Adapter<ChallengeRolesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChallengeRolesViewHolder holder, int position) {
-        SceneRoleFullInfo curItem = listData.get(position);
+    public void onBindViewHolder(@NonNull final ChallengeRolesViewHolder holder, int position) {
+        final SceneRoleFullInfo curItem = listData.get(position);
 
         holder.bindData(curItem);
+        holder.btnDeleteRole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClickDeleteRole(curItem);
+            }
+        });
+
+        holder.btnSaveChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                curItem.setDesc(holder.edtRoleDesc.getText().toString());
+                listener.onClickSave(curItem);
+            }
+        });
     }
 
     @Override
@@ -55,13 +69,15 @@ public class ChallengeRolesAdapter extends RecyclerView.Adapter<ChallengeRolesAd
     public interface OnClickItem{
         void onClickCharacter();
         void onClickAssignedActor();
+        void onClickDeleteRole(SceneRoleFullInfo role);
+        void onClickSave(SceneRoleFullInfo role);
     }
 
     public class ChallengeRolesViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgCharacter, imgAssignedActor;
-        private EditText edtRoleDesc;
-        private Button btnSaveChange, btnDeleteRole;
+        public EditText edtRoleDesc;
+        public Button btnSaveChange, btnDeleteRole;
 
         public ChallengeRolesViewHolder(@NonNull View itemView) {
             super(itemView);

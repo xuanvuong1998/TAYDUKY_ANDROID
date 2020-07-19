@@ -97,6 +97,16 @@ public class ChallengeRolesDialogFragment extends DialogFragment
     }
 
     @Override
+    public void onClickDeleteRole(SceneRoleFullInfo role) {
+        mPresenter.removeRole(role);
+    }
+
+    @Override
+    public void onClickSave(SceneRoleFullInfo role) {
+        //mPresenter.updateRole(role);
+    }
+
+    @Override
     public void loadChallengeRoles(List<SceneRoleFullInfo> roles) {
         mSwipeRefreshLayout.setRefreshing(false);
         mAdapter = new ChallengeRolesAdapter(roles, this);
@@ -105,6 +115,11 @@ public class ChallengeRolesDialogFragment extends DialogFragment
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void refreshTheList() {
+        mPresenter.loadChallengeRoles((int) mChallenge.getId());
     }
 
     @Override

@@ -55,7 +55,6 @@ public class CartHelper {
             }
         });
 
-
     }
 
     public static void addNewSceneTool(SceneToolFullInfo newTool, final SetDocumentCallBack callBack) {

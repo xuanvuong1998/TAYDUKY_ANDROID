@@ -2,6 +2,7 @@ package vuong.hx.tayduky.models;
 
 import java.io.Serializable;
 public class SceneRoleFullInfo implements Serializable {
+    private int id;
     private Character character;
     private Actor assignedActor;
     private String desc;
@@ -13,19 +14,28 @@ public class SceneRoleFullInfo implements Serializable {
         return challenge;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
     }
 
-    public SceneRoleFullInfo(Character character, Actor assignedActor, String desc, String participatedDate, String finishedDate) {
+    public SceneRoleFullInfo(int id, Character character, Actor assignedActor, String desc, String participatedDate, String finishedDate, Challenge challenge) {
+        this.id = id;
         this.character = character;
         this.assignedActor = assignedActor;
         this.desc = desc;
         this.participatedDate = participatedDate;
         this.finishedDate = finishedDate;
+        this.challenge = challenge;
     }
+
 
     @Override
     public String toString() {

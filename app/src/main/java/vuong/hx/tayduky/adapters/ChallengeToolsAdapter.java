@@ -36,7 +36,7 @@ public class ChallengeToolsAdapter extends RecyclerView.Adapter<ChallengeToolsAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChallengeToolsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ChallengeToolsViewHolder holder, int position) {
         final SceneTool curItem = listData.get(position);
 
         holder.bindData(curItem);
@@ -50,6 +50,8 @@ public class ChallengeToolsAdapter extends RecyclerView.Adapter<ChallengeToolsAd
         holder.btnSaveChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                curItem.setQuantity(Integer.parseInt(holder.edtToolQuantity.getText().toString()));
+
                 listener.onSaveChangeTool(curItem);
             }
         });
@@ -72,7 +74,7 @@ public class ChallengeToolsAdapter extends RecyclerView.Adapter<ChallengeToolsAd
 
     public class ChallengeToolsViewHolder extends RecyclerView.ViewHolder {
 
-        private EditText edtToolQuantity, edtToolName;
+        public EditText edtToolQuantity, edtToolName;
         public Button btnSaveChange, btnDeleteTool;
 
         public ChallengeToolsViewHolder(@NonNull View itemView) {

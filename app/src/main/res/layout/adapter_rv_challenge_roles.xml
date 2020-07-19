@@ -110,6 +110,7 @@
                 android:layout_height="@dimen/button_small_height"
                 android:background="@drawable/button_primary"
                 android:text="Save changes"
+                android:visibility="gone"
                 android:textSize="12sp" />
 
             <Button

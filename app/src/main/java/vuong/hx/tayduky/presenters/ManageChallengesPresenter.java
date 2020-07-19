@@ -12,11 +12,17 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
+import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.models.Challenge;
+import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.repositories.implementations.ChallengeRepoImpl;
+import vuong.hx.tayduky.repositories.implementations.SceneRoleRepoImpl;
+import vuong.hx.tayduky.repositories.implementations.SceneToolRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.ChallengeRepo;
+import vuong.hx.tayduky.repositories.interfaces.SceneRoleRepo;
+import vuong.hx.tayduky.repositories.interfaces.SceneToolRepo;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeDetailsView;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeRolesView;
 import vuong.hx.tayduky.ui.view_interfaces.ChallengeToolsView;
@@ -29,6 +35,8 @@ public class ManageChallengesPresenter {
     private ChallengeDetailsView mDetailsView;
 
     private ChallengeRepo challengeRepo = new ChallengeRepoImpl();
+    private SceneRoleRepo roleRepo = new SceneRoleRepoImpl();
+    private SceneToolRepo sceToolRepo = new SceneToolRepoImpl();
 
     public ManageChallengesPresenter(ManageChallengeView manageChallengeView) {
         this.manageChallengeView = manageChallengeView;
@@ -55,6 +63,66 @@ public class ManageChallengesPresenter {
             @Override
             public void onSuccess(List<SceneRoleFullInfo> sceneRoleFullInfos) {
                 rolesView.loadChallengeRoles(sceneRoleFullInfos);
+            }
+
+            @Override
+            public void onFail(String message) {
+                rolesView.showToastMessage(message);
+            }
+        });
+    }
+
+    public void updateRole(SceneRole role){
+        roleRepo.update(TempDataHelper.getUserToken(), role, new ApiCallBack<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody responseBody) {
+                rolesView.refreshTheList();
+                rolesView.showToastMessage("Updated!");
+            }
+
+            @Override
+            public void onFail(String message) {
+                rolesView.showToastMessage(message);
+            }
+        });
+    }
+
+    public void updateTool(SceneTool tool){
+        sceToolRepo.update(TempDataHelper.getUserToken(), tool, new ApiCallBack<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody responseBody) {
+                toolsView.refreshList();
+                toolsView.showToastMessage("Updated!");
+            }
+
+            @Override
+            public void onFail(String message) {
+                toolsView.showToastMessage(message);
+            }
+        });
+    }
+
+    public void removeTool(SceneTool tool) {
+        sceToolRepo.remove(TempDataHelper.getUserToken(), tool, new ApiCallBack<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody responseBody) {
+                toolsView.refreshList();
+                toolsView.showToastMessage("Removed!");
+            }
+
+            @Override
+            public void onFail(String message) {
+                toolsView.showToastMessage(message);
+            }
+        });
+    }
+
+    public void removeRole(SceneRoleFullInfo role){
+        roleRepo.remove(TempDataHelper.getUserToken(), role.getId(), new ApiCallBack<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody responseBody) {
+                rolesView.refreshTheList();
+                rolesView.showToastMessage("Removed!");
             }
 
             @Override
@@ -152,4 +220,6 @@ public class ManageChallengesPresenter {
         }
         return filterList;
     }
+
+
 }

@@ -53,4 +53,46 @@ public class SceneRoleRepoImpl implements SceneRoleRepo {
             }
         });
     }
+
+    @Override
+    public void remove(String userToken, int id, final ApiCallBack<ResponseBody> callBack) {
+        mService.delete(userToken, id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void update(String userToken, SceneRole role, final ApiCallBack<ResponseBody> callBack) {
+        mService.update(userToken, role).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    callBack.onSuccess(response.body());
+                }else{
+                    callBack.onFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callBack.onFail(t.getMessage());
+            }
+        });
+    }
+
+
+
+
 }

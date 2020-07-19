@@ -6,4 +6,5 @@ import vuong.hx.tayduky.models.SceneTool;
 
 public interface ChallengeToolsView extends ToastView{
     void loadChallengeTools(List<SceneTool> tools);
+    void refreshList();
 }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
     private RecyclerView mRecyclerView;
     private CartRolesAdapter mAdapter;
     private Button mBtnCheckout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private CartPresenter mPresenter;
 
 
@@ -45,6 +48,8 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnCheckout = view.findViewById(R.id.btnCheckoutCartRoles);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setEnabled(false);
 
         mPresenter = new CartPresenter(this);
 

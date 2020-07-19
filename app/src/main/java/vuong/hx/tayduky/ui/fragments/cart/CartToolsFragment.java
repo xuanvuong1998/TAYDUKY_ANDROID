@@ -32,6 +32,7 @@ public class CartToolsFragment extends Fragment implements
     private CartToolsAdapter mAdapter;
     private Button mBtnCheckout;
     private CartPresenter mPresenter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -44,7 +45,8 @@ public class CartToolsFragment extends Fragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart_tools, container, false);
         mBtnCheckout = view.findViewById(R.id.btnCheckoutCartTools);
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setEnabled(false);
         mBtnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
