@@ -98,7 +98,6 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
             fragment.show(getActivity().getSupportFragmentManager(), ReqTag.TOOL_DETAILS_TAG);
             }
         });
-
     }
 
     @Override

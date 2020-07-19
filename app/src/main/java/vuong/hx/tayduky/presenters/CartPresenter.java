@@ -5,7 +5,7 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
-import vuong.hx.tayduky.helpers.CartHelper;
+import vuong.hx.tayduky.helpers.NotificationHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
@@ -28,7 +28,7 @@ public class CartPresenter {
         roleRepo = new SceneRoleRepoImpl();
     }
 
-    public void checkoutRoles(List<SceneRoleFullInfo> roles){
+    public void checkoutRoles(final List<SceneRoleFullInfo> roles){
 
         List<SceneRole> newList = new ArrayList<>();
 
@@ -48,6 +48,7 @@ public class CartPresenter {
         roleRepo.createRange(TempDataHelper.getUserToken(), newList, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
+                NotificationHelper.updateRole(roles);
                 cartView.removeRolesInCart();
             }
 

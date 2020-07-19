@@ -119,13 +119,6 @@ public class AddRoleDialogFragment extends DialogFragment
         newRole.setChallenge(mChallenge);
         newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());
 
-        /*SceneRole newRole = new SceneRole();
-        newRole.setChallengeId(mChallenge.getId());
-        newRole.setAssignedActor(mAssignedActor.getUsername());
-        newRole.setChallengeId(mCharacter.getId());
-        newRole.setDescription(mEdtDesc.getText().toString());
-        newRole.setParticipatedDate(mEdtJoinedDate.getText().toString());*/
-
         final Fragment thisFr = this;
 
         CartHelper.addNewRole(newRole, new SetDocumentCallBack() {
