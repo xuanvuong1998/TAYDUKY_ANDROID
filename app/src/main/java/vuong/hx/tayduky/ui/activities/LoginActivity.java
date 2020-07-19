@@ -8,9 +8,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.constants.SharePreferenceKeys;
 import vuong.hx.tayduky.constants.UserRole;
