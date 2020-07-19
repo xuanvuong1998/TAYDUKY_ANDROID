@@ -17,5 +17,5 @@ public interface ToolRepo {
 
     void delete(String token, int toolId, ApiCallBack<ResponseBody> callBack);
 
-    void update(String token, Tool tool, ApiCallBack<ResponseBody> callBack);
+    void update(String token, Tool tool, File image, ApiCallBack<ResponseBody> callBack);
 }

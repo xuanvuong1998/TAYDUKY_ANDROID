@@ -26,7 +26,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.ReqCode;
 import vuong.hx.tayduky.helpers.FileHelper;
+import vuong.hx.tayduky.helpers.ImageHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
@@ -37,7 +39,6 @@ import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
 public class ToolDetailsDialogFragment extends DialogFragment
         implements View.OnFocusChangeListener, CreateToolView {
 
-
     private EditText mEdtToolName, mEdtToolQty, mEdtToolDesc;
     private TextView mTvTitle;
 
@@ -47,7 +48,6 @@ public class ToolDetailsDialogFragment extends DialogFragment
     private CreateToolPresenter mPresenter;
     private String mUserToken;
 
-    private final int SELECT_PHOTO = 99;
     private Tool mCurTool;
 
     public static ToolDetailsDialogFragment newInstance(Tool tool) {
@@ -73,6 +73,7 @@ public class ToolDetailsDialogFragment extends DialogFragment
         mEdtToolName = view.findViewById(R.id.edtToolName);
         mEdtToolQty = view.findViewById(R.id.edtToolQty);
         mEdtToolDesc = view.findViewById(R.id.edtToolDesc);
+        mTvTitle = view.findViewById(R.id.tvToolDetailTitle);
         mEdtToolName.setOnFocusChangeListener(this);
         mBtnUploadImage = view.findViewById(R.id.btnUploadToolImage);
 
@@ -102,23 +103,48 @@ public class ToolDetailsDialogFragment extends DialogFragment
             @Override
             public void onClick(View v) {
 
-                mPresenter.createNewTool(mUserToken, mEdtToolName.getText().toString(),
-                        Integer.parseInt(mEdtToolQty.getText().toString()),
-                        mEdtToolDesc.getText().toString(), mImageFile);
+                if (isCreateMode()){
+                    createTool();
+
+                }else{
+                    updateTool();
+                }
+
             }
         });
 
         if (isCreateMode() == false){
             setData();
+        }else{
+            mTvTitle.setText("NEW TOOL");
         }
         return view;
+    }
+
+
+    private void updateTool(){
+        mCurTool.setQuantity(Integer.parseInt(mEdtToolQty.getText().toString()));
+        mCurTool.setDescription(mEdtToolDesc.getText().toString());
+        mCurTool.setName(mEdtToolName.getText().toString());
+        mPresenter.updateTool(mUserToken, mCurTool, mImageFile);
+    }
+
+    private void createTool(){
+        mPresenter.createNewTool(mUserToken, mEdtToolName.getText().toString(),
+                Integer.parseInt(mEdtToolQty.getText().toString()),
+                mEdtToolDesc.getText().toString(), mImageFile);
     }
 
     private boolean isCreateMode(){
         return mCurTool == null;
     }
     private void setData(){
+        mEdtToolName.setText(mCurTool.getName());
+        mEdtToolQty.setText(mCurTool.getQuantity() + "");
+        mEdtToolDesc.setText(mCurTool.getDescription());
+        ImageHelper.loadImageFromInternal(mCurTool.getImage(), mImgvToolImage);
 
+        mTvTitle.setText("Tool Details");
     }
 
     private void openFileChooser() {
@@ -126,7 +152,7 @@ public class ToolDetailsDialogFragment extends DialogFragment
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PHOTO);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), ReqCode.SELECT_PHOTO);
     }
 
 
@@ -135,7 +161,7 @@ public class ToolDetailsDialogFragment extends DialogFragment
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_PHOTO && data != null && data.getData() != null) {
+            if (requestCode == ReqCode.SELECT_PHOTO && data != null && data.getData() != null) {
                 Uri imageUri = data.getData();
 
 

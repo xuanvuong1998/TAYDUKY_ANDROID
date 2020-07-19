@@ -12,7 +12,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import vuong.hx.tayduky.models.Challenge;
-import vuong.hx.tayduky.models.ChallengeCreateModel;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ApiConfig;
@@ -34,7 +33,7 @@ public interface ChallengeService {
     Call<ResponseBody> createNew(@Header("Authorization") String token, @Body Challenge challenge);
 
     @PUT(ApiConfig.Apis.Challenge.UPDATE)
-    Call<ResponseBody> update(@Header("Authorization") String token, @Body ChallengeCreateModel challenge);
+    Call<ResponseBody> update(@Header("Authorization") String token, @Body Challenge challenge);
 
     @DELETE(ApiConfig.Apis.Challenge.DELETE)
     Call<ResponseBody> delete(@Header("Authorization") String token, @Path("challenge_id") int challengeId);

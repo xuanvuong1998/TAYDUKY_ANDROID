@@ -4,6 +4,7 @@ import java.io.File;
 
 import okhttp3.ResponseBody;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
+import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.repositories.implementations.ToolRepoImpl;
 import vuong.hx.tayduky.repositories.interfaces.ToolRepo;
 import vuong.hx.tayduky.ui.view_interfaces.CreateToolView;
@@ -38,6 +39,22 @@ public class CreateToolPresenter {
                 createView.showToastMessage(message);
             }
         });
+    }
 
+    public void updateTool(String token, Tool tool, File image){
+
+        mToolRepo.update(token, tool,
+                image, new ApiCallBack<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody responseBody) {
+                createView.showToastMessage("Updated!");
+                createView.refreshToolList();
+            }
+
+            @Override
+            public void onFail(String message) {
+                createView.showToastMessage(message);
+            }
+        });
     }
 }

@@ -6,7 +6,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -33,8 +32,13 @@ public interface CharacterService {
                                  @Part("DefaultActor") RequestBody defaultActor,
                                  @Part MultipartBody.Part image);
 
+    @Multipart
     @PUT(ApiConfig.Apis.Character.UPDATE)
-    Call<ResponseBody> update(@Header("Authorization") String token,@Body Character Character);
+    Call<ResponseBody> update(@Header("Authorization") String token,
+                                 @Part("Id") int id,
+                                 @Part("Name") RequestBody name,
+                                 @Part("DefaultActor") RequestBody defaultActor,
+                                 @Part MultipartBody.Part image);
 
     @DELETE(ApiConfig.Apis.Character.DELETE)
     Call<ResponseBody> delete(@Header("Authorization") String token, @Path("character_id") int characterId);

@@ -8,7 +8,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.models.Challenge;
-import vuong.hx.tayduky.models.ChallengeCreateModel;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.remote.api.ClientApi;
@@ -103,8 +102,8 @@ public class ChallengeRepoImpl implements ChallengeRepo {
     }
 
     @Override
-    public void createNewChallenge(String token, ChallengeCreateModel model, final ApiCallBack<ResponseBody> callBack) {
-        mChallengeService.createNew(token, model.getChallenge()).enqueue(new Callback<ResponseBody>() {
+    public void createNewChallenge(String token, Challenge model, final ApiCallBack<ResponseBody> callBack) {
+        mChallengeService.createNew(token, model).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -122,7 +121,7 @@ public class ChallengeRepoImpl implements ChallengeRepo {
     }
 
     @Override
-    public void updateChallenge(String token, ChallengeCreateModel model, final ApiCallBack<ResponseBody> callBack) {
+    public void updateChallenge(String token, Challenge model, final ApiCallBack<ResponseBody> callBack) {
         mChallengeService.update(token, model).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

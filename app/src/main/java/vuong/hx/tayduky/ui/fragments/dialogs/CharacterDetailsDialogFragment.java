@@ -25,39 +25,51 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import vuong.hx.tayduky.R;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.FileHelper;
+import vuong.hx.tayduky.helpers.ImageHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
+import vuong.hx.tayduky.models.Character;
+import vuong.hx.tayduky.presenters.CharacterPresenter;
 import vuong.hx.tayduky.presenters.ManageActorsPresenter;
-import vuong.hx.tayduky.presenters.CreateCharacterPresenter;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
-import vuong.hx.tayduky.ui.view_interfaces.CreateCharacterView;
+import vuong.hx.tayduky.ui.view_interfaces.CharacterView;
 
-public class CreateCharacterDialogFragment extends DialogFragment
-                    implements CreateCharacterView, ActorsListView {
+public class CharacterDetailsDialogFragment extends DialogFragment
+                    implements CharacterView, ActorsListView {
 
-    private String mChosenActor = "";
+    private Actor mChosenActor;
     private Button mBtnCancel, mBtnUploadImage, mBtnSave, mBtnAssignActor;
     private EditText mEdtCharacterName;
     private TextView mTvAssignedActor;
     private String mUserToken;
-    private final int CREATE_CHARACTER = 87;
-    private final int SELECT_PHOTO = 99;
-    private final int CHOOSE_ACTOR = 17;
-    private final String ASSIGN_ACTOR_TAG = "assign_actor";
     private ImageView mImgUploaded;
-    private CreateCharacterPresenter mCreateCharacterPresenter;
+    private CharacterPresenter mCharacterPresenter;
     private ManageActorsPresenter mActorsPresenter;
     private File mFileUploaded;
     private List<Actor> mActorsList;
+    private Character mCurCharacter;
+
+    public static CharacterDetailsDialogFragment newInstance(Character character) {
+
+        Bundle args = new Bundle();
+        args.putSerializable("curCharacter", character);
+
+        CharacterDetailsDialogFragment fragment = new CharacterDetailsDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        View view = inflater.inflate(R.layout.dialog_fragment_create_character, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment_character_details, container, false);
 
+        mCurCharacter = (Character) getArguments().getSerializable("curCharacter");
         mUserToken = TempDataHelper.getUserToken();
 
         mEdtCharacterName = view.findViewById(R.id.edtCharacterName);
@@ -69,7 +81,7 @@ public class CreateCharacterDialogFragment extends DialogFragment
         mImgUploaded = view.findViewById(R.id.imgvNewCharacter);
         mTvAssignedActor = view.findViewById(R.id.tvAsignedActor);
 
-        mCreateCharacterPresenter = new CreateCharacterPresenter(this);
+        mCharacterPresenter = new CharacterPresenter(this);
         mActorsPresenter = new ManageActorsPresenter(this);
         mActorsPresenter.loadActorsList(mUserToken);
 
@@ -77,13 +89,11 @@ public class CreateCharacterDialogFragment extends DialogFragment
             @Override
             public void onClick(View v) {
 
-                getTargetFragment().onActivityResult(CREATE_CHARACTER,
+                getTargetFragment().onActivityResult(ReqCode.CHARACTER_DETAILS,
                                     Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });
-
-
 
         mBtnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,19 +105,53 @@ public class CreateCharacterDialogFragment extends DialogFragment
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mCreateCharacterPresenter.createNewCharacter(mUserToken,
-                            mEdtCharacterName.getText().toString(), mChosenActor, mFileUploaded);
+                if (isCreateNew()){
+                    createNew();
+                }else{
+                    update();
+                }
             }
         });
+
+        if (isCreateNew() == false){
+            setData();
+        }
         return view;
+    }
+
+    private void createNew(){
+
+        String actorUsername = null;
+
+        if (mChosenActor != null) {
+            actorUsername = mChosenActor.getUsername();
+        }
+
+        mCharacterPresenter.createNewCharacter(mUserToken,
+                mEdtCharacterName.getText().toString(), actorUsername, mFileUploaded);
+    }
+
+    private void update(){
+        mCharacterPresenter.update(mUserToken, (int) mCurCharacter.getId(),
+                mEdtCharacterName.getText().toString(),
+                            mTvAssignedActor.getText().toString(), mFileUploaded );
+    }
+
+    private boolean isCreateNew(){
+        return mCurCharacter == null;
+    }
+    private void setData(){
+        mEdtCharacterName.setText(mCurCharacter.getName());
+        ImageHelper.loadImageFromInternal(mCurCharacter.getImage(), mImgUploaded);
+        mTvAssignedActor.setText(mCurCharacter.getDefaultActor());
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SELECT_PHOTO){
+        if (requestCode == ReqCode.SELECT_PHOTO){
             if (resultCode == Activity.RESULT_OK){
                 Uri contentUri = data.getData();
 
@@ -129,19 +173,10 @@ public class CreateCharacterDialogFragment extends DialogFragment
                 }
 
             }
-        }else if (requestCode == CHOOSE_ACTOR){
-            mChosenActor =  data.getStringExtra("chosenActor");
+        }else if (requestCode == ReqCode.CHOOSE_ACTOR){
+            mChosenActor = (Actor) data.getSerializableExtra("chosenActorFullInfo");
 
-            String actorName = "";
-            for(Actor actor : mActorsList){
-                if (actor.getUsername() == mChosenActor){
-                    actorName = actor.getName();
-                }
-            }
-
-            // Avoid displaying Actor's username on UI
-
-            mTvAssignedActor.setText(actorName);
+            mTvAssignedActor.setText(mChosenActor.getUsername());
         }
     }
 
@@ -152,12 +187,12 @@ public class CreateCharacterDialogFragment extends DialogFragment
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
 
-        startActivityForResult(intent, SELECT_PHOTO);
+        startActivityForResult(intent, ReqCode.SELECT_PHOTO);
     }
 
     @Override
-    public void refreshCharacterList() {
-        getTargetFragment().onActivityResult(CREATE_CHARACTER,
+    public void notifySaveSuccessfully() {
+        getTargetFragment().onActivityResult(ReqCode.CHARACTER_DETAILS,
                         Activity.RESULT_OK, getActivity().getIntent());
 
         dismiss();
@@ -175,12 +210,13 @@ public class CreateCharacterDialogFragment extends DialogFragment
         final ChooseActorDialogFragment fragment =
                 ChooseActorDialogFragment.newInstance( mActorsList);
 
-        fragment.setTargetFragment(this, CHOOSE_ACTOR);
+        fragment.setTargetFragment(this, ReqCode.CHOOSE_ACTOR);
+
 
         mBtnAssignActor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.show(getActivity().getSupportFragmentManager(), ASSIGN_ACTOR_TAG);
+                fragment.show(getActivity().getSupportFragmentManager(), ReqTag.CHOOSE_ACTOR);
             }
         });
     }
@@ -189,8 +225,8 @@ public class CreateCharacterDialogFragment extends DialogFragment
     public void onDestroy() {
         super.onDestroy();
 
-        // Clean views
+        /*// Clean views
         mActorsPresenter.setActorsView(null);
-        mCreateCharacterPresenter.setCreateView(null);
+        mCreateCharacterPresenter.setCreateView(null);*/
     }
 }

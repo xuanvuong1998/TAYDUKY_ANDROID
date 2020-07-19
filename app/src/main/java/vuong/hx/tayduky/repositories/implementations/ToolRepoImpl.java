@@ -107,8 +107,29 @@ public class ToolRepoImpl implements ToolRepo {
     }
 
     @Override
-    public void update(String token, Tool tool, final ApiCallBack<ResponseBody> callBack) {
-        Call<ResponseBody> call = mToolService.update(token, tool);
+    public void update(String token, Tool tool, File image, final ApiCallBack<ResponseBody> callBack) {
+
+        RequestBody fileReqBody = null;
+
+        if (image != null){
+            fileReqBody = RequestBody.create(MediaType.parse("image/*"), image);
+        }
+
+        String imageName = null;
+
+        if (image != null) imageName = image.getName();
+
+        MultipartBody.Part imagePart = null;
+        if (image != null){
+            imagePart = MultipartBody.Part
+                    .createFormData("imageFile", imageName, fileReqBody);
+
+        }
+        RequestBody reqName = RequestBody.create(MultipartBody.FORM, tool.getName());
+        RequestBody reqDesc = RequestBody.create(MultipartBody.FORM, tool.getDescription());
+
+        Call<ResponseBody> call = mToolService.update(token, (int) tool.getId(),
+                                    reqName, reqDesc, (int) tool.getQuantity(), imagePart);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

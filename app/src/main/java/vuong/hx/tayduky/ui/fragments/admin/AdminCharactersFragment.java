@@ -18,10 +18,12 @@ import java.util.List;
 
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.CharactersAdapter;
+import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Character;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
-import vuong.hx.tayduky.ui.fragments.dialogs.CreateCharacterDialogFragment;
+import vuong.hx.tayduky.ui.fragments.dialogs.CharacterDetailsDialogFragment;
 import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 
 
@@ -34,11 +36,7 @@ public class AdminCharactersFragment extends Fragment
     private RecyclerView mRecyclerView;
     private List<Character> mCharactersList;
     private Button mBtnAddNew;
-    private final int CREATE_CHARACTER = 87;
 
-    public AdminCharactersFragment() {
-
-    }
 
 
     @Override
@@ -62,8 +60,8 @@ public class AdminCharactersFragment extends Fragment
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnAddNew = view.findViewById(R.id.btnAddRole);
 
-        final CreateCharacterDialogFragment frg = new CreateCharacterDialogFragment();
-        frg.setTargetFragment(this, CREATE_CHARACTER);
+        final CharacterDetailsDialogFragment frg = CharacterDetailsDialogFragment.newInstance(null);
+        frg.setTargetFragment(this, ReqCode.CHARACTER_DETAILS);
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +88,15 @@ public class AdminCharactersFragment extends Fragment
         //mPresenter.setCharacterListView(null);
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CREATE_CHARACTER){
+        if (requestCode == ReqCode.CHARACTER_DETAILS){
             if (resultCode == Activity.RESULT_OK){
-                showToastMessage("CREATED!");
+                showToastMessage("Saved!");
                 mPresenter.loadCharactersList();
 
             }else if (resultCode == Activity.RESULT_CANCELED){
@@ -115,7 +115,10 @@ public class AdminCharactersFragment extends Fragment
 
     @Override
     public void onClickCharacter(Character character) {
-        
+        CharacterDetailsDialogFragment fr = CharacterDetailsDialogFragment.newInstance(character);
+
+        fr.setTargetFragment(this, ReqCode.CHARACTER_DETAILS);
+        fr.show(getActivity().getSupportFragmentManager(), ReqTag.CHARACTER_DETAILS);
     }
 
     /**

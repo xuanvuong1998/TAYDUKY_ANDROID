@@ -1,16 +1,18 @@
 package vuong.hx.tayduky.presenters;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import vuong.hx.tayduky.callbacks.ApiCallBack;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
 import vuong.hx.tayduky.models.Challenge;
-import vuong.hx.tayduky.models.ChallengeCreateModel;
-import vuong.hx.tayduky.models.SceneRole;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.models.SceneTool;
 import vuong.hx.tayduky.repositories.implementations.ChallengeRepoImpl;
@@ -92,9 +94,8 @@ public class ManageChallengesPresenter {
         });
     }
 
-    public void createNewChallenge(String token, Challenge challenge, List<SceneRole> roles, List<SceneTool> tools) {
+    public void createNewChallenge(String token, Challenge model) {
 
-        ChallengeCreateModel model = new ChallengeCreateModel(challenge, roles, tools);
         challengeRepo.createNewChallenge(token, model, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
@@ -109,9 +110,8 @@ public class ManageChallengesPresenter {
     }
 
 
-    public void update(String token, Challenge challenge, List<SceneRole> roles, List<SceneTool> tools) {
-        ChallengeCreateModel model = new ChallengeCreateModel(challenge, roles, tools);
-        challengeRepo.createNewChallenge(token, model, new ApiCallBack<ResponseBody>() {
+    public void update(String token, Challenge model) {
+        challengeRepo.updateChallenge(token, model, new ApiCallBack<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody responseBody) {
                 mDetailsView.notifyCreateSuccess();
@@ -125,6 +125,7 @@ public class ManageChallengesPresenter {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<Challenge> filterListByStatus(List<Challenge> list, int filter) {
         List<Challenge> filterList = new ArrayList<>();
 
@@ -136,6 +137,12 @@ public class ManageChallengesPresenter {
                     filterList.add(c);
                 }
             }
+            filterList.sort(new Comparator<Challenge>() {
+                @Override
+                public int compare(Challenge o1, Challenge o2) {
+                    return DateTimeHelper.Compare(o1.getStartDate(), o2.getStartDate());
+                }
+            });
         } else {
             for (Challenge c : list) {
                 if (c.getEndDate() != null && DateTimeHelper.CompareToNow(c.getEndDate()) < 0) {

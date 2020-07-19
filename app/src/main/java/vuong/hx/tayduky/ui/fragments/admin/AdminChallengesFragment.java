@@ -3,6 +3,7 @@ package vuong.hx.tayduky.ui.fragments.admin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,11 +40,12 @@ public class AdminChallengesFragment extends Fragment
     private RecyclerView mRecyclerView;
     private Spinner mChallengeFilter;
     private Button mBtnAddNew;
-    private List<Challenge> mChallengesList, mChallengesListFilter;
+    private List<Challenge> mChallengesList, mFilteredList;
     private ManageChallengesPresenter mChallengesPresenter;
     private ChallengesAdapter mChallengeAdapter;
     private SwipeRefreshLayout mSwipeLayout;
     private String mUserToken;
+    private int mFilterPos = 0;
     private int counter = 1;
 
     public AdminChallengesFragment() {
@@ -126,13 +129,18 @@ public class AdminChallengesFragment extends Fragment
         mChallengeFilter.setAdapter(adapter);
 
         mChallengeFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mChallengesListFilter = mChallengesPresenter.filterListByStatus(
-                        mChallengesList, position);
 
-                mChallengeAdapter.setListData(mChallengesListFilter);
-                mChallengeAdapter.notifyDataSetChanged();
+                if (mFilterPos != position){
+                    mFilterPos = position;
+                    mFilteredList = mChallengesPresenter.filterListByStatus(
+                            mChallengesList, position);
+
+                    mChallengeAdapter.setListData(mFilteredList);
+                    mChallengeAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -161,14 +169,16 @@ public class AdminChallengesFragment extends Fragment
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void loadChallengesList(List<Challenge> challenges) {
 
-        mSwipeLayout.setRefreshing(false);
         mChallengesList = challenges;
+        mSwipeLayout.setRefreshing(false);
 
         if (mChallengeAdapter != null){
-            mChallengeAdapter.setListData(challenges);
+            mFilteredList = mChallengesPresenter.filterListByStatus(challenges, mFilterPos);
+            mChallengeAdapter.setListData(mFilteredList);
             mChallengeAdapter.notifyDataSetChanged();
         }else{
             mChallengeAdapter = new ChallengesAdapter(mChallengesList, getContext());

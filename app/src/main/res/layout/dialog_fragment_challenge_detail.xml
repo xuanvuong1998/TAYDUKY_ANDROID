@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:text="From"
+        android:text="Start Date"
         android:textSize="19sp" />
 
     <LinearLayout
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:inputType="none"
-        android:text="To"
+        android:text="Ended Date"
         android:textSize="19sp" />
 
 

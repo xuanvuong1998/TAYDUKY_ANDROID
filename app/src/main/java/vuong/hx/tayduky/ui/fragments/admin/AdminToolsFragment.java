@@ -71,7 +71,7 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
         return view;
     }
 
-    private void initViews(View view){
+    private void initViews(View view) {
         mBtnAddNew = view.findViewById(R.id.btnAddNewTool);
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
@@ -87,36 +87,36 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     }
 
 
-    private void registerEvents(){
-        final ToolDetailsDialogFragment fragment = new ToolDetailsDialogFragment();
-
-        fragment.setTargetFragment(this, ReqCode.CREATE_TOOL);
+    private void registerEvents() {
 
         mBtnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                fragment.show(getActivity().getSupportFragmentManager(), ReqTag.CREATE_TOOL_TAG);
+            final ToolDetailsDialogFragment fragment = ToolDetailsDialogFragment.newInstance(null);
+            fragment.setTargetFragment(AdminToolsFragment.this, ReqCode.TOOL_DETAILS);
+            fragment.show(getActivity().getSupportFragmentManager(), ReqTag.TOOL_DETAILS_TAG);
             }
         });
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ReqCode.CREATE_TOOL){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == ReqCode.TOOL_DETAILS) {
+            if (resultCode == Activity.RESULT_OK) {
                 mPresenter.loadToolsList();
-            }else if (resultCode == Activity.RESULT_CANCELED){
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 showToastMessage("Nothing changed!");
             }
         }
 
     }
 
-    private void initData(){
-        if (mPresenter == null){
+    private void initData() {
+        if (mPresenter == null) {
             mPresenter = new ManageToolsPresenter(this);
         }
         mPresenter.loadToolsList();
@@ -156,7 +156,8 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     @Override
     public void onClickEdit(Tool tool) {
-
-        //mPresenter.updateTool(mUserToken, tool);
+        final ToolDetailsDialogFragment fragment = ToolDetailsDialogFragment.newInstance(tool);
+        fragment.setTargetFragment(AdminToolsFragment.this, ReqCode.TOOL_DETAILS);
+        fragment.show(getActivity().getSupportFragmentManager(), ReqTag.TOOL_DETAILS_TAG);
     }
 }

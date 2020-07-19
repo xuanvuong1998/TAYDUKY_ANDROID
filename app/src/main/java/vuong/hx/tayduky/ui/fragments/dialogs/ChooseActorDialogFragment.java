@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +32,8 @@ public class ChooseActorDialogFragment extends DialogFragment implements ActorsA
     private Button mBtnChoose;
     private ActorsAdapter mAdapter;
     private String mUserToken;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private Actor mChosenActor;
 
 
@@ -58,14 +61,14 @@ public class ChooseActorDialogFragment extends DialogFragment implements ActorsA
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mBtnChoose = view.findViewById(R.id.btnChooseActor);
         mEdtSearchActor = view.findViewById(R.id.edtActorSearch);
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setEnabled(false);
 
         mBtnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = getActivity().getIntent();
                 if (mChosenActor != null){
-                    intent.putExtra("chosenActor", mChosenActor.getUsername());
 
                     intent.putExtra("chosenActorFullInfo", mChosenActor);
 
@@ -99,7 +102,6 @@ public class ChooseActorDialogFragment extends DialogFragment implements ActorsA
 
         mRecyclerView.setAdapter(mAdapter);
     }
-
 
     @Override
     public void onClickActor(Actor actor) {

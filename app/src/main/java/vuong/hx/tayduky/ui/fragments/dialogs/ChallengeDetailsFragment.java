@@ -101,12 +101,14 @@ public class ChallengeDetailsFragment extends DialogFragment
             mBtnRoles.setVisibility(View.GONE);
             mBtnTools.setVisibility(View.GONE);
             mEdtShotTimes.setVisibility(View.GONE);
+            mEdtEndTime.setVisibility(View.GONE);
 
         }else{ // Update
             mBtnSave.setText("Save changes");
             mBtnTools.setVisibility(View.VISIBLE);
             mBtnRoles.setVisibility(View.VISIBLE);
             mEdtShotTimes.setVisibility(View.VISIBLE);
+            mEdtEndTime.setVisibility(View.VISIBLE);
         }
     }
     private void setData(){
@@ -169,7 +171,6 @@ public class ChallengeDetailsFragment extends DialogFragment
                 }else{
                     showChallengeRolesList();
                 }
-
                 break;
             case R.id.btnTools:
                 if (isCreateNewMode()){
@@ -206,10 +207,17 @@ public class ChallengeDetailsFragment extends DialogFragment
             newChallenge.setLocation(mEdtLocation.getText().toString());
             newChallenge.setStartDate(mEdtStartTime.getText().toString());
 
-            mPresenter.createNewChallenge(mUserToken, newChallenge, null, null);
+            mPresenter.createNewChallenge(mUserToken, newChallenge);
 
-        }else{ // update
-            mPresenter.update(mUserToken, curChallenge, mRoles, mTools);
+        }else{ // updatex`
+            curChallenge.setDescription(mEdtDesc.getText().toString());
+            curChallenge.setName(mEdtName.getText().toString());
+            curChallenge.setLocation(mEdtLocation.getText().toString());
+            curChallenge.setStartDate(mEdtStartTime.getText().toString());
+            curChallenge.setEndDate(mEdtEndTime.getText().toString());
+            curChallenge.setShootTimes(Integer.parseInt(mEdtShotTimes.getText().toString()));
+
+            mPresenter.update(mUserToken, curChallenge);
         }
     }
 
@@ -236,7 +244,6 @@ public class ChallengeDetailsFragment extends DialogFragment
         }
     }
 
-
     @Override
     public void notifyModelErr(String mess) {
         ToastHelper.showLongMess(getContext(), mess);
@@ -244,7 +251,12 @@ public class ChallengeDetailsFragment extends DialogFragment
 
     @Override
     public void notifyCreateSuccess() {
-        ToastHelper.showLongMess(getContext(), "created!");
+
+        if (isCreateNewMode()){
+            ToastHelper.showLongMess(getContext(), "created!");
+        }else{
+            ToastHelper.showLongMess(getContext(), "updated!");
+        }
 
         getTargetFragment().onActivityResult(ReqCode.CHALLENGE_DETAILS,
                             Activity.RESULT_OK, getActivity().getIntent());

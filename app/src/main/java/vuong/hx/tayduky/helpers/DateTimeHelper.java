@@ -7,6 +7,23 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateTimeHelper {
+
+    public static int Compare(String date1, String date2){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date d1 = dateFormat.parse(date1);
+            Date d2 = dateFormat.parse(date2);
+
+            return d1.compareTo(d2);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+            return -2;
+        }
+    }
+
     public static int CompareToNow(String date){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

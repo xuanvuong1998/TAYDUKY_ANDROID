@@ -6,7 +6,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -31,8 +30,13 @@ public interface ToolService {
                                  @Part("toolName") RequestBody name, @Part("toolDesc") RequestBody desc,
                                  @Part("toolQuantity") int qty, @Part MultipartBody.Part imageFile);
 
+    @Multipart
     @PUT(ApiConfig.Apis.Tool.UPDATE)
-    Call<ResponseBody> update(@Header("Authorization") String token, @Body Tool Tool);
+    Call<ResponseBody> update(@Header("Authorization") String token,
+                                 @Part("toolId") int id,
+                                 @Part("toolName") RequestBody name, @Part("toolDesc") RequestBody desc,
+                                 @Part("toolQuantity") int qty, @Part MultipartBody.Part imageFile);
+
 
     @DELETE(ApiConfig.Apis.Tool.DELETE)
     Call<ResponseBody> delete(@Header("Authorization") String token, @Path("tool_id") int toolId);
