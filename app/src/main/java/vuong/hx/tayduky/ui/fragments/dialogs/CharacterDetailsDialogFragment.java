@@ -35,6 +35,7 @@ import vuong.hx.tayduky.models.Actor;
 import vuong.hx.tayduky.models.Character;
 import vuong.hx.tayduky.presenters.CharacterPresenter;
 import vuong.hx.tayduky.presenters.ManageActorsPresenter;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 import vuong.hx.tayduky.ui.view_interfaces.CharacterView;
 
@@ -52,6 +53,7 @@ public class CharacterDetailsDialogFragment extends DialogFragment
     private File mFileUploaded;
     private List<Actor> mActorsList;
     private Character mCurCharacter;
+    private LoadingDialog loadingDialog;
 
     public static CharacterDetailsDialogFragment newInstance(Character character) {
 
@@ -61,6 +63,14 @@ public class CharacterDetailsDialogFragment extends DialogFragment
         CharacterDetailsDialogFragment fragment = new CharacterDetailsDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
     }
 
     @Nullable
@@ -83,6 +93,8 @@ public class CharacterDetailsDialogFragment extends DialogFragment
 
         mCharacterPresenter = new CharacterPresenter(this);
         mActorsPresenter = new ManageActorsPresenter(this);
+
+        loadingDialog.start();
         mActorsPresenter.loadActorsList(mUserToken);
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
@@ -200,11 +212,13 @@ public class CharacterDetailsDialogFragment extends DialogFragment
 
     @Override
     public void showToastMessage(String message) {
+        loadingDialog.stop();
         ToastHelper.showLongMess(getContext(), message);
     }
 
     @Override
     public void loadActorsList(List<Actor> actors) {
+        loadingDialog.stop();
         mActorsList = actors;
 
         final ChooseActorDialogFragment fragment =

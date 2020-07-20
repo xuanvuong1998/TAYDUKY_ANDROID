@@ -25,6 +25,7 @@ import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
 import vuong.hx.tayduky.ui.fragments.dialogs.ToolDetailsDialogFragment;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class AdminToolsFragment extends Fragment implements ManageToolView, ToolsAdapter.OnClickItem {
@@ -34,17 +35,23 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     private ToolsAdapter mToolsAdapter;
     private RecyclerView mRecyclerView;
     private ManageToolsPresenter mPresenter;
-
-
     private List<Tool> mToolsList, mToolsFilteredList;
     private Button mBtnAddNew;
     private String mUserToken;
+    private LoadingDialog loadingDialog;
 
     public AdminToolsFragment() {
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        loadingDialog = new LoadingDialog(getActivity());
+        initData();
+
+    }
     public static AdminToolsFragment newInstance() {
         AdminToolsFragment fragment = new AdminToolsFragment();
         return fragment;
@@ -53,7 +60,6 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mPresenter.setManageToolView(null);
     }
 
     @Override
@@ -83,7 +89,6 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
         });
 
         registerEvents();
-        initData();
     }
 
 
@@ -118,12 +123,13 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
         if (mPresenter == null) {
             mPresenter = new ManageToolsPresenter(this);
         }
+        loadingDialog.start();
         mPresenter.loadToolsList();
     }
 
     @Override
     public void loadToolsList(List<Tool> list) {
-
+        loadingDialog.stop();
         mSwipeLayout.setRefreshing(false);
         mToolsList = list;
 
@@ -139,11 +145,13 @@ public class AdminToolsFragment extends Fragment implements ManageToolView, Tool
 
     @Override
     public void refreshToolsList() {
+        loadingDialog.start();
         mPresenter.loadToolsList();
     }
 
     @Override
     public void showToastMessage(String message) {
+        loadingDialog.stop();
         mSwipeLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }

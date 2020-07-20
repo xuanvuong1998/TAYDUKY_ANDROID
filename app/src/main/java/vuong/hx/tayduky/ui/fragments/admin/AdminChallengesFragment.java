@@ -31,6 +31,7 @@ import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;
 import vuong.hx.tayduky.presenters.ManageChallengesPresenter;
 import vuong.hx.tayduky.ui.fragments.dialogs.ChallengeDetailsFragment;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.ManageChallengeView;
 
 
@@ -47,6 +48,8 @@ public class AdminChallengesFragment extends Fragment
     private String mUserToken;
     private int mFilterPos = 0;
     private int counter = 1;
+    private LoadingDialog loadingDialog;
+
 
     public AdminChallengesFragment() {
     }
@@ -62,6 +65,7 @@ public class AdminChallengesFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        loadingDialog = new LoadingDialog(getActivity());
     }
 
     @Override
@@ -116,7 +120,7 @@ public class AdminChallengesFragment extends Fragment
             mChallengesPresenter = new ManageChallengesPresenter(this);
         }
 
-
+        loadingDialog.start();
         mChallengesPresenter.loadChallengesList(mUserToken);
     }
 
@@ -172,7 +176,7 @@ public class AdminChallengesFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void loadChallengesList(List<Challenge> challenges) {
-
+        loadingDialog.stop();
         mChallengesList = challenges;
         mSwipeLayout.setRefreshing(false);
 
@@ -202,6 +206,7 @@ public class AdminChallengesFragment extends Fragment
 
     @Override
     public void showToastMessage(String message) {
+        loadingDialog.stop();
         mSwipeLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }

@@ -24,6 +24,7 @@ import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Character;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
 import vuong.hx.tayduky.ui.fragments.dialogs.CharacterDetailsDialogFragment;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 
 
@@ -36,13 +37,20 @@ public class AdminCharactersFragment extends Fragment
     private RecyclerView mRecyclerView;
     private List<Character> mCharactersList;
     private Button mBtnAddNew;
+    private LoadingDialog loadingDialog;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadingDialog = new LoadingDialog(getActivity());
+
+        initData();
+    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -78,7 +86,7 @@ public class AdminCharactersFragment extends Fragment
                 mPresenter.loadCharactersList();
             }
         });
-        initData();
+        //initData();
     }
 
     @Override
@@ -110,6 +118,10 @@ public class AdminCharactersFragment extends Fragment
             mPresenter = new ManageCharactersPresenter(this);
         }
 
+        /*if (loadingDialog == null){
+            loadingDialog = new LoadingDialog(getActivity());
+        }*/
+        loadingDialog.start();
         mPresenter.loadCharactersList();
     }
 
@@ -129,6 +141,7 @@ public class AdminCharactersFragment extends Fragment
     public void loadCharactersList(List<Character> characters) {
 
         // data received! remove refreshing icon
+        loadingDialog.stop();
         mSwipeRefreshLayout.setRefreshing(false);
         mCharactersList = characters;
 
@@ -146,6 +159,7 @@ public class AdminCharactersFragment extends Fragment
     @Override
     public void showToastMessage(String message) {
         // data received! remove refreshing icon
+        loadingDialog.stop();
         mSwipeRefreshLayout.setRefreshing(false);
         ToastHelper.showLongMess(getContext(), message);
     }

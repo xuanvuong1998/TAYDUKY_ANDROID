@@ -115,7 +115,7 @@
 
             <Button
                 android:id="@+id/btnDeleteRole"
-                android:layout_marginLeft="50dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="@dimen/button_small_width"
                 android:layout_height="@dimen/button_small_height"
                 android:background="@drawable/button_delete"

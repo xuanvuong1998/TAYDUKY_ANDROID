@@ -19,20 +19,22 @@ import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.presenters.LoginPresenter;
 import vuong.hx.tayduky.remote.api.ApiConfig;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.LoginScreenView;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginScreenView{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginScreenView {
 
     private LoginPresenter mLoginPresenter;
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnSignUp;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (mLoginPresenter == null){
+        if (mLoginPresenter == null) {
             mLoginPresenter = new LoginPresenter(this);
         }
 
@@ -56,7 +58,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
 
         //goToHomeActivity(null, null, null, UserRole.ADMIN.getVal());
-        if (isUserAuthenticated()){
+        if (isUserAuthenticated()) {
+            startLoadingDialog();
 
             String userId = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_ID);
 
@@ -64,23 +67,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void refreshUserToken(String userId){
+    private void refreshUserToken(String userId) {
         String userPassword = SharePreferenceHelper.getString(this, SharePreferenceKeys.USER_PASSWORD);
 
-        if (userId != null){
+        if (userId != null) {
             mLoginPresenter.authenticate(userId, userPassword);
         }
     }
-    private boolean isUserAuthenticated(){
+
+    private void startLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingDialog(this);
+        }
+        loadingDialog.start();
+
+    }
+
+    private boolean isUserAuthenticated() {
 
         return SharePreferenceHelper.getString(this,
-                        SharePreferenceKeys.USER_ID) != null;
+                SharePreferenceKeys.USER_ID) != null;
     }
-    private void initViews(){
-        edtUsername =  findViewById(R.id.edtUsername);
-        edtPassword =  findViewById(R.id.edtPassword);
-        btnLogin =  findViewById(R.id.btnLogin);
-        btnSignUp =  findViewById(R.id.btnSignUp);
+
+    private void initViews() {
+        edtUsername = findViewById(R.id.edtUsername);
+        edtPassword = findViewById(R.id.edtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignUp = findViewById(R.id.btnSignUp);
 
         btnLogin.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
@@ -88,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void showToastMessage(String message) {
+        loadingDialog.stop();
         ToastHelper.showLongMess(this, message);
 
     }
@@ -96,10 +110,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnLogin:
+                startLoadingDialog();
                 mLoginPresenter.authenticate(edtUsername.getText().toString(),
-                                edtPassword.getText().toString());
+                        edtPassword.getText().toString());
                 break;
             case R.id.btnSignUp:
                 break;
@@ -109,27 +124,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void goToHomeActivity(String username, String password, String token, int role) {
 
-        // Save token to preference
+        loadingDialog.stop();
 
-        if (username != null){ // First time
+        if (username != null) { // First time
             token = ApiConfig.Apis.Auth.BEARER_PREFIX + token;
             TempDataHelper.setUserToken(token);
             TempDataHelper.setUserId(username);
             SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_PASSWORD, password);
-            SharePreferenceHelper.putString(this,SharePreferenceKeys.USER_TOKEN, token);
+            SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_TOKEN, token);
             SharePreferenceHelper.putString(this, SharePreferenceKeys.USER_ID, username);
             SharePreferenceHelper.putInt(this, SharePreferenceKeys.USER_ROLE, role);
         }
         Intent intent = null;
-        if (role == UserRole.ADMIN.getVal()){
+        if (role == UserRole.ADMIN.getVal()) {
             intent = new Intent(this, AdminHomeActivity.class);
-        }else if (role == UserRole.ACTOR.getVal()){
+        } else if (role == UserRole.ACTOR.getVal()) {
             intent = new Intent(this, ActorHomeActivity.class);
-        }else{
+        } else {
             // other user
         }
 
-        if (intent != null){
+        if (intent != null) {
             finish();
             startActivity(intent);
         }

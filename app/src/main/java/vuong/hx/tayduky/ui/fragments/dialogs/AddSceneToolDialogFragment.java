@@ -31,6 +31,7 @@ import vuong.hx.tayduky.models.Tool;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
 import vuong.hx.tayduky.presenters.ManageToolsPresenter;
 import vuong.hx.tayduky.ui.fragments.support.ConfirmGotoCartDialog;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.ManageToolView;
 
 public class AddSceneToolDialogFragment extends DialogFragment
@@ -45,6 +46,14 @@ public class AddSceneToolDialogFragment extends DialogFragment
     private ManageCharactersPresenter mCharactersPresenter;
     private List<Tool> mToolsList;
     private Challenge mChallenge;
+    private LoadingDialog loadingDialog;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
+    }
 
     public static AddSceneToolDialogFragment newInstance(Challenge challenge) {
 
@@ -114,9 +123,11 @@ public class AddSceneToolDialogFragment extends DialogFragment
         newTool.setTool(mChosenTool);
 
         final Fragment thisFrg = this;
+        loadingDialog.start();
         CartHelper.addNewSceneTool(newTool, new SetDocumentCallBack() {
             @Override
             public void onSuccess() {
+                loadingDialog.stop();
                 ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
                 dialog.setTargetFragment(thisFrg, ReqCode.CONFIRM_GOTOCART);
                 dialog.show(getActivity().getSupportFragmentManager(), "confirm-gotocart");
@@ -124,6 +135,7 @@ public class AddSceneToolDialogFragment extends DialogFragment
 
             @Override
             public void onFail(String message) {
+                loadingDialog.stop();
                 ToastHelper.showLongMess(getContext(), message);
             }
         });

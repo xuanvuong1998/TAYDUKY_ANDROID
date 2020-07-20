@@ -26,6 +26,7 @@ import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.CartHelper;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
 import vuong.hx.tayduky.helpers.ImageHelper;
+import vuong.hx.tayduky.helpers.LogHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
@@ -36,6 +37,7 @@ import vuong.hx.tayduky.presenters.ManageActorsPresenter;
 import vuong.hx.tayduky.presenters.ManageCharactersPresenter;
 import vuong.hx.tayduky.ui.fragments.support.ConfirmGotoCartDialog;
 import vuong.hx.tayduky.ui.fragments.support.DatePickerFragment;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 import vuong.hx.tayduky.ui.view_interfaces.CharacterListView;
 
@@ -53,6 +55,7 @@ public class AddRoleDialogFragment extends DialogFragment
     private DatePickerFragment datePicker;
     private List<Character> mCharactersList;
     private Challenge mChallenge;
+    public LoadingDialog loadingDialog;
 
     public static AddRoleDialogFragment newInstance(Challenge challenge) {
 
@@ -65,13 +68,33 @@ public class AddRoleDialogFragment extends DialogFragment
         return fragment;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+        loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.start();
+        LogHelper.printAssert("start loading data!");
+
+        loadData();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_add_role, container, false);
 
         mChallenge = (Challenge) getArguments().getSerializable("challenge");
-        loadData();
 
         initViews(view);
         return view;
@@ -121,9 +144,12 @@ public class AddRoleDialogFragment extends DialogFragment
 
         final Fragment thisFr = this;
 
+        loadingDialog.start();
+
         CartHelper.addNewRole(newRole, new SetDocumentCallBack() {
             @Override
             public void onSuccess() {
+                loadingDialog.stop();
                 ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
 
                 dialog.setTargetFragment(thisFr, ReqCode.CONFIRM_GOTOCART);
@@ -132,6 +158,7 @@ public class AddRoleDialogFragment extends DialogFragment
 
             @Override
             public void onFail(String message) {
+                loadingDialog.stop();
                 ToastHelper.showLongMess(getContext(), message);
             }
         });
@@ -228,6 +255,8 @@ public class AddRoleDialogFragment extends DialogFragment
 
     @Override
     public void loadActorsList(List<Actor> actors) {
+        //loadingDialog.stop();
+        LogHelper.printAssert("Recevied actors!");
         mActorsList = actors;
     }
 
