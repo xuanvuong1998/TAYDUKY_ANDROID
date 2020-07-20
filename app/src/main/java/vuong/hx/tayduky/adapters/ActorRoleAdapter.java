@@ -15,9 +15,11 @@ import vuong.hx.tayduky.models.SceneRole;
 
 public class ActorRoleAdapter extends RecyclerView.Adapter<ActorRoleAdapter.ActorRoleViewHolder> {
     private List<SceneRole> listData;
+    private boolean areIncoming;
 
-    public ActorRoleAdapter(List<SceneRole> listData) {
+    public ActorRoleAdapter(List<SceneRole> listData, boolean mode) {
         this.listData = listData;
+        areIncoming = mode;
     }
 
     @NonNull
@@ -26,7 +28,7 @@ public class ActorRoleAdapter extends RecyclerView.Adapter<ActorRoleAdapter.Acto
         View view = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.adapter_rv_actor_challenges, parent, false);
 
-        return new ActorRoleViewHolder(view);
+        return new ActorRoleViewHolder(view, areIncoming);
 
     }
 
@@ -44,14 +46,22 @@ public class ActorRoleAdapter extends RecyclerView.Adapter<ActorRoleAdapter.Acto
 
         private TextView mTvChallengeName, mTvLocation, mTvStartDate, mTvDesc, mTvEndDate, mTvRole;
 
-        public ActorRoleViewHolder(@NonNull View itemView) {
+        public ActorRoleViewHolder(@NonNull View itemView, boolean mode) {
             super(itemView);
-            initViews(itemView);
+            initViews(itemView, mode);
         }
 
-        private void initViews(View view){
+        private void initViews(View view, boolean mode){
             mTvChallengeName = view.findViewById(R.id.tvChallengeTitle);
             mTvEndDate = view.findViewById(R.id.tvFinishedDate);
+            if (mode == true){
+
+                view.findViewById(R.id.tvFinishedDateTitle).setVisibility(View.GONE);
+                mTvEndDate.setVisibility(View.GONE);
+            }else{
+                view.findViewById(R.id.tvFinishedDateTitle).setVisibility(View.VISIBLE);
+                mTvEndDate.setVisibility(View.VISIBLE);
+            }
             mTvStartDate = view.findViewById(R.id.tvStartDate);
             mTvDesc = view.findViewById(R.id.tvRoleDesc);
             mTvLocation = view.findViewById(R.id.tvChallengeLocation);

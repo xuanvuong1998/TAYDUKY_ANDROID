@@ -1,7 +1,10 @@
 package vuong.hx.tayduky.helpers;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -9,7 +12,46 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class FileHelper {
+
+    public static boolean checkPermission(Context context){
+        int check = ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        return check == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+
+    public static void downloadRoles(Activity activity, String sFileName, String sBody) {
+        try {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    123);
+            if (checkPermission(activity.getBaseContext()) == false){
+                return;
+            }
+            File root = new File(Environment.getExternalStorageDirectory(), "roles");
+            if (!root.exists()) {
+                root.mkdirs();
+            }
+            File gpxfile = new File(root, sFileName);
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+            //Toast.makeText(activity.getBaseContext(), "Saved", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access

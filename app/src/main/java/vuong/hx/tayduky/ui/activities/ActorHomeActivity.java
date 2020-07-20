@@ -114,7 +114,7 @@ public class ActorHomeActivity extends AppCompatActivity {
 
     }
 
-    private boolean setFragment(int itemId){
+    public boolean setFragment(int itemId){
         switch (itemId){
             case R.id.mnHome:
                 viewPager.setCurrentItem(ActorMenuItem.HOME);

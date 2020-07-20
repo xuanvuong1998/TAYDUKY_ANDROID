@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import vuong.hx.tayduky.adapters.NotifAdapter;
 import vuong.hx.tayduky.callbacks.NotifCallBack;
 import vuong.hx.tayduky.helpers.NotificationHelper;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
+import vuong.hx.tayduky.ui.activities.ActorHomeActivity;
 
 
 public class ActorNotificationFragment extends Fragment implements NotifAdapter.OnClickItem {
@@ -24,6 +26,7 @@ public class ActorNotificationFragment extends Fragment implements NotifAdapter.
     private NotifAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private List<SceneRoleFullInfo> roles;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     public ActorNotificationFragment() {
@@ -67,13 +70,14 @@ public class ActorNotificationFragment extends Fragment implements NotifAdapter.
         View view =  inflater.inflate(R.layout.fragment_actor_notification, container, false);
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setEnabled(false);
 
         return view;
     }
 
-
     @Override
     public void onClickNotifDetails(SceneRoleFullInfo role) {
-
+        ((ActorHomeActivity) getActivity()).setFragment(R.id.mnHome);
     }
 }

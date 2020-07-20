@@ -41,12 +41,12 @@
             android:id="@+id/tvChallengeLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15sp"
+            android:padding="12sp"
             android:layout_below="@id/tvChallengeTitle"
             android:background="@drawable/color_card_view_gradient4"
 
             android:layout_marginTop="12dp"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
 
@@ -61,31 +61,32 @@
         <TextView
             android:id="@+id/tvStartDate"
             android:background="@drawable/color_card_view_gradient4"
-            android:padding="15sp"
+            android:padding="12sp"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/tvFinishedDateTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Finished Date"
+            android:visibility="gone"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFinishedDate"
             android:layout_width="match_parent"
-            android:padding="15sp"
-
+            android:padding="12sp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/color_card_view_gradient4"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -100,10 +101,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:padding="15sp"
+            android:padding="12sp"
 
             android:background="@drawable/color_card_view_gradient4"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -117,9 +118,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:padding="15sp"
+            android:padding="12sp"
             android:background="@drawable/color_card_view_gradient4"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

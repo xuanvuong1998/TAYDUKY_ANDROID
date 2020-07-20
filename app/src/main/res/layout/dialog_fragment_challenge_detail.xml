@@ -62,8 +62,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
 
         <EditText
@@ -71,54 +71,60 @@
             android:id="@+id/edtStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="datetime"
             android:layout_weight="0.95"
+            android:inputType="datetime"
             android:textSize="19sp" />
+
         <Button
             android:id="@+id/btnPickStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick date"
             android:layout_weight="0.05"
-            android:textSize="12sp"
-            />
+            android:text="Pick date"
+            android:textSize="12sp" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:inputType="none"
-        android:text="Ended Date"
-        android:textSize="19sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:id="@+id/llEndDate"
+        android:orientation="vertical">
 
-
-        <EditText
-            android:id="@+id/edtEndTime"
-            android:layout_weight="0.95"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="datetime"
+            android:layout_marginRight="5dp"
+            android:inputType="none"
+            android:text="Ended Date"
             android:textSize="19sp" />
-        <Button
-            android:id="@+id/btnPickEndDate"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.05"
-            android:text="Pick date"
-            android:textSize="12sp"
-            />
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <EditText
+                android:id="@+id/edtEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:inputType="datetime"
+                android:textSize="19sp" />
+
+            <Button
+                android:id="@+id/btnPickEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:text="Pick date"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </LinearLayout>
-
-
-
 
 
     <TextView
