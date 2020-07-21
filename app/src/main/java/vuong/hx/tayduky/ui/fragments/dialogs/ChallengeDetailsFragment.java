@@ -42,6 +42,7 @@ public class ChallengeDetailsFragment extends DialogFragment
     private ManageChallengesPresenter mPresenter;
     private String mUserToken;
     private View mLLEndDate;
+    private ChallengeRolesDialogFragment rolesDialog;
 
     public static ChallengeDetailsFragment newInstance(Challenge challenge) {
         Bundle args = new Bundle();
@@ -59,6 +60,9 @@ public class ChallengeDetailsFragment extends DialogFragment
         mPresenter = new ManageChallengesPresenter(this);
         mUserToken = TempDataHelper.getUserToken();
         curChallenge = (Challenge) getArguments().getSerializable("currentChallenge");
+
+        rolesDialog = ChallengeRolesDialogFragment
+                .newInstance(curChallenge);
     }
 
     @Nullable
@@ -135,29 +139,28 @@ public class ChallengeDetailsFragment extends DialogFragment
     }
 
     private void showCreateNewRoleDialog() {
-        AddRoleDialogFragment fr = new AddRoleDialogFragment();
+        AddRoleDialogFragment rolesDialog = new AddRoleDialogFragment();
 
-        fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
+        rolesDialog.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
     }
 
     private void showChallengeRolesList() {
-        ChallengeRolesDialogFragment fr = ChallengeRolesDialogFragment
-                .newInstance(curChallenge);
 
-        fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
+
+        rolesDialog.show(getActivity().getSupportFragmentManager(), "challenge-roles");
     }
 
     private void showCreateNewSceneToolDialog() {
-        AddRoleDialogFragment fr = new AddRoleDialogFragment();
+        AddRoleDialogFragment rolesDialog = new AddRoleDialogFragment();
 
-        fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
+        rolesDialog.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
     }
 
     private void showCreateSceneToolListDialog() {
-        ChallengeToolsDialogFragment fr
+        ChallengeToolsDialogFragment rolesDialog
                 = ChallengeToolsDialogFragment.newInstance(curChallenge);
 
-        fr.show(getActivity().getSupportFragmentManager(), "challenge-roles");
+        rolesDialog.show(getActivity().getSupportFragmentManager(), "challenge-roles");
     }
 
     private boolean isCreateNewMode() {

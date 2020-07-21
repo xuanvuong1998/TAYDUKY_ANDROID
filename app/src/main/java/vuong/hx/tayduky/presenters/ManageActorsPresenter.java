@@ -20,7 +20,6 @@ import vuong.hx.tayduky.ui.view_interfaces.ActorsListView;
 public class ManageActorsPresenter {
     private ActorsListView actorsView;
     private ActorRepo actorRepo = new ActorRepoImpl();
-    ;
     private ActorRolesView rolesView;
 
     public ManageActorsPresenter(ActorsListView actorsView) {

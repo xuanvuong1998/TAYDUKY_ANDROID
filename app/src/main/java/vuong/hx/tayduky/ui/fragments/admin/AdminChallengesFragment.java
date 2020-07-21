@@ -26,6 +26,7 @@ import java.util.List;
 import vuong.hx.tayduky.R;
 import vuong.hx.tayduky.adapters.ChallengesAdapter;
 import vuong.hx.tayduky.constants.ReqCode;
+import vuong.hx.tayduky.helpers.LogHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Challenge;

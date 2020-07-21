@@ -22,6 +22,7 @@ import vuong.hx.tayduky.helpers.CartHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.SceneRoleFullInfo;
 import vuong.hx.tayduky.presenters.CartPresenter;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.CartView;
 
 public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnClickItem, CartView {
@@ -34,7 +35,18 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private CartPresenter mPresenter;
+    private LoadingDialog loadingDialog;
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.start();
+        loadRoles();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +71,7 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
                 checkOut();
             }
         });
-        loadRoles();
+
         return view;
     }
 
@@ -84,6 +96,8 @@ public class CartRolesFragment extends Fragment implements CartRolesAdapter.OnCl
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRecyclerView.setAdapter(mAdapter);
+
+        loadingDialog.stop();
 
     }
 

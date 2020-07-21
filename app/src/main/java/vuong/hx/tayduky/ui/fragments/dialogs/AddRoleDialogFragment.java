@@ -26,7 +26,6 @@ import vuong.hx.tayduky.constants.ReqTag;
 import vuong.hx.tayduky.helpers.CartHelper;
 import vuong.hx.tayduky.helpers.DateTimeHelper;
 import vuong.hx.tayduky.helpers.ImageHelper;
-import vuong.hx.tayduky.helpers.LogHelper;
 import vuong.hx.tayduky.helpers.TempDataHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.Actor;
@@ -55,7 +54,10 @@ public class AddRoleDialogFragment extends DialogFragment
     private DatePickerFragment datePicker;
     private List<Character> mCharactersList;
     private Challenge mChallenge;
-    public LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
+    private ChooseActorDialogFragment chooseActorDialog;
+    private ChooseCharacterDialogFragment chooseCharacterDialog;
+
 
     public static AddRoleDialogFragment newInstance(Challenge challenge) {
 
@@ -65,6 +67,7 @@ public class AddRoleDialogFragment extends DialogFragment
 
         AddRoleDialogFragment fragment = new AddRoleDialogFragment();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -79,14 +82,12 @@ public class AddRoleDialogFragment extends DialogFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
         loadingDialog = new LoadingDialog(getActivity());
 
-        loadingDialog.start();
-        LogHelper.printAssert("start loading data!");
+        /*loadingDialog.start();
+        LogHelper.printAssert("start loading data!");*/
 
         loadData();
-
     }
 
     @Nullable
@@ -184,19 +185,15 @@ public class AddRoleDialogFragment extends DialogFragment
                 
             case R.id.imgvAssignedActor:
 
-                ChooseActorDialogFragment fr = ChooseActorDialogFragment.newInstance(mActorsList);
 
-                fr.setTargetFragment(this, ReqCode.CHOOSE_ACTOR);
 
-                fr.show(getActivity().getSupportFragmentManager(), ReqTag.CHOOSE_ACTOR);
+                chooseActorDialog.show(getActivity().getSupportFragmentManager(), ReqTag.CHOOSE_ACTOR);
 
                 break;
             case R.id.imgvCharacter:
-                ChooseCharacterDialogFragment fr2 = ChooseCharacterDialogFragment.newInstance(mCharactersList);
 
-                fr2.setTargetFragment(this, ReqCode.CHOOSE_CHARACTER);
 
-                fr2.show(getActivity().getSupportFragmentManager(), ReqTag.CHOOSE_CHARACTER);
+                chooseCharacterDialog.show(getActivity().getSupportFragmentManager(), ReqTag.CHOOSE_CHARACTER);
 
                 break;
         }
@@ -255,19 +252,25 @@ public class AddRoleDialogFragment extends DialogFragment
 
     @Override
     public void loadActorsList(List<Actor> actors) {
-        //loadingDialog.stop();
-        LogHelper.printAssert("Recevied actors!");
+        loadingDialog.stop();
         mActorsList = actors;
+        chooseActorDialog = ChooseActorDialogFragment.newInstance(mActorsList);
+        chooseActorDialog.setTargetFragment(this, ReqCode.CHOOSE_ACTOR);
     }
 
     @Override
     public void showToastMessage(String message) {
+        loadingDialog.stop();
         ToastHelper.showLongMess(getContext(), message);
     }
 
     @Override
     public void loadCharactersList(List<Character> characters) {
+        loadingDialog.stop();
         mCharactersList = characters;
+        chooseCharacterDialog = ChooseCharacterDialogFragment.newInstance(mCharactersList);
+        chooseCharacterDialog.setTargetFragment(this, ReqCode.CHOOSE_CHARACTER);
+
     }
 
     @Override

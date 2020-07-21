@@ -47,12 +47,16 @@ public class AddSceneToolDialogFragment extends DialogFragment
     private List<Tool> mToolsList;
     private Challenge mChallenge;
     private LoadingDialog loadingDialog;
+    ConfirmGotoCartDialog gotoCartDialog = new ConfirmGotoCartDialog();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         loadingDialog = new LoadingDialog(getActivity());
+
+        gotoCartDialog.setTargetFragment(this, ReqCode.CONFIRM_GOTOCART);
+
     }
 
     public static AddSceneToolDialogFragment newInstance(Challenge challenge) {
@@ -128,9 +132,9 @@ public class AddSceneToolDialogFragment extends DialogFragment
             @Override
             public void onSuccess() {
                 loadingDialog.stop();
-                ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
-                dialog.setTargetFragment(thisFrg, ReqCode.CONFIRM_GOTOCART);
-                dialog.show(getActivity().getSupportFragmentManager(), "confirm-gotocart");
+               /* ConfirmGotoCartDialog dialog = new ConfirmGotoCartDialog();
+                dialog.setTargetFragment(thisFrg, ReqCode.CONFIRM_GOTOCART);*/
+                gotoCartDialog.show(getActivity().getSupportFragmentManager(), "confirm-gotocart");
             }
 
             @Override

@@ -22,6 +22,7 @@ import vuong.hx.tayduky.helpers.CartHelper;
 import vuong.hx.tayduky.helpers.ToastHelper;
 import vuong.hx.tayduky.models.SceneToolFullInfo;
 import vuong.hx.tayduky.presenters.CartPresenter;
+import vuong.hx.tayduky.ui.fragments.support.LoadingDialog;
 import vuong.hx.tayduky.ui.view_interfaces.CartView;
 
 public class CartToolsFragment extends Fragment implements
@@ -33,11 +34,22 @@ public class CartToolsFragment extends Fragment implements
     private Button mBtnCheckout;
     private CartPresenter mPresenter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LoadingDialog loadingDialog;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.start();
+        loadTools();
+
     }
 
     @Nullable
@@ -61,7 +73,6 @@ public class CartToolsFragment extends Fragment implements
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
 
-        loadTools();
         return view;
     }
 
@@ -74,6 +85,7 @@ public class CartToolsFragment extends Fragment implements
             @Override
             public void onComplete(List list) {
                 mTools = list;
+
                 updateAdapter();
             }
         });
@@ -82,11 +94,12 @@ public class CartToolsFragment extends Fragment implements
     private void updateAdapter(){
         mAdapter = new CartToolsAdapter(mTools, this);
 
-
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRecyclerView.setAdapter(mAdapter);
+
+        loadingDialog.stop();
     }
 
     @Override

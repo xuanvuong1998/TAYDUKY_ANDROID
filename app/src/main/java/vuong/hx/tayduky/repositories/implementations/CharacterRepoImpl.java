@@ -51,13 +51,22 @@ public class CharacterRepoImpl implements CharacterRepo {
                           File image, final ApiCallBack<ResponseBody> callBack) {
 
         RequestBody reqName = RequestBody.create(MultipartBody.FORM, name);
+        RequestBody reqDefaultActor = null;
 
-        RequestBody reqDefaultActor = RequestBody.create(MultipartBody.FORM, defaultActor);
+        if (defaultActor != null){
+            RequestBody.create(MultipartBody.FORM, defaultActor);
+        }
 
-        RequestBody reqImageFile = RequestBody.create(
-                        MediaType.parse(MediaTypeConst.IMAGE), image);
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
-                            "ImageFile",image.getName(), reqImageFile);
+        MultipartBody.Part imagePart = null;
+
+        if (image != null){
+
+            RequestBody reqImageFile = RequestBody.create(
+                    MediaType.parse(MediaTypeConst.IMAGE), image);
+            imagePart = MultipartBody.Part.createFormData(
+                    "ImageFile",image.getName(), reqImageFile);
+        }
+
 
         Call<ResponseBody> call = mService.createNew(token, reqName, reqDefaultActor, imagePart);
 

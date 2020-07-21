@@ -71,6 +71,9 @@ public class CharacterDetailsDialogFragment extends DialogFragment
         super.onActivityCreated(savedInstanceState);
 
         loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.start();
+        mActorsPresenter.loadActorsList(mUserToken);
     }
 
     @Nullable
@@ -94,8 +97,6 @@ public class CharacterDetailsDialogFragment extends DialogFragment
         mCharacterPresenter = new CharacterPresenter(this);
         mActorsPresenter = new ManageActorsPresenter(this);
 
-        loadingDialog.start();
-        mActorsPresenter.loadActorsList(mUserToken);
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +156,7 @@ public class CharacterDetailsDialogFragment extends DialogFragment
     private void setData(){
         mEdtCharacterName.setText(mCurCharacter.getName());
         ImageHelper.loadImageFromInternal(mCurCharacter.getImage(), mImgUploaded);
+
         mTvAssignedActor.setText(mCurCharacter.getDefaultActor());
 
     }
@@ -188,7 +190,9 @@ public class CharacterDetailsDialogFragment extends DialogFragment
         }else if (requestCode == ReqCode.CHOOSE_ACTOR){
             mChosenActor = (Actor) data.getSerializableExtra("chosenActorFullInfo");
 
-            mTvAssignedActor.setText(mChosenActor.getUsername());
+            if (mChosenActor != null){
+                mTvAssignedActor.setText(mChosenActor.getUsername());
+            }
         }
     }
 

@@ -32,6 +32,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
     private Button mBtnAddNew, mBtnCancel;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private AddRoleDialogFragment addRoleDialog;
 
     private Challenge mChallenge;
 
@@ -63,18 +64,13 @@ public class ChallengeRolesDialogFragment extends DialogFragment
             }
         });
 
-        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddRoleDialogFragment fr = AddRoleDialogFragment.newInstance(mChallenge);
 
-                fr.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
-            }
-        });
         mPresenter = new ManageChallengesPresenter(this);
 
         mChallenge = (Challenge) getArguments().getSerializable("challenge");
         mPresenter.loadChallengeRoles((int) mChallenge.getId());
+
+        addRoleDialog = AddRoleDialogFragment.newInstance(mChallenge);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -82,10 +78,18 @@ public class ChallengeRolesDialogFragment extends DialogFragment
                 mPresenter.loadChallengeRoles((int) mChallenge.getId());
             }
         });
+
+        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addRoleDialog.show(getActivity().getSupportFragmentManager(), ReqTag.ADD_ROLE);
+            }
+        });
         return view;
     }
 
-    
+
     @Override
     public void onClickCharacter() {
         showToastMessage("CLicked character");
@@ -110,6 +114,7 @@ public class ChallengeRolesDialogFragment extends DialogFragment
     public void loadChallengeRoles(List<SceneRoleFullInfo> roles) {
         mSwipeRefreshLayout.setRefreshing(false);
         mAdapter = new ChallengeRolesAdapter(roles, this);
+
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
